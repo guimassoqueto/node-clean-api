@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "lint-staged",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -17,8 +18,5 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
     "typescript": "^5.0.2"
-  },
-  "lint-staged": {
-    "src/**/**": "eslint"
   }
 }
