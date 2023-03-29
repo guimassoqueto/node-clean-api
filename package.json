@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "lint-staged",
+    "lint:test": "lint-staged",
+    "test": "jest --passWithNoTests",
+    "jest:staged": "jest --passWithNoTests",
     "jest:init": "jest --init",
-    "husk:init": "husky install",
-    "test": "jest"
+    "husk:init": "husky install"
   },
   "keywords": [],
   "author": "",
