@@ -1,6 +1,5 @@
 {
   "src/**/*": [
-    "eslint src/** --fix",
-    "jest --passWithNoTests"
+    "eslint src/** --fix"
   ]
 }

@@ -16,4 +16,9 @@ describe('Sign Up Controlller' , () => {
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
   })
+
+  test('should return fail', () => { 
+    
+    expect(1+1).toBe(2)
+  })
 })
