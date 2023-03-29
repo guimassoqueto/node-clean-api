@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "lint-staged",
-    "prepare": "husky install"
+    "jest:init": "jest --init",
+    "husk:init": "husky install",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
