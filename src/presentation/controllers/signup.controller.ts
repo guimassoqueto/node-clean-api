@@ -1,15 +1,18 @@
 import { MissingParamError } from '../errors/missing-param-error'
+import { InvalidParamError } from '../errors/invalid-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { type Controller } from '../protocols/controller'
 import { type IHttpRequest, type IHttpResponse } from '../protocols/http'
 import { type EmailValidator } from '../protocols/email-validator'
-import { InvalidParamError } from '../errors/invalid-param-error'
+import { type PasswordValidator } from '../protocols/password-validator'
 
 export class SignUpControlller implements Controller {
   private readonly emailValidator: EmailValidator
+  private readonly passwordValidator: PasswordValidator
 
-  constructor (emailValidator: EmailValidator) {
+  constructor (emailValidator: EmailValidator, passwordValidator: PasswordValidator) {
     this.emailValidator = emailValidator
+    this.passwordValidator = passwordValidator
   }
 
   public handle (httpRequest: IHttpRequest): IHttpResponse {
@@ -22,8 +25,10 @@ export class SignUpControlller implements Controller {
     }
 
     const isValidEmail = this.emailValidator.isValid(httpRequest.body.email)
-
     if (!isValidEmail) return badRequest(new InvalidParamError('email'))
+
+    const isValidPassword = this.passwordValidator.isStrong(httpRequest.body.password)
+    if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
     return {
       statusCode: 200,
