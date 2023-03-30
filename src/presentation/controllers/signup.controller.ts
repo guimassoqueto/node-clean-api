@@ -25,6 +25,7 @@ export class SignUpControlller {
         body: new MissingParamError('password')
       }
     }
+
     return {
       statusCode: 200,
       body: 'Success'
