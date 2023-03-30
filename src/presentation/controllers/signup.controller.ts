@@ -4,14 +4,13 @@ import { type IHttpRequest, type IHttpResponse } from '../protocols/http'
 
 export class SignUpControlller {
   public handle (httpRequest: IHttpRequest): IHttpResponse {
-    // checks for name
-    if (!httpRequest.body.name) return badRequest(new MissingParamError('name'))
+    const requiredFields: string[] = ['name', 'email', 'password']
 
-    // checks for email
-    if (!httpRequest.body.email) return badRequest(new MissingParamError('email'))
+    // checa se os campos obrigatórios esperados estão presentes no corpo da requisição
 
-    // checks for password
-    if (!httpRequest.body.password) return badRequest(new MissingParamError('password'))
+    for (const field of requiredFields) {
+      if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
+    }
 
     return {
       statusCode: 200,
