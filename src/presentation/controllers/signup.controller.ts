@@ -4,7 +4,7 @@ import { type IHttpRequest, type IHttpResponse } from '../protocols/http'
 
 export class SignUpControlller {
   public handle (httpRequest: IHttpRequest): IHttpResponse {
-    const requiredFields: string[] = ['name', 'email', 'password']
+    const requiredFields: string[] = ['name', 'email', 'password', 'passwordConfirmation']
 
     // checa se os campos obrigatórios esperados estão presentes no corpo da requisição
 
