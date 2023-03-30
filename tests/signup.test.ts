@@ -51,6 +51,5 @@ describe('Sign Up Controlller' , () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("password"));
   })
-
-  })
+  
 })
