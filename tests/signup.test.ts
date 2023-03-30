@@ -1,6 +1,5 @@
 import { SignUpControlller } from "../src/presentation/controllers/signup.controller"
 import { MissingParamError } from "../src/presentation/errors/missing-param-error";
-import { ValidationError } from "../src/presentation/errors/validation-error";
 import { IHttpRequest } from "../src/presentation/protocols/http";
 
 describe('Sign Up Controlller' , () => {
@@ -51,5 +50,5 @@ describe('Sign Up Controlller' , () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("password"));
   })
-  
+
 })
