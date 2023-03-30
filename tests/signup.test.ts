@@ -125,6 +125,27 @@ describe('Sign Up Controlller' , () => {
     expect(httpResponse.body).toEqual(new InvalidParamError("email"));
   })
 
+  test('Should call EmailValidator with correct email provided by request', () => { 
+    const { sut, emailValidatorStub } = makeSut();
+
+    // Espiona o comportamento do método isValid dentro da classe emailValidatorStub
+    const isValidSpy = jest.spyOn(emailValidatorStub, "isValid")
+
+    const bodyEmail = "any_email@email.com"
+    const httpRequest = {
+      body: {
+        name: "any_name",
+        email: bodyEmail,
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    sut.handle(httpRequest);
+
+    expect(isValidSpy).toHaveBeenCalledWith(bodyEmail);
+  })
+
   test('Should return 400 if the provided the password isn\'t strong', () => { 
     const { sut, passwordValidatorStub } = makeSut();
     jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false);
