@@ -3,28 +3,39 @@ import { MissingParamError } from "../src/presentation/errors/missing-param-erro
 import { InvalidParamError } from "../src/presentation/errors/invalid-param-error";
 import { IHttpRequest } from "../src/presentation/protocols/http";
 import { EmailValidator } from "../src/presentation/protocols/email-validator";
+import { PasswordValidator } from "../src/presentation/protocols/password-validator";
 
 interface SutTypes {
   sut: SignUpControlller,
-  emailValidatorStub: EmailValidator
+  emailValidatorStub: EmailValidator,
+  passwordValidatorStub: PasswordValidator
 }
 
 // Factory que cria um SignUpController
 function makeSut(): SutTypes {
   
-  // Mock Stub 
+  // Mock Email Stub 
   class EmailValidatorStub implements EmailValidator {
     public isValid(email: string): boolean {
       return true
     }
   }
 
+  // Mock Password Stub
+  class PasswordValidatorStub implements PasswordValidator {
+    isStrong(password: string): boolean {
+      return true
+    }
+  }
+
   const emailValidatorStub = new EmailValidatorStub();
-  const sut = new SignUpControlller(emailValidatorStub);
+  const passwordValidatorStub = new PasswordValidatorStub()
+  const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
 
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    passwordValidatorStub
   }
 }
 
@@ -112,6 +123,25 @@ describe('Sign Up Controlller' , () => {
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new InvalidParamError("email"));
+  })
+
+  test('Should return 400 if the provided the password isn\'t strong', () => { 
+    const { sut, passwordValidatorStub } = makeSut();
+    jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false);
+
+    const httpRequest: IHttpRequest = {
+      body: {
+        name: "any_name",
+        email: "any_email@email.com",
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError("password"));
   })
 
 })
