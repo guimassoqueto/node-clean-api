@@ -2,9 +2,14 @@ import { SignUpControlller } from "../src/presentation/controllers/signup.contro
 import { MissingParamError } from "../src/presentation/errors/missing-param-error";
 import { IHttpRequest } from "../src/presentation/protocols/http";
 
+// Factory que cria um SignUpController
+function makeSut(): SignUpControlller {
+  return new SignUpControlller();
+}
+
 describe('Sign Up Controlller' , () => {
   test('Should return 400 if no name is provided', () => {
-    const sut = new SignUpControlller();
+    const sut = makeSut();
 
     const httpRequest = {
       body: {
@@ -20,7 +25,7 @@ describe('Sign Up Controlller' , () => {
   })
 
   test('Should return 400 if no email is provided', () => { 
-    const sut = new SignUpControlller();
+    const sut = makeSut();
 
     const httpRequest = {
       body: {
@@ -36,7 +41,7 @@ describe('Sign Up Controlller' , () => {
   })
 
   test('Should return 400 if no password is provided', () => { 
-    const sut = new SignUpControlller();
+    const sut = makeSut();
 
     const httpRequest: IHttpRequest = {
       body: {
@@ -52,7 +57,7 @@ describe('Sign Up Controlller' , () => {
   })
 
   test('Should return 400 if no passwordConfirmation is provided', () => { 
-    const sut = new SignUpControlller();
+    const sut = makeSut();
 
     const httpRequest: IHttpRequest = {
       body: {
