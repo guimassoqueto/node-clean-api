@@ -1,11 +1,10 @@
 import { MissingParamError } from '../errors/missing-param-error'
 import { InvalidParamError } from '../errors/invalid-param-error'
-import { badRequest } from '../helpers/http-helper'
+import { badRequest, serverError } from '../helpers/http-helper'
 import { type Controller } from '../protocols/controller'
 import { type IHttpRequest, type IHttpResponse } from '../protocols/http'
 import { type EmailValidator } from '../protocols/email-validator'
 import { type PasswordValidator } from '../protocols/password-validator'
-import { ServerError } from '../errors/server-error'
 
 export class SignUpControlller implements Controller {
   private readonly emailValidator: EmailValidator
@@ -26,9 +25,11 @@ export class SignUpControlller implements Controller {
         if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
       }
 
+      // valida o email do usuário
       const isValidEmail = this.emailValidator.isValid(httpRequest.body.email)
       if (!isValidEmail) return badRequest(new InvalidParamError('email'))
 
+      // valida a senha do usuário
       const isValidPassword = this.passwordValidator.isStrong(httpRequest.body.password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
@@ -37,10 +38,7 @@ export class SignUpControlller implements Controller {
         body: 'Success'
       }
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: new ServerError()
-      }
+      return serverError()
     }
   }
 }
