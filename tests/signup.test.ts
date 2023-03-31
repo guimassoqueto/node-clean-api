@@ -4,6 +4,7 @@ import { InvalidParamError } from "../src/presentation/errors/invalid-param-erro
 import { IHttpRequest } from "../src/presentation/protocols/http";
 import { EmailValidator } from "../src/presentation/protocols/email-validator";
 import { PasswordValidator } from "../src/presentation/protocols/password-validator";
+import { ServerError } from "../src/presentation/errors/server-error";
 
 interface SutTypes {
   sut: SignUpControlller,
@@ -29,7 +30,7 @@ function makeSut(): SutTypes {
   }
 
   const emailValidatorStub = new EmailValidatorStub();
-  const passwordValidatorStub = new PasswordValidatorStub()
+  const passwordValidatorStub = new PasswordValidatorStub();
   const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
 
   return {
@@ -163,6 +164,43 @@ describe('Sign Up Controlller' , () => {
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new InvalidParamError("password"));
+  })
+
+  test('Should return 500 if EmailValidator throws', () => { 
+    
+    // Mock Email Stub 
+    class EmailValidatorStub implements EmailValidator {
+
+      // Mock the method to return error
+      public isValid(email: string): boolean {
+        throw Error()
+      }
+    }
+
+    // Mock Password Stub
+    class PasswordValidatorStub implements PasswordValidator {
+      isStrong(password: string): boolean {
+        return true
+      }
+    }
+
+    const emailValidatorStub = new EmailValidatorStub();
+    const passwordValidatorStub = new PasswordValidatorStub();
+    const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
+
+    const httpRequest: IHttpRequest = {
+      body: {
+        name: "any_name",
+        email: 123, // try error
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    const response = sut.handle(httpRequest)
+
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toEqual(new ServerError())
   })
 
 })
