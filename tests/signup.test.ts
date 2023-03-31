@@ -1,7 +1,5 @@
 import { SignUpControlller } from "../src/presentation/controllers/signup.controller"
-import { IHttpRequest } from "../src/presentation/protocols/http";
-import { EmailValidator } from "../src/presentation/protocols/email-validator";
-import { PasswordValidator } from "../src/presentation/protocols/password-validator";
+import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols";
 import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors";
 
 interface SutTypes {
