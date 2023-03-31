@@ -45,11 +45,11 @@ export default class SignUpControlller implements Controller {
       const isValidPassword = this.passwordValidator.isStrong(password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
-      this.addAccount.add({ name, email, password })
+      const account = this.addAccount.add({ name, email, password })
 
       return {
         statusCode: 200,
-        body: 'Success'
+        body: account
       }
     } catch (error) {
       return serverError()
