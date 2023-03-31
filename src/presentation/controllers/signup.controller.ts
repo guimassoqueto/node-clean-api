@@ -26,17 +26,19 @@ export class SignUpControlller implements Controller {
         if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
       }
 
+      const { email, password, passwordConfirmation } = httpRequest.body
+
       // valida que a senha e a senha de confirmação são iguais
-      if (httpRequest.body.password !== httpRequest.body.passwordConfirmation) {
+      if (password !== passwordConfirmation) {
         return badRequest(new InvalidParamError('passwordConfirmation'))
       }
 
       // valida o email do usuário
-      const isValidEmail = this.emailValidator.isValid(httpRequest.body.email)
+      const isValidEmail = this.emailValidator.isValid(email)
       if (!isValidEmail) return badRequest(new InvalidParamError('email'))
 
       // valida a senha do usuário
-      const isValidPassword = this.passwordValidator.isStrong(httpRequest.body.password)
+      const isValidPassword = this.passwordValidator.isStrong(password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
       return {
