@@ -2,6 +2,30 @@ import { SignUpControlller } from "../src/presentation/controllers"
 import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols";
 import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors";
 
+// Factory que cria um EmailValidator
+function makeEmailValidator(): EmailValidator {
+  // Mock EmailValidator 
+  class EmailValidatorStub implements EmailValidator {
+    public isValid(email: string) {
+      return true;
+    }
+  }
+
+  return new EmailValidatorStub();
+}
+
+// Factory que cria um PasswordValidator
+function makePasswordValidator(): PasswordValidator {
+  // Mock PasswordValidator
+  class PasswordValidatorStub implements PasswordValidator {
+    public isStrong(password: string) {
+      return true;
+    }
+  }
+
+  return new PasswordValidatorStub();
+}
+
 interface SutTypes {
   sut: SignUpControlller,
   emailValidatorStub: EmailValidator,
@@ -11,22 +35,8 @@ interface SutTypes {
 // Factory que cria um SignUpController
 function makeSut(): SutTypes {
   
-  // Mock Email Stub 
-  class EmailValidatorStub implements EmailValidator {
-    public isValid(email: string): boolean {
-      return true
-    }
-  }
-
-  // Mock Password Stub
-  class PasswordValidatorStub implements PasswordValidator {
-    isStrong(password: string): boolean {
-      return true
-    }
-  }
-
-  const emailValidatorStub = new EmailValidatorStub();
-  const passwordValidatorStub = new PasswordValidatorStub();
+  const emailValidatorStub = makeEmailValidator()
+  const passwordValidatorStub = makePasswordValidator()
   const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
 
   return {
@@ -35,6 +45,7 @@ function makeSut(): SutTypes {
     passwordValidatorStub
   }
 }
+
 
 describe('Sign Up Controlller' , () => {
   test('Should return 400 if no name is provided', () => {
@@ -164,7 +175,7 @@ describe('Sign Up Controlller' , () => {
 
   test('Should return 500 if EmailValidator throws', () => { 
     
-    // Mock Email Stub 
+    // Mock Email Stub com o método isValid emitindo erro
     class EmailValidatorStub implements EmailValidator {
 
       // Mock the method to return error
@@ -173,15 +184,8 @@ describe('Sign Up Controlller' , () => {
       }
     }
 
-    // Mock Password Stub
-    class PasswordValidatorStub implements PasswordValidator {
-      isStrong(password: string): boolean {
-        return true
-      }
-    }
-
     const emailValidatorStub = new EmailValidatorStub();
-    const passwordValidatorStub = new PasswordValidatorStub();
+    const passwordValidatorStub = makePasswordValidator();
     const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
 
     const httpRequest: IHttpRequest = {
@@ -199,4 +203,5 @@ describe('Sign Up Controlller' , () => {
     expect(response.body).toEqual(new ServerError())
   })
 
+  // TODO: Implementar testes para validação de password
 })
