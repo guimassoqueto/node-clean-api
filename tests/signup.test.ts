@@ -1,6 +1,8 @@
 import { SignUpControlller } from "../src/presentation/controllers"
-import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols";
-import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors";
+import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols"
+import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors"
+import { AddAccount, AddAccountModel } from "../src/domain/usecases/add-account"
+import { AccountModel } from "../src/domain/models/account"
 
 // Factory que cria um EmailValidator
 function makeEmailValidator(): EmailValidator {
@@ -26,10 +28,30 @@ function makePasswordValidator(): PasswordValidator {
   return new PasswordValidatorStub();
 }
 
+// Factory que cria um AddAccount
+function makeAddAccount(): AddAccount {
+  // Mock AddAccountStub
+  class AddAccountStub implements AddAccount {
+    public add(account: AddAccountModel): AccountModel {
+      const fakeAccount: AccountModel = {
+        id: "valid_id",
+        name: "valid_name",
+        email: "valid_email",
+        password: "valid_password"
+      }
+
+      return fakeAccount
+    }
+  }
+
+  return new AddAccountStub();
+}
+
 interface SutTypes {
   sut: SignUpControlller,
   emailValidatorStub: EmailValidator,
-  passwordValidatorStub: PasswordValidator
+  passwordValidatorStub: PasswordValidator,
+  addAccountStub: AddAccount
 }
 
 // Factory que cria um SignUpController
@@ -37,12 +59,15 @@ function makeSut(): SutTypes {
   
   const emailValidatorStub = makeEmailValidator()
   const passwordValidatorStub = makePasswordValidator()
-  const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub);
+  const addAccountStub = makeAddAccount()
+
+  const sut = new SignUpControlller(emailValidatorStub, passwordValidatorStub, addAccountStub);
 
   return {
     sut,
     emailValidatorStub,
-    passwordValidatorStub
+    passwordValidatorStub,
+    addAccountStub
   }
 }
 
@@ -255,6 +280,28 @@ describe('Sign Up Controlller' , () => {
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new InvalidParamError("passwordConfirmation"));
+  })
+
+  test('Should call AddAccount with correct values', () => {
+    const { sut, addAccountStub } = makeSut();
+    const addSpy = jest.spyOn(addAccountStub, "add")
+
+    const httpRequest = {
+      body: {
+        name: "any_name",
+        email: "any_email@email.com",
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(addSpy).toHaveBeenCalledWith({ 
+      name: "any_name",
+      email: "any_email@email.com",
+      password: "any_password"
+    });
   })
 
 })
