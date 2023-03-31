@@ -1,3 +1,4 @@
+import { type AccountModel } from '../models/account'
 
 export interface AddAccountModel {
   name: string
