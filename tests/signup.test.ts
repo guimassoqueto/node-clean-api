@@ -36,9 +36,9 @@ function makeAddAccount(): AddAccount {
     public add(account: AddAccountModel): AccountModel {
       const fakeAccount: AccountModel = {
         id: "valid_id",
-        name: "valid_name",
-        email: "valid_email",
-        password: "valid_password"
+        name: account.name,
+        email: account.email,
+        password: account.password
       }
 
       return fakeAccount
@@ -322,5 +322,29 @@ describe('Sign Up Controlller' , () => {
 
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
+  })
+
+  test('Should return 200 when the request body is valid', () => {
+    const { sut } = makeSut();
+
+    const httpRequest: HttpRequest = {
+      body: {
+        name: "valid_name",
+        email: "gaymen@email.com",
+        password: "valid_password",
+        passwordConfirmation: "valid_password",
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      id: "valid_id",
+      name: "valid_name",
+      email: "gaymen@email.com",
+      password: "valid_password",
+    })
+
   })
 })
