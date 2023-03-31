@@ -22,9 +22,13 @@ export class SignUpControlller implements Controller {
       const requiredFields: string[] = ['name', 'email', 'password', 'passwordConfirmation']
 
       // checa se os campos obrigatórios esperados estão presentes no corpo da requisição
-
       for (const field of requiredFields) {
         if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
+      }
+
+      // valida que a senha e a senha de confirmação são iguais
+      if (httpRequest.body.password !== httpRequest.body.passwordConfirmation) {
+        return badRequest(new InvalidParamError('passwordConfirmation'))
       }
 
       // valida o email do usuário

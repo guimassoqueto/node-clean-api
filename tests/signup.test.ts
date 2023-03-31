@@ -190,21 +190,37 @@ describe('Sign Up Controlller' , () => {
 
     // const emailValidatorStub = new EmailValidatorStub();
     const passwordValidatorStub = makePasswordValidator();
-
+    
     const httpRequest: IHttpRequest = {
       body: {
         name: "any_name",
-        email: 123, // try error
+        email: "email@email.com",
         password: "any_password",
         passwordConfirmation: "any_password"
       }
     }
 
-    const response = sut.handle(httpRequest)
-
-    expect(response.statusCode).toBe(500);
-    expect(response.body).toEqual(new ServerError())
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 
-  // TODO: Implementar testes para validação de password
+  test('should return error if password and passwordConfirmation are different', () => {
+    const { sut } = makeSut();
+
+    const httpRequest: IHttpRequest = {
+      body: {
+        name: "any_name",
+        email: "any_email@email.com",
+        password: "any_password",
+        passwordConfirmation: "any_password_different"
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError("passwordConfirmation"));
+  })
+
 })
