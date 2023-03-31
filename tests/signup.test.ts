@@ -64,6 +64,40 @@ describe('Sign Up Controlller' , () => {
     expect(httpResponse.body).toEqual(new MissingParamError("name"));
   })
 
+  test('Should return 400 if name is provided as an empty string', () => {
+    const { sut } = makeSut();
+
+    const httpRequest = {
+      body: {
+        name: "",
+        email: "any_email@email.com",
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError("name"));
+  })
+
+  test('Should return 400 if name is provided with less than 3 lettes', () => {
+    const { sut } = makeSut();
+
+    const httpRequest = {
+      body: {
+        name: "Ab",
+        email: "any_email@email.com",
+        password: "any_password",
+        passwordConfirmation: "any_password"
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError("name"));
+  })
+
   test('Should return 400 if no email is provided', () => { 
     const { sut } = makeSut();
 
