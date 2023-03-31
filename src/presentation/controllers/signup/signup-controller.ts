@@ -1,15 +1,15 @@
-import { type AddAccount } from '../../domain/usecases/add-account'
-import { MissingParamError, InvalidParamError } from '../errors'
-import { badRequest, serverError } from '../helpers/http-helper'
 import {
-  type IHttpRequest,
-  type IHttpResponse,
   type Controller,
   type EmailValidator,
-  type PasswordValidator
-} from '../protocols'
+  type PasswordValidator,
+  type AddAccount,
+  type HttpRequest,
+  type HttpResponse
+} from './signup-protocols'
+import { badRequest, serverError } from '../../helpers/http-helper'
+import { MissingParamError, InvalidParamError } from '../../errors'
 
-export class SignUpControlller implements Controller {
+export default class SignUpControlller implements Controller {
   private readonly emailValidator: EmailValidator
   private readonly passwordValidator: PasswordValidator
   private readonly addAccount: AddAccount
@@ -20,7 +20,7 @@ export class SignUpControlller implements Controller {
     this.addAccount = addAccount
   }
 
-  public handle (httpRequest: IHttpRequest): IHttpResponse {
+  public handle (httpRequest: HttpRequest): HttpResponse {
     try {
       const requiredFields: string[] = ['name', 'email', 'password', 'passwordConfirmation']
 

@@ -1,8 +1,9 @@
-import { SignUpControlller } from "../src/presentation/controllers"
-import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols"
-import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors"
+import SignUpControlller from "../src/presentation/controllers/signup/signup-controller"
 import { AddAccount, AddAccountModel } from "../src/domain/usecases/add-account"
 import { AccountModel } from "../src/domain/models/account"
+import { EmailValidator, PasswordValidator, HttpRequest } from "../src/presentation/controllers/signup/signup-protocols"
+import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors"
+
 
 // Factory que cria um EmailValidator
 function makeEmailValidator(): EmailValidator {
@@ -142,7 +143,7 @@ describe('Sign Up Controlller' , () => {
   test('Should return 400 if no password is provided', () => { 
     const { sut } = makeSut();
 
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       body: {
         name: "any_name",
         email: "any_email@email.com",
@@ -158,7 +159,7 @@ describe('Sign Up Controlller' , () => {
   test('Should return 400 if no passwordConfirmation is provided', () => { 
     const { sut } = makeSut();
 
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       body: {
         name: "any_name",
         email: "any_email@email.com",
@@ -217,7 +218,7 @@ describe('Sign Up Controlller' , () => {
     const { sut, passwordValidatorStub } = makeSut();
     jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false);
 
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       body: {
         name: "any_name",
         email: "any_email@email.com",
@@ -250,7 +251,7 @@ describe('Sign Up Controlller' , () => {
     // const emailValidatorStub = new EmailValidatorStub();
     const passwordValidatorStub = makePasswordValidator();
     
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       body: {
         name: "any_name",
         email: "email@email.com",
@@ -267,7 +268,7 @@ describe('Sign Up Controlller' , () => {
   test('should return error if password and passwordConfirmation are different', () => {
     const { sut } = makeSut();
 
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       body: {
         name: "any_name",
         email: "any_email@email.com",
