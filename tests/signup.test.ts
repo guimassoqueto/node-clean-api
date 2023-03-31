@@ -1,4 +1,4 @@
-import { SignUpControlller } from "../src/presentation/controllers/signup.controller"
+import { SignUpControlller } from "../src/presentation/controllers"
 import { IHttpRequest, EmailValidator, PasswordValidator } from "../src/presentation/protocols";
 import { MissingParamError, InvalidParamError, ServerError } from "../src/presentation/errors";
 
