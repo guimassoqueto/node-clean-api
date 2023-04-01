@@ -1,4 +1,4 @@
-# node-api-clean-architectures
+# node-api-clean-architecture
 
 TODO:
 - [ ] UML Class Diagram
