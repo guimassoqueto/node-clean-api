@@ -6,6 +6,7 @@
   "scripts": {
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests --runInBand",
+    "test:gitActions": "npm test -- --silent --noStackTrace --coverage=false",
     "test:staged": "npm test -- --findRelatedTests",
     "test:watch": "npm test -- --watch --noStackTrace --silent",
     "test:unit": "npm test -- --noStackTrace --silent -c jest-unit.config.ts",
