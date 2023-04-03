@@ -1,9 +1,9 @@
 import { DbAddAcccount } from "../../src/data/usecases/add-account/db-add-account"
-import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account";
+import { AddAccountModel } from "../../src/domain/usecases/add-account";
 import { Encrypter } from "../../src/data/protocols/encrypter";
 
 
-function makeEncryptStub(): Encrypter {
+function makeEncrypter(): Encrypter {
   class EncrypterStub implements Encrypter {
     async encrypt(value: string): Promise<string> {
       return new Promise(resolve => resolve("hashed_password"));
@@ -20,7 +20,7 @@ interface SutTypes {
 
 
 function makeSut(): SutTypes {
-  const encrypterStub = makeEncryptStub();
+  const encrypterStub = makeEncrypter();
   const addAccountStub = new DbAddAcccount(encrypterStub);
   
   return {
