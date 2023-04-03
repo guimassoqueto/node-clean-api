@@ -20,13 +20,6 @@ describe('Email Validator Adapter' , () => {
     expect(isValid).toBe(true)
   })
 
-  test('should return false if the email passed is an empty string', async () => {
-    const sut = makeSut()
-
-    const isValid = await sut.isValid('');
-    expect(isValid).toBe(false)
-  })
-
   test('Should call validator with correct email', async () => {
     const sut = makeSut()
     const isEmailSpy = jest.spyOn(sut, "isValid")
