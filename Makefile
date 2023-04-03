@@ -20,3 +20,7 @@ integration-test:
 # abre o navegador na página principal do repositório no GitHub 
 open-repo:
 	${BROWSER} -url "https://github.com/guimassoqueto/node-api-clean-architecture"
+
+# executa teste de um arquivo especifico
+test-file:
+	${PACKAGE_MANAGER_RUN} test -- <relative_path_to_test_file>
