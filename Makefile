@@ -21,3 +21,5 @@ integration-test:
 open-repo:
 	${BROWSER} -url "https://github.com/guimassoqueto/node-api-clean-architecture"
 
+test-email-validator:
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/email-validator-adapter.spec.ts
