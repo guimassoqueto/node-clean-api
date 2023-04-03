@@ -1,6 +1,6 @@
-import { DbAddAcccount } from "../../src/data/usecases/add-account/db-add-account"
-import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account";
-import { Encrypter } from "../../src/data/protocols/encrypter";
+import { DbAddAcccount } from "../../src/data/usecases/add-account/db-add-account-usecase"
+import { AddAccountModel } from "../../src/domain/usecases/add-account"
+import { Encrypter } from "../../src/data/usecases/add-account/db-add-account-protocols"
 
 
 function makeEncrypter(): Encrypter {
