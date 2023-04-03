@@ -1,4 +1,5 @@
 import { EmailValidatorAdapter } from "../../src/utils/email-validator-adapter";
+import validator from "validator";
 
 describe('Email Validator Adapter' , () => {
   test('should return false if the email passed is invalid', async () => {
@@ -21,4 +22,14 @@ describe('Email Validator Adapter' , () => {
     expect(isValid).toBe(false);
   })
 
+  test('Should call validator with correct email', async () => {
+    const sut = new EmailValidatorAdapter()
+    const isEmailSpy = jest.spyOn(sut, "isValid")
+
+    // corfirma que o email passado no método é o mesmo email usado na verificação
+    const correct_email = "correct_email@gmail.com"
+    await sut.isValid(correct_email)
+
+    expect(isEmailSpy).toHaveBeenCalledWith(correct_email);
+  })
 })
