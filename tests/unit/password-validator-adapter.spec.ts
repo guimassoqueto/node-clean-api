@@ -1,5 +1,5 @@
-import { PasswordValidator } from "../../../src/presentation/protocols"
-import { PasswordValidatorAdapter } from "../../../src/utils/password-validator-adapter"
+import { PasswordValidator } from "../../src/presentation/protocols"
+import { PasswordValidatorAdapter } from "../../src/utils/password-validator-adapter"
 
 // Factory for PasswordValidatorAdapter
 function makeSut(): PasswordValidator {
