@@ -69,7 +69,7 @@ describe('DbAddAcccount Usecase' , () => {
   })
 
 
-  test('Should call Encrypter with correct password', async () => {
+  test('Should throw in case of errors in encrypt method', async () => {
     const { sut, encrypterStub } = makeSut();
     jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => {
       reject(new Error())
