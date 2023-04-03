@@ -13,4 +13,12 @@ describe('Email Validator Adapter' , () => {
     const isValid = await sut.isValid('valid_email@gmail.com');
     expect(isValid).toBe(true);
   })
+
+  test('should return false if the email passed is an empty string', async () => {
+    const sut = new EmailValidatorAdapter()
+
+    const isValid = await sut.isValid('');
+    expect(isValid).toBe(false);
+  })
+
 })
