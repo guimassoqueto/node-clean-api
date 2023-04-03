@@ -13,4 +13,11 @@ describe('PasswordValidatorAdapter', () => {
     const isStrongPassword = await sut.isStrong("password123");
     expect(isStrongPassword).toBe(false);
   })
+
+  test('Should return true if the provided password is strong', async () => {
+    const sut = makeSut();
+    const isStrongPassword = await sut.isStrong("#!@1QWrt34 !@");
+    expect(isStrongPassword).toBe(true);
+  })
+
 })
