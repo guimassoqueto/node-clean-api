@@ -8,21 +8,26 @@ jest.mock('bcrypt', () => ({
   }
 }))
 
+// usada para facilitar os tests quando utilizamos o método hash em bcrypt
+const BCRYPT_SALT = 12;
+
+// Factory para a criação de BcryptAdapter
+function makeSut(): BcryptAdapter {
+  return new BcryptAdapter(BCRYPT_SALT);
+}
+
 describe('Bcrypt Adapter' , () => {
   test('Should call bcrypt with correct values', async () => {
-    const salt = 12
-    const sut = new BcryptAdapter(salt)
+    const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, "hash")
-
     const valueToHash = "any_string" 
     await sut.encrypt(valueToHash)
 
-    expect(hashSpy).toHaveBeenCalledWith(valueToHash, salt)
+    expect(hashSpy).toHaveBeenCalledWith(valueToHash, BCRYPT_SALT)
   })
 
   test('Should returns the hash on encryption success', async () => {
-    const salt = 12
-    const sut = new BcryptAdapter(salt)
+    const sut = makeSut()
     const valueToHash = "any_string"
     const hashedValue = await sut.encrypt(valueToHash)
 
