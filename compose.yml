@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGO_DB_NAME}"
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    networks:
+      - local
+      
+networks:
+  local:
+    name: local
+    driver: bridge

@@ -1,5 +1,6 @@
 PACKAGE_MANAGER_RUN=npm run
 BROWSER=firefox
+DOCKER=docker compose
 
 # executa todos os testes da aplicação, verborragicamente, sequencialmente, um a um
 test:
@@ -24,3 +25,6 @@ open-repo:
 # executa teste de um arquivo especifico
 test-file:
 	${PACKAGE_MANAGER_RUN} test -- <relative_path_to_test_file>
+
+mongodb:
+	${DOCKER} up -d
