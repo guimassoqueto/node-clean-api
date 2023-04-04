@@ -11,7 +11,23 @@ export const MongoHelper = {
     if (this.client) await (this.client as MongoClient).close()
   },
 
+  /**
+   * Busca ou cria uma collection
+   * @param name nome da collection
+   * @returns a collection para CRUD
+   */
   getCollection (name: string): Collection {
     return (this.client as MongoClient).db().collection(name)
+  },
+  /**
+   * Analisa do objeto retornado em uma consulta feita no mongo e o adequa para
+   * se encaixar no formato definido no genérico
+   * @param object um objeto que representa um dado qualquer retornado do MongoDb
+   * @returns O objeto formatado de acordo com a interface/tipo definida pelo genérico
+   */
+  mapper<T>(object: any): T {
+    if (!object) throw new Error()
+    const { _id, ...rest } = object
+    return Object.assign({}, rest, { id: _id })
   }
 }
