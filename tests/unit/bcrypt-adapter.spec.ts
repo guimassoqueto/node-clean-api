@@ -28,8 +28,7 @@ describe('Bcrypt Adapter' , () => {
 
   test('Should returns the hash on encryption success', async () => {
     const sut = makeSut()
-    const valueToHash = "any_string"
-    const hashedValue = await sut.encrypt(valueToHash)
+    const hashedValue = await sut.encrypt("any_string")
 
     expect(hashedValue).toBe("xxx111222")
   })
