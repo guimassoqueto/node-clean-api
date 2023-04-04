@@ -2,7 +2,7 @@ import { MONGO_URL } from "../../src/settings"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
 import { AddAccountMongoRepository } from "../../src/infra/db/mongodb/account-repository/account"
 
-describe('Account Mongo Repository' , () => {
+describe('Add Account Mongo Repository' , () => {
   beforeAll(async () => {
     await MongoHelper.connect(MONGO_URL);
   })
