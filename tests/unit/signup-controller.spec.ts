@@ -1,8 +1,8 @@
-import SignUpControlller from "../../../src/presentation/controllers/signup/signup-controller"
-import { AddAccount, AddAccountModel } from "../../../src/domain/usecases/add-account"
-import { AccountModel } from "../../../src/domain/models/account"
-import { EmailValidator, PasswordValidator, HttpRequest } from "../../../src/presentation/controllers/signup/signup-protocols"
-import { MissingParamError, InvalidParamError, ServerError } from "../../../src/presentation/errors"
+import SignUpControlller from "../../src/presentation/controllers/signup/signup-controller"
+import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
+import { AccountModel } from "../../src/domain/models/account"
+import { EmailValidator, PasswordValidator, HttpRequest } from "../../src/presentation/controllers/signup/signup-protocols"
+import { MissingParamError, InvalidParamError, ServerError } from "../../src/presentation/errors"
 
 
 // Factory que cria um EmailValidator
