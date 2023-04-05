@@ -1,12 +1,12 @@
 import request from "supertest"
 import app from "../../src/main/config/app"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
-import { MONGO_URL } from "../../src/settings"
+import { MONGO_URL_STG } from "../../src/settings"
 
 
 describe('SignUp Route' , () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL);
+    await MongoHelper.connect(MONGO_URL_STG);
   })
 
   afterAll(async () => {
