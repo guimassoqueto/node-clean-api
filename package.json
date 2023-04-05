@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:server": "ts-node src/index.ts",
+    "start:server": "ts-node src/main/index.ts",
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests --runInBand",
     "test:simplified": "npm test -- --silent --noStackTrace --coverage=false",
