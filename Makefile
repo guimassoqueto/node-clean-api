@@ -26,5 +26,10 @@ open-repo:
 test-file:
 	${PACKAGE_MANAGER_RUN} test -- <relative_path_to_test_file>
 
+# inicia a aplicação localmente sem aguardar pela compilação
+start-server:
+	${PACKAGE_MANAGER_RUN} start:server
+
+# inicia o mongodb localmente
 mongodb:
 	${DOCKER} up -d
