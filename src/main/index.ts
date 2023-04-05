@@ -1,4 +1,28 @@
-import app from './config/app'
-import { APP_PORT } from '../settings'
+import { APP_PORT, MONGO_URL_PROD } from '../settings'
+import { MongoHelper } from '../infra/db/mongodb/helpers/mongo-helper'
 
-app.listen(APP_PORT, () => { console.log(`server is listening to ${APP_PORT}`) })
+MongoHelper.connect(MONGO_URL_PROD)
+  .then(async () => {
+    const app = (await (import('./config/app'))).default
+    app.listen(APP_PORT, () => { console.log(`server is running at ${APP_PORT}`) })
+  })
+  .catch(error => {
+    console.error(error)
+  })
+
+// (async () => {
+
+//   try {
+
+//     const app = (await (import('./config/app'))).default
+
+//     await MongoHelper.connect(MONGO_URL_PROD);
+//     app.listen(APP_PORT, () => { console.log(`server is running at ${APP_PORT}`) })
+
+//   } catch (error) {
+
+//     console.error(error);
+
+//   }
+
+// })()
