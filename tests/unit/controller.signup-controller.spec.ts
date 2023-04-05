@@ -1,4 +1,4 @@
-import SignUpControlller from "../../src/presentation/controllers/signup/signup-controller"
+import { SignUpControlller } from "../../src/presentation/controllers/signup/signup-controller"
 import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
 import { AccountModel } from "../../src/domain/models/account"
 import { EmailValidator, PasswordValidator, HttpRequest } from "../../src/presentation/controllers/signup/signup-protocols"
