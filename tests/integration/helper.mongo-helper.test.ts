@@ -1,5 +1,5 @@
 import { MongoHelper as sut } from "../../src/infra/db/mongodb/helpers/mongo-helper" 
-import { MONGO_URL_STG } from "../../src/settings"
+import { MONGO_URL } from "../settings"
 
 describe('Mongo Helper' , () => {
   afterEach(async () => {
@@ -7,7 +7,7 @@ describe('Mongo Helper' , () => {
   })
 
   test('Should set and unset values when connects and diconnects', async () => {
-    await sut.connect(MONGO_URL_STG)
+    await sut.connect(MONGO_URL)
     let accountCollection = sut.getCollection("accounts")
     
     expect(accountCollection).toBeTruthy()
@@ -22,7 +22,7 @@ describe('Mongo Helper' , () => {
   })
 
   test('Should reconnect if connection is down', async () => {
-    await sut.connect(MONGO_URL_STG)
+    await sut.connect(MONGO_URL)
     let accountCollection = await sut.getCollection("accounts")
 
     expect(accountCollection).toBeTruthy()
