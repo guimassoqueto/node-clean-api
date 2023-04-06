@@ -10,4 +10,4 @@ TODO:
 - [ ] Create Kubernetes files to allow the application to run in pods
 - [ ] Deploy the application in AWS EKS or GCP Kubernetes Engine
 - [ ] Integrate the application with [Grafana](https://grafana.com/)
-- [ ] Evaluate whether tests should have their own settings.ts
+- [x] Evaluate whether tests should have their own settings.ts
