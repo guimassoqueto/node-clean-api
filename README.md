@@ -11,3 +11,4 @@ TODO:
 - [ ] Deploy the application in AWS EKS or GCP Kubernetes Engine
 - [ ] Integrate the application with [Grafana](https://grafana.com/)
 - [x] Evaluate whether tests should have their own settings.ts
+- [ ] Add a logging library to manage application logs, like [Winston](https://www.npmjs.com/package/winston)
