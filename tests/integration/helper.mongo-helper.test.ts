@@ -16,6 +16,8 @@ describe('Mongo Helper' , () => {
 
     await sut.disconnect()
     expect(sut.client).toBeFalsy()
-    expect(sut.uri).toBeFalsy()
+
+    // a uri permanece definida, só sendo modificada em uma nova connect()
+    expect(sut.uri).toBeTruthy()
   })
 })
