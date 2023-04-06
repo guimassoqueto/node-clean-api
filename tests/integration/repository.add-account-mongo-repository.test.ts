@@ -1,4 +1,4 @@
-import { MONGO_URL_STG } from "../../src/settings"
+import { MONGO_URL } from "../settings"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
 import { AddAccountMongoRepository } from "../../src/infra/db/mongodb/account-repository/account"
 
@@ -8,7 +8,7 @@ function makeSut(): AddAccountMongoRepository {
 
 describe('Add Account Mongo Repository' , () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL_STG);
+    await MongoHelper.connect(MONGO_URL);
   })
 
   afterAll(async () => {
