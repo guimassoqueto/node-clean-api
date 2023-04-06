@@ -20,4 +20,15 @@ describe('Mongo Helper' , () => {
     // a uri permanece definida, só sendo modificada em uma nova connect()
     expect(sut.uri).toBeTruthy()
   })
+
+  test('Should reconnect if connection is down', async () => {
+    await sut.connect(MONGO_URL_STG)
+    let accountCollection = await sut.getCollection("accounts")
+
+    expect(accountCollection).toBeTruthy()
+    await sut.disconnect()
+
+    accountCollection = await sut.getCollection("accounts")
+    expect(accountCollection).toBeTruthy()
+  })
 })
