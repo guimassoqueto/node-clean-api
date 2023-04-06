@@ -4,8 +4,10 @@ import { PasswordValidatorAdapter } from '../../utils/password-validator-adapter
 import { DbAddAcccount } from '../../data/usecases/add-account/db-add-account-usecase'
 import { BcryptAdapter } from '../../infra/cryptography/bcrypt-adapter'
 import { AddAccountMongoRepository } from '../../infra/db/mongodb/account-repository/account'
+import { type Controller } from '../../presentation/protocols'
+import { LoggingControllerDecorator } from '../decorators/logging'
 
-export function makeSignUpController (): SignUpControlller {
+export function makeSignUpController (): Controller {
   const emailValidatorAdapter = new EmailValidatorAdapter()
   const passwordValidatorAdapter = new PasswordValidatorAdapter()
 
@@ -13,6 +15,6 @@ export function makeSignUpController (): SignUpControlller {
   const bcryptAdapter = new BcryptAdapter(salt)
   const addAccountMongoRepository = new AddAccountMongoRepository()
   const dbAddAcccount = new DbAddAcccount(bcryptAdapter, addAccountMongoRepository)
-
-  return new SignUpControlller(emailValidatorAdapter, passwordValidatorAdapter, dbAddAcccount)
+  const signUpControlller = new SignUpControlller(emailValidatorAdapter, passwordValidatorAdapter, dbAddAcccount)
+  return new LoggingControllerDecorator(signUpControlller)
 }
