@@ -13,6 +13,12 @@ services:
       - "${MONGO_PORT}:${MONGO_PORT}"
     networks:
       - local
+    healthcheck:
+      test: "echo 'db.runCommand(\"ping\").ok' | mongosh 0.0.0.0:${MONGO_PORT}/ --quiet"
+      interval: 10s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
       
 networks:
   local:
