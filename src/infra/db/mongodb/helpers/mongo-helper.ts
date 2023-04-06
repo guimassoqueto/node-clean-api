@@ -19,7 +19,8 @@ export const MongoHelper = {
    * @param name nome da collection
    * @returns a collection para CRUD
    */
-  getCollection (name: string): Collection {
+  async getCollection (name: string): Promise<Collection> {
+    if (!this.client) await this.connect(this.uri)
     return (this.client as MongoClient).db().collection(name)
   },
 
