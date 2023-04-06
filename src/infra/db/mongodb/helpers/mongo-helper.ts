@@ -25,9 +25,9 @@ export const MongoHelper = {
    * @param object um objeto que representa um dado qualquer retornado do MongoDb
    * @returns O objeto formatado de acordo com a interface/tipo definida pelo genérico
    */
-  mapper<T>(object: any): T {
-    if (!object) throw new Error()
-    const { _id, ...rest } = object
-    return Object.assign({}, rest, { id: _id })
+  mapper<T>(obj: any): T {
+    if (!obj) throw new Error()
+    const { _id, ...rest } = obj
+    return Object.assign({}, rest, { id: _id.toString() }) as T
   }
 }
