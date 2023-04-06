@@ -2,13 +2,16 @@ import { type Collection, MongoClient } from 'mongodb'
 
 export const MongoHelper = {
   client: null,
+  uri: null,
 
   async connect (uri: string): Promise<void> {
-    this.client = await MongoClient.connect(uri)
+    this.uri = uri
+    this.client = await MongoClient.connect(this.uri)
   },
 
   async disconnect (): Promise<void> {
     if (this.client) await (this.client as MongoClient).close()
+    this.client = null
   },
 
   /**
@@ -16,9 +19,11 @@ export const MongoHelper = {
    * @param name nome da collection
    * @returns a collection para CRUD
    */
-  getCollection (name: string): Collection {
+  async getCollection (name: string): Promise<Collection> {
+    if (!this.client) await this.connect(this.uri)
     return (this.client as MongoClient).db().collection(name)
   },
+
   /**
    * Analisa do objeto retornado em uma consulta feita no mongo e o adequa para
    * se encaixar no formato definido no genérico
