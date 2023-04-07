@@ -9,12 +9,13 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
       MONGO_INITDB_DATABASE: "${MONGO_DB_NAME}"
+      MONGO_PORT: 27017
     ports: 
-     - 27017
+     - "${MONGO_PORT}:${MONGO_PORT}"
     networks:
       - local
     healthcheck:
-      test: "echo 'db.runCommand(\"ping\").ok' | mongosh 0.0.0.0:27017/ --quiet"
+      test: "echo 'db.runCommand(\"ping\").ok' | mongosh 0.0.0.0:${MONGO_PORT}/ --quiet"
       interval: 10s
       timeout: 5s
       retries: 2
