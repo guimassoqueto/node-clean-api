@@ -6,9 +6,9 @@ services:
     image: mongo:latest
     restart: always
     env_file:
-      - ../../.env.example
+      - ./mongo.env
     ports: 
-      - 27017:27017
+      - ${MONGO_PORT}:${MONGO_PORT}
     networks:
       - local
     healthcheck:
