@@ -17,9 +17,30 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      # esse é um plugin encontrado no marketplace do github actions
+      # https://github.com/marketplace/actions/docker-compose-action
+      - name: Docker Compose Action 
+        uses: isbang/compose-action@v1.4.1
+        with:
+          compose-file: "./docker/compose.yml"
+          down-flags: "--volumes"
+          services: |
+            mongobd
+        env:
+          MONGO_INITDB_ROOT_USERNAME: "username"
+          MONGO_INITDB_ROOT_PASSWORD: "password"
+          MONGO_INITDB_DATABASE: "node-clean-api"
+      # fim do plugin
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+
+      # chamada para buildar a imagem do mongodb
+      - run: docker-compose up mongodb -d
+      # fim da chamada para buildar a imagem do mongodb
+
       - run: npm i
       - run: npm run test:unit
