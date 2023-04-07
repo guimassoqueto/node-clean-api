@@ -9,9 +9,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
       MONGO_INITDB_DATABASE: "${MONGO_DB_NAME}"
-      MONGO_PORT: 27017
+      MONGO_PORT: "27017"
     ports: 
-     - "${MONGO_PORT}:${MONGO_PORT}"
+     - 27017
     networks:
       - local
     healthcheck:
