@@ -7,8 +7,8 @@ services:
     restart: always
     env_file:
       - ../../.env.example
-    ports:
-      - "${MONGO_PORT}:${MONGO_PORT}"
+    ports: 
+      - 27017:27017
     networks:
       - local
     healthcheck:
