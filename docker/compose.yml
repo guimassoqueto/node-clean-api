@@ -5,13 +5,10 @@ services:
     container_name: mongodb
     image: mongo:latest
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USERNAME}"
-      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
-      MONGO_INITDB_DATABASE: "${MONGO_DB_NAME}"
-      MONGO_PORT: "27017"
-    ports: 
-     - 27017
+    env_file:
+      - ../../.env.example
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
     networks:
       - local
     healthcheck:
