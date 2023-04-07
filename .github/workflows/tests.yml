@@ -42,7 +42,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       # chamada para buildar a imagem do mongodb
-      - run: docker-compose up mongodb -d
+      - run: docker-compose up
       # fim da chamada para buildar a imagem do mongodb
 
       - run: npm i
