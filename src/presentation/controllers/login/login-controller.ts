@@ -1,11 +1,19 @@
-import { type EmailValidator, type PasswordValidator, type Controller, type HttpRequest, type HttpResponse } from './login-protocols'
+import {
+  type EmailValidator,
+  type PasswordValidator,
+  type Controller,
+  type HttpRequest,
+  type HttpResponse,
+  type Authentication
+} from './login-protocols'
 import { serverError, badRequest, ok } from '../../helpers/http-helper'
 import { InvalidParamError, MissingParamError } from '../../errors'
 
 export class LoginController implements Controller {
   constructor (
     private readonly emailValidator: EmailValidator,
-    private readonly passwordValidator: PasswordValidator
+    private readonly passwordValidator: PasswordValidator,
+    private readonly authentication: Authentication
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -28,6 +36,8 @@ export class LoginController implements Controller {
       // valida a senha do usuário
       const isValidPassword = await this.passwordValidator.isStrong(password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
+
+      await this.authentication.auth(email, password)
 
       return ok('success')
     } catch (error) {
