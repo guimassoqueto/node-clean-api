@@ -1,3 +1,4 @@
 export interface Authentication {
-  auth: (email: string, password: string) => Promise<string>
+  // TODO: remover null se necessario e refatorar teste
+  auth: (email: string, password: string) => Promise<string | null>
 }
