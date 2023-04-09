@@ -1,6 +1,6 @@
 import { LoginController } from "../../src/presentation/controllers/login/login-controller"
 import { EmailValidator, HttpRequest, PasswordValidator, Authentication } from "../../src/presentation/controllers/login/login-protocols"
-import { badRequest, serverError, unauthorized } from "../../src/presentation/helpers/http-helper"
+import { badRequest, ok, serverError, unauthorized } from "../../src/presentation/helpers/http-helper"
 import { InvalidParamError, MissingParamError  } from "../../src/presentation/errors"
 
 function makeEmailValidator(): EmailValidator {
@@ -21,10 +21,11 @@ function makePasswordValidator(): PasswordValidator {
   return new PasswordValidatorStub()
 }
 
+const accessToken = "fake_token"
 function makeAuthentication(): Authentication {
   class AuthenticationStub implements Authentication {
     async auth(email: string, password: string): Promise<string> {
-      return new Promise(resolve => resolve("token"))
+      return new Promise(resolve => resolve(accessToken))
     }
   }
   return new AuthenticationStub()
@@ -152,6 +153,13 @@ describe('Login Controller' , () => {
     const httpResponse = await sut.handle(makeFakeHttpRequest())
 
     expect(httpResponse).toEqual(serverError(error))
+  })
+
+  test('Should return 200 if authentication succeed', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeHttpRequest())
+
+    expect(httpResponse).toEqual(ok({ accessToken }))
   })
 
 })
