@@ -6,7 +6,7 @@ import {
   type HttpResponse,
   type Authentication
 } from './login-protocols'
-import { serverError, badRequest, ok } from '../../helpers/http-helper'
+import { serverError, badRequest, ok, unauthorized } from '../../helpers/http-helper'
 import { InvalidParamError, MissingParamError } from '../../errors'
 
 export class LoginController implements Controller {
@@ -37,7 +37,8 @@ export class LoginController implements Controller {
       const isValidPassword = await this.passwordValidator.isStrong(password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
-      await this.authentication.auth(email, password)
+      const accessToken = await this.authentication.auth(email, password)
+      if (!accessToken) return unauthorized()
 
       return ok('success')
     } catch (error) {
