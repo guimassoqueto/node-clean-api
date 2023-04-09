@@ -3,20 +3,24 @@ import { EmailValidator, HttpRequest, PasswordValidator } from "../../src/presen
 import { badRequest } from "../../src/presentation/helpers/http-helper"
 import { InvalidParamError, MissingParamError  } from "../../src/presentation/errors"
 import { EmailValidatorAdapter} from "../../src/utils/email-validator-adapter"
+import { PasswordValidatorAdapter } from "../../src/utils/password-validator-adapter"
 
 interface SutTypes {
   sut: LoginController
-  emailValidatorStub: EmailValidator
+  emailValidatorStub: EmailValidator,
+  passwordValidatorStub: PasswordValidator
 }
 
 function makeSut(): SutTypes {
   const emailValidatorStub = new EmailValidatorAdapter()
+  const passwordValidatorStub = new PasswordValidatorAdapter()
 
-  const sut = new LoginController(emailValidatorStub)
+  const sut = new LoginController(emailValidatorStub, passwordValidatorStub)
 
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    passwordValidatorStub
   }
 }
 
@@ -24,7 +28,7 @@ function makeFakeHttpRequest(): HttpRequest {
   return {
     body: {
       email: "valid_email@email.com",
-      password: "valid_password"
+      password: "!@#123QWEqwe"
     }
   }
 }
@@ -58,6 +62,18 @@ describe('Login Controller' , () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')))
+  })
+
+  test('Return 400 if the password provided is not a strong password', async () => {
+    const { sut } = makeSut()
+    // const spyPasswordValidatorStubIsStrong = jest.spyOn(emailValidatorStub, "isStrong")
+
+    const httpRequest = makeFakeHttpRequest()
+    httpRequest.body.password = "weak_password"
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('password')))
   })
 
 })
