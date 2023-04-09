@@ -1,6 +1,6 @@
 import { LoginController } from "../../src/presentation/controllers/login/login-controller"
 import { EmailValidator, HttpRequest, PasswordValidator } from "../../src/presentation/controllers/login/login-protocols"
-import { badRequest } from "../../src/presentation/helpers/http-helper"
+import { badRequest, serverError } from "../../src/presentation/helpers/http-helper"
 import { InvalidParamError, MissingParamError  } from "../../src/presentation/errors"
 
 function makeEmailValidatorStub(): EmailValidator {
@@ -88,6 +88,21 @@ describe('Login Controller' , () => {
     await sut.handle(httpRequest)
 
     expect(spyEVSIsValid).toHaveBeenCalledWith(mockEmail)
+  })
+
+  test('Should return 500 if EmailValidator Throws', async () => {
+    const { sut, emailValidatorStub } = makeSut()
+    // EVS = EmailValidatorStub
+    const error = new Error("Some error")
+    jest.spyOn(emailValidatorStub, "isValid").mockImplementationOnce((email: string) => {
+      throw error
+    })
+    const mockEmail = "some_email@email.com"
+    const httpRequest = makeFakeHttpRequest()
+    httpRequest.body.email = mockEmail
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual(serverError(error))
   })
 
   test('Return 400 if the password provided is not a strong password', async () => {
