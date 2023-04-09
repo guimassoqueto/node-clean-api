@@ -1,8 +1,7 @@
 import { LoginController } from "../../src/presentation/controllers/login/login-controller"
-import { EmailValidator, HttpRequest, PasswordValidator } from "../../src/presentation/controllers/login/login-protocols"
+import { EmailValidator, HttpRequest, PasswordValidator, Authentication } from "../../src/presentation/controllers/login/login-protocols"
 import { badRequest, serverError, unauthorized } from "../../src/presentation/helpers/http-helper"
 import { InvalidParamError, MissingParamError  } from "../../src/presentation/errors"
-import { Authentication } from  "../../src/domain/usecases/authentication"
 
 function makeEmailValidator(): EmailValidator {
   class EmailValidatorStub implements EmailValidator {
