@@ -1,17 +1,22 @@
 import { LoginController } from "../../src/presentation/controllers/login/login-controller"
-import { HttpRequest } from "../../src/presentation/controllers/login/login-protocols"
+import { EmailValidator, HttpRequest, PasswordValidator } from "../../src/presentation/controllers/login/login-protocols"
 import { badRequest } from "../../src/presentation/helpers/http-helper"
-import { MissingParamError  } from "../../src/presentation/errors"
+import { InvalidParamError, MissingParamError  } from "../../src/presentation/errors"
+import { EmailValidatorAdapter} from "../../src/utils/email-validator-adapter"
 
 interface SutTypes {
   sut: LoginController
+  emailValidatorStub: EmailValidator
 }
 
 function makeSut(): SutTypes {
-  const sut = new LoginController()
+  const emailValidatorStub = new EmailValidatorAdapter()
+
+  const sut = new LoginController(emailValidatorStub)
 
   return {
-    sut
+    sut,
+    emailValidatorStub
   }
 }
 
@@ -43,25 +48,16 @@ describe('Login Controller' , () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError("password")))
   })
 
-  // test('Should return 200 if the user is retrieved corretly', async () => {
-  //   const sut = makeSut()
-  //   const httpRequest = makeFakeHttpRequest()
-  //   const httpResponse = await sut.handle(httpRequest)
+  test('Return 400 if the email provided is not a valid email', async () => {
+    const { sut } = makeSut()
+    // const spyEmailValidatorStubIsValid = jest.spyOn(emailValidatorStub, "isValid")
 
-  //   expect(httpResponse).toStrictEqual(ok({
-  //     token: "any_token"
-  //   }))
-  // })
+    const httpRequest = makeFakeHttpRequest()
+    httpRequest.body.email = "invalid_email"
 
-  // test('Should return 500 if handle method throws', async () => {
-  //   const sut = makeSut()
-  //   const handleSpy = jest.spyOn(sut, "handle").mockRejectedValueOnce(async () => {
-  //     return new Promise((resolve, reject) => reject(new Error("any_error")))
-  //   })
-  //   const httpRequest = makeFakeHttpRequest()
-  //   const httpResponse = await sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
 
-  //   expect(httpResponse.statusCode).toBe(500)
-  // })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')))
+  })
 
 })
