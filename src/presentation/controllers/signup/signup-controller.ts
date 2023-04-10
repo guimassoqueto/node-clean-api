@@ -8,7 +8,7 @@ import {
   type Validation
 } from './signup-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
-import { MissingParamError, InvalidParamError } from '../../errors'
+import { InvalidParamError } from '../../errors'
 
 export class SignUpControlller implements Controller {
   constructor (
@@ -22,13 +22,6 @@ export class SignUpControlller implements Controller {
     try {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
-
-      const requiredFields: string[] = ['name', 'email', 'password', 'passwordConfirmation']
-
-      // checa se os campos obrigatórios esperados estão presentes no corpo da requisição
-      for (const field of requiredFields) {
-        if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
-      }
 
       const { name, email, password, passwordConfirmation } = httpRequest.body
 
