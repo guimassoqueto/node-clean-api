@@ -9,17 +9,6 @@ import {
 import { MissingParamError, ServerError } from "../../src/presentation/errors"
 import { ok, badRequest } from "../../src/presentation/helpers/http-helper"
 
-// Factory que cria um PasswordValidator
-function makePasswordValidator(): PasswordValidator {
-  // Mock PasswordValidator
-  class PasswordValidatorStub implements PasswordValidator {
-    public async isStrong(password: string): Promise<boolean> {
-      return new Promise(resolve => resolve(true));
-    }
-  }
-
-  return new PasswordValidatorStub();
-}
 
 function makeFakeAccount(): AccountModel {
   return {
@@ -54,21 +43,18 @@ function makeValidation(): Validation {
 
 interface SutTypes {
   sut: SignUpControlller,
-  passwordValidatorStub: PasswordValidator,
   addAccountStub: AddAccount,
   validationStub: Validation
 }
 
 // Factory que cria um SignUpController
 function makeSut(): SutTypes {
-  const passwordValidatorStub = makePasswordValidator()
   const addAccountStub = makeAddAccount()
   const validationStub = makeValidation()
-  const sut = new SignUpControlller(passwordValidatorStub, addAccountStub, validationStub);
+  const sut = new SignUpControlller(addAccountStub, validationStub);
 
   return {
     sut,
-    passwordValidatorStub,
     addAccountStub,
     validationStub
   }
@@ -86,19 +72,6 @@ function makeFakeRequest(): HttpRequest {
 }
 
 describe('Sign Up Controlller' , () => {
-  // test('Should return 400 if the provided the password isn\'t strong', async () => { 
-  //   const { sut, passwordValidatorStub } = makeSut();
-  //   jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(new Promise(result => result(false)));
-  //   const weakBodyPassword = "password123"
-  //   const httpRequest = makeFakeRequest()
-  //   httpRequest.body.password = weakBodyPassword
-  //   httpRequest.body.passwordConfirmation = httpRequest.body.password
-  //   const httpResponse = await sut.handle(httpRequest);
-
-  //   expect(httpResponse).toEqual(badRequest(new InvalidParamError("password")));
-  // })
-
-
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut();
     const addSpy = jest.spyOn(addAccountStub, "add")
