@@ -16,4 +16,11 @@ describe('RequiredField Validation' , () => {
 
     expect(result).toEqual(new MissingParamError("email"))
   })
+
+  test('Should return null if the field is provided correctly', () => {
+    const sut = new RequiredFieldValidation("name")
+    const result = sut.validate({name: "some_name"})
+
+    expect(result).toBe(null)
+  })
 })
