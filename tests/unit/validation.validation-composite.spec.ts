@@ -50,4 +50,10 @@ describe('ValidationComposite' , () => {
 
     expect(result).toEqual(new InvalidParamError("field"))
   })
+
+  test('Should return null if all validations Pass', () => {
+    const { sut } = makeSut()
+    const result = sut.validate({ field: "any_data" })
+    expect(result).toEqual(null)
+  })
 })
