@@ -3,7 +3,7 @@ import { type Validation } from '../validation'
 import { type EmailValidator } from '../../../protocols'
 
 /**
- * Faz uma comparação entre os campos da requisição, retornando erro se forem diferentes
+ * Verifica se o email passado na requisição é válido
  */
 export class EmailValidation implements Validation {
   constructor (private readonly fieldName: string, private readonly emailValidator: EmailValidator) {}
