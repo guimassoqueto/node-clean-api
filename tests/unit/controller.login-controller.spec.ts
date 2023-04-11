@@ -5,8 +5,8 @@ import { InvalidParamError, MissingParamError  } from "../../src/presentation/er
 
 function makeEmailValidator(): EmailValidator {
   class EmailValidatorStub implements EmailValidator {
-    async isValid(email: string): Promise<boolean> {
-      return new Promise(resolve => resolve(true))
+    isValid(email: string): boolean {
+      return true
     }
   }
   return new EmailValidatorStub()
@@ -83,7 +83,7 @@ describe('Login Controller' , () => {
 
   test('Return 400 if the email provided is not a valid email', async () => {
     const { sut, emailValidatorStub } = makeSut()
-    jest.spyOn(emailValidatorStub, "isValid").mockResolvedValue(new Promise(resolve => resolve(false)))
+    jest.spyOn(emailValidatorStub, "isValid").mockReturnValueOnce(false)
     const httpRequest = makeFakeHttpRequest()
     httpRequest.body.email = "invalid_email"
     const httpResponse = await sut.handle(httpRequest)
