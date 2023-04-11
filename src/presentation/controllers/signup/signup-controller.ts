@@ -4,30 +4,24 @@ import {
   type PasswordValidator,
   type AddAccount,
   type HttpRequest,
-  type HttpResponse
+  type HttpResponse,
+  type Validation
 } from './signup-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
-import { MissingParamError, InvalidParamError } from '../../errors'
+import { InvalidParamError } from '../../errors'
 
 export class SignUpControlller implements Controller {
-  private readonly emailValidator: EmailValidator
-  private readonly passwordValidator: PasswordValidator
-  private readonly addAccount: AddAccount
-
-  constructor (emailValidator: EmailValidator, passwordValidator: PasswordValidator, addAccount: AddAccount) {
-    this.emailValidator = emailValidator
-    this.passwordValidator = passwordValidator
-    this.addAccount = addAccount
-  }
+  constructor (
+    private readonly emailValidator: EmailValidator,
+    private readonly passwordValidator: PasswordValidator,
+    private readonly addAccount: AddAccount,
+    private readonly validation: Validation
+  ) {}
 
   public async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields: string[] = ['name', 'email', 'password', 'passwordConfirmation']
-
-      // checa se os campos obrigatórios esperados estão presentes no corpo da requisição
-      for (const field of requiredFields) {
-        if (!(field in httpRequest.body)) return badRequest(new MissingParamError(field))
-      }
+      const error = this.validation.validate(httpRequest.body)
+      if (error) return badRequest(error)
 
       const { name, email, password, passwordConfirmation } = httpRequest.body
 
