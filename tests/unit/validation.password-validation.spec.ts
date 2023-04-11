@@ -52,4 +52,10 @@ describe('Password Validation' , () => {
     expect(sut.validate).toThrow()
   })
 
+  test('PasswordValidator return InvalidParamError if the password provided is not strong', () => {
+    const { sut, passwordValidatorStub } = makeSut()
+    jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false)
+    const result = sut.validate({password: "weak_password"})
+    expect(result).toEqual(new InvalidParamError("password"))
+  })
 })
