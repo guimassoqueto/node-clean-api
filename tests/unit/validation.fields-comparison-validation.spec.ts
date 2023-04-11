@@ -15,4 +15,11 @@ describe('Fields Comparison Validator' , () => {
 
     expect(result).toEqual(new InvalidParamError("passwordConfirmation"))
   })
+
+  test('Should return null if the provided fields are equal', () => {
+    const sut = new FieldsComparisonValidation("password", "passwordConfirmation")
+    const result = sut.validate({password: "field", passwordConfirmation: "field"})
+
+    expect(result).toBeFalsy()
+  })
 })
