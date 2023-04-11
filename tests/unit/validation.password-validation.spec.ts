@@ -44,4 +44,12 @@ describe('Password Validation' , () => {
     expect(isStrongSpy).toHaveBeenCalledWith(input.password)
   })
 
+  test('PasswordValidator should thows if PasswordValidator throws', () => {
+    const { sut, passwordValidatorStub } = makeSut()
+    jest.spyOn(passwordValidatorStub, "isStrong").mockImplementationOnce((password: string) => {
+      throw new Error()
+    })
+    expect(sut.validate).toThrow()
+  })
+
 })
