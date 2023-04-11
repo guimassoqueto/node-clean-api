@@ -14,8 +14,8 @@ function makeEmailValidator(): EmailValidator {
 
 function makePasswordValidator(): PasswordValidator {
   class PasswordValidatorStub implements PasswordValidator {
-    async isStrong(email: string): Promise<boolean> {
-      return new Promise(resolve => resolve(true))
+    isStrong(email: string): boolean {
+      return true
     }
   }
   return new PasswordValidatorStub()
@@ -120,7 +120,7 @@ describe('Login Controller' , () => {
 
   test('Return 400 if the password provided is not a strong password', async () => {
     const { sut, passwordValidatorStub } = makeSut()
-    jest.spyOn(passwordValidatorStub, "isStrong").mockResolvedValue(new Promise(resolve => resolve(false)))
+    jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false)
     const httpRequest = makeFakeHttpRequest()
     httpRequest.body.password = "weak_password"
     const httpResponse = await sut.handle(httpRequest)
