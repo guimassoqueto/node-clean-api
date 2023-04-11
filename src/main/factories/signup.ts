@@ -1,5 +1,4 @@
 import { SignUpControlller } from '../../presentation/controllers/signup/signup-controller'
-import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
 import { PasswordValidatorAdapter } from '../../utils/password-validator-adapter'
 import { DbAddAcccount } from '../../data/usecases/add-account/db-add-account-usecase'
 import { BcryptAdapter } from '../../infra/cryptography/bcrypt-adapter'
@@ -10,7 +9,6 @@ import { LoggingMongoRepository } from '../../infra/db/mongodb/logging-repositor
 import { makeSignUpValidation } from './signup-validation'
 
 export function makeSignUpController (): Controller {
-  const emailValidatorAdapter = new EmailValidatorAdapter()
   const passwordValidatorAdapter = new PasswordValidatorAdapter()
 
   const salt = 12
@@ -19,7 +17,7 @@ export function makeSignUpController (): Controller {
   const dbAddAcccount = new DbAddAcccount(bcryptAdapter, addAccountMongoRepository)
 
   const validationComposite = makeSignUpValidation()
-  const signUpControlller = new SignUpControlller(emailValidatorAdapter, passwordValidatorAdapter, dbAddAcccount, validationComposite)
+  const signUpControlller = new SignUpControlller(passwordValidatorAdapter, dbAddAcccount, validationComposite)
   const loggingMongoRepository = new LoggingMongoRepository()
 
   return new LoggingControllerDecorator(signUpControlller, loggingMongoRepository)

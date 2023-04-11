@@ -30,7 +30,7 @@ export class LoginController implements Controller {
       const { email, password } = httpRequest.body
 
       // valida o email do usuário
-      const isValidEmail = await this.emailValidator.isValid(email)
+      const isValidEmail = this.emailValidator.isValid(email)
       if (!isValidEmail) return badRequest(new InvalidParamError('email'))
 
       // valida a senha do usuário
