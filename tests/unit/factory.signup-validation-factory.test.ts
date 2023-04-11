@@ -3,10 +3,11 @@ import { ValidationComposite } from "../../src/presentation/helpers/validators/v
 import { 
   RequiredFieldValidation, 
   FieldsComparisonValidation,
-  EmailValidation
+  EmailValidation,
+  PasswordValidation
 } from "../../src/presentation/helpers/validators/validations/"
 import { Validation } from "../../src/presentation/helpers/validators/validation"
-import { EmailValidator } from "../../src/presentation/protocols"
+import { EmailValidator, PasswordValidator } from "../../src/presentation/protocols"
 
 jest.mock("../../src/presentation/helpers/validators/validation-composite")
 
@@ -19,6 +20,15 @@ function makeEmailValidator(): EmailValidator {
   return new EmailValidatorStub()
 }
 
+function makePasswordValidator(): PasswordValidator {
+  class PasswordValidatorStub implements PasswordValidator {
+    isStrong (password: string) {
+      return true
+    }
+  }
+  return new PasswordValidatorStub()
+}
+
 describe('SignUpValidation Factory' , () => {
   test('Should call ValidationComposite with all validations', () => {
     makeSignUpValidation()
@@ -28,7 +38,8 @@ describe('SignUpValidation Factory' , () => {
     }
     validations.push(new FieldsComparisonValidation('password', 'passwordConfirmation'))
     validations.push(new EmailValidation('email', makeEmailValidator()))
-
+    validations.push(new PasswordValidation("password", makePasswordValidator()))
+    
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })
 })
