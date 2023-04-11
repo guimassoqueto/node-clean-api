@@ -2,10 +2,12 @@ import { ValidationComposite } from '../../presentation/helpers/validators/valid
 import {
   RequiredFieldValidation,
   FieldsComparisonValidation,
-  EmailValidation
+  EmailValidation,
+  PasswordValidation
 } from '../../presentation/helpers/validators/validations'
 import { type Validation } from '../../presentation/controllers/signup/signup-protocols'
 import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
+import { PasswordValidatorAdapter } from '../../utils/password-validator-adapter'
 
 export function makeSignUpValidation (): ValidationComposite {
   const validations: Validation[] = []
@@ -22,5 +24,13 @@ export function makeSignUpValidation (): ValidationComposite {
   const emailValidator = new EmailValidatorAdapter()
   validations.push(new EmailValidation('email', emailValidator))
 
+  // validador de checagem de força de senha
+  const passwordValidator = new PasswordValidatorAdapter()
+  validations.push(new PasswordValidation('password', passwordValidator))
+
   return new ValidationComposite(validations)
 }
+
+/*
+  const passwordValidatorAdapter = new PasswordValidatorAdapter()
+*/

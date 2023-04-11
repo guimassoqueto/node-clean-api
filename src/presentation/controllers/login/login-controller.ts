@@ -34,7 +34,7 @@ export class LoginController implements Controller {
       if (!isValidEmail) return badRequest(new InvalidParamError('email'))
 
       // valida a senha do usuário
-      const isValidPassword = await this.passwordValidator.isStrong(password)
+      const isValidPassword = this.passwordValidator.isStrong(password)
       if (!isValidPassword) return badRequest(new InvalidParamError('password'))
 
       const accessToken = await this.authentication.auth(email, password)
