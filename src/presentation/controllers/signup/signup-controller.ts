@@ -23,13 +23,10 @@ export class SignUpControlller implements Controller {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
 
-      const { name, email, password, passwordConfirmation } = httpRequest.body
+      const { name, email, password } = httpRequest.body
 
       // valida que o nome existe e não é vazio e é composto por no mínimo 3 letras
       if ((name as string).length < 3) return badRequest(new InvalidParamError('name'))
-
-      // valida que a senha e a senha de confirmação são iguais
-      if (password !== passwordConfirmation) return badRequest(new InvalidParamError('passwordConfirmation'))
 
       // valida o email do usuário
       const isValidEmail = await this.emailValidator.isValid(email)
