@@ -24,7 +24,7 @@ open-repo:
 
 # executa teste de um arquivo especifico
 test-file:
-	${PACKAGE_MANAGER_RUN} test -- tests/integration/helper.mongo-helper.test.ts
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/data.usecase.db-authentication.spec.ts
 
 # inicia a aplicação localmente sem aguardar pela compilação
 start-server:
