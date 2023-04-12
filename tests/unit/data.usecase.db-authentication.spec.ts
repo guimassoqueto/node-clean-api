@@ -3,14 +3,14 @@ import { LoadAccountByEmailRepository } from "../../src/data/protocols/load-acco
 import { AccountModel } from "../../src/data/usecases/authentication/db-authentication-protocols"
 import { DbAuthentication } from "../../src/data/usecases/authentication/db-authentication-usecase"
 
-function makeAuthenticatonModel(): AuthenticationModel {
+function makeFakeAuthentication(): AuthenticationModel {
   return {
     email: "any_email",
     password: "any_password"
   }
 }
 
-function makeAccountModel(): AccountModel {
+function makeFakeAccount(): AccountModel {
   return {
     id: "any_id",
     name: "any_name",
@@ -27,7 +27,7 @@ interface SutTypes {
 function makeLoadAccountByEmailRepository(): LoadAccountByEmailRepository {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async load (): Promise<AccountModel> {
-      const account = makeAccountModel()
+      const account = makeFakeAccount()
       return new Promise(resolve => resolve(account))
     }
   }
@@ -48,7 +48,7 @@ describe('DbAuthentication UseCase' , () => {
   test('Should call LoadAccountByEmailRepo with correct email', async () => {
     const { sut, loadAccountByEmailRepoStub } = makeSut()
     const loadSpy = jest.spyOn(loadAccountByEmailRepoStub, "load")
-    const authRequest = makeAuthenticatonModel()
+    const authRequest = makeFakeAuthentication()
     await sut.auth(authRequest)
 
     expect(loadSpy).toHaveBeenCalledWith(authRequest.email)
