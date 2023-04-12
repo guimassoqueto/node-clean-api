@@ -1,10 +1,11 @@
-import { Authentication, AuthenticationModel } from "../../src/domain/usecases/authentication"
 import { 
   LoadAccountByEmailRepository , 
   AccountModel, 
   HashComparer, 
   TokenGenerator, 
-  UpdateAccessTokenRepository
+  UpdateAccessTokenRepository,
+  Authentication,
+  AuthenticationModel
 } from "../../src/data/usecases/authentication/db-authentication-protocols"
 import { DbAuthentication } from "../../src/data/usecases/authentication/db-authentication-usecase"
 
