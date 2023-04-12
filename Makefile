@@ -7,7 +7,7 @@ test:
 	${PACKAGE_MANAGER_RUN} test
 
 # abre o navegador e mostra a cobertura dos testes
-test-coverage-report:
+coverage-report:
 	${BROWSER} -url "file://$(CURDIR)/coverage/lcov-report/index.html"
 
 # executa testes unitários da aplicação, localizados em tests/unit

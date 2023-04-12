@@ -1,19 +1,14 @@
 import {
   type Controller,
-  type EmailValidator,
-  type PasswordValidator,
   type AddAccount,
   type HttpRequest,
   type HttpResponse,
   type Validation
 } from './signup-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
-import { InvalidParamError } from '../../errors'
 
 export class SignUpControlller implements Controller {
   constructor (
-    private readonly emailValidator: EmailValidator,
-    private readonly passwordValidator: PasswordValidator,
     private readonly addAccount: AddAccount,
     private readonly validation: Validation
   ) {}
@@ -23,22 +18,7 @@ export class SignUpControlller implements Controller {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
 
-      const { name, email, password, passwordConfirmation } = httpRequest.body
-
-      // valida que o nome existe e não é vazio e é composto por no mínimo 3 letras
-      if ((name as string).length < 3) return badRequest(new InvalidParamError('name'))
-
-      // valida que a senha e a senha de confirmação são iguais
-      if (password !== passwordConfirmation) return badRequest(new InvalidParamError('passwordConfirmation'))
-
-      // valida o email do usuário
-      const isValidEmail = await this.emailValidator.isValid(email)
-      if (!isValidEmail) return badRequest(new InvalidParamError('email'))
-
-      // valida a senha do usuário
-      const isValidPassword = await this.passwordValidator.isStrong(password)
-      if (!isValidPassword) return badRequest(new InvalidParamError('password'))
-
+      const { name, email, password } = httpRequest.body
       const account = await this.addAccount.add({ name, email, password })
 
       return ok(account)
