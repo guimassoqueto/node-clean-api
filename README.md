@@ -12,3 +12,4 @@ TODO:
 - [ ] Integrate the application with [Grafana](https://grafana.com/)
 - [x] Evaluate whether tests should have their own settings.ts
 - [ ] Add a logging library to manage application logs. See [Winston](https://www.npmjs.com/package/winston)
+- [ ] Add diagram for LoginController
