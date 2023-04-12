@@ -3,7 +3,7 @@ import {
   RequiredFieldValidation,
   EmailValidation
 } from '../../../presentation/helpers/validators/validations'
-import { type Validation } from '../../../presentation/controllers/signup/signup-protocols'
+import { type Validation } from '../../../presentation/controllers/login/login-protocols'
 import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter'
 
 export function makeLoginValidation (): ValidationComposite {

@@ -6,7 +6,7 @@ import {
   Validation
 } from "../../src/presentation/controllers/signup/signup-protocols"
 import { MissingParamError, ServerError } from "../../src/presentation/errors"
-import { ok, badRequest } from "../../src/presentation/helpers/http-helper"
+import { ok, badRequest } from "../../src/presentation/helpers/http/http-helper"
 
 
 function makeFakeAccount(): AccountModel {
