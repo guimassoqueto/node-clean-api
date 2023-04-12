@@ -1,5 +1,5 @@
 import { LoginController } from "../../src/presentation/controllers/login/login-controller"
-import { HttpRequest, Authentication, Validation } from "../../src/presentation/controllers/login/login-protocols"
+import { HttpRequest, Authentication, Validation, AuthenticationModel } from "../../src/presentation/controllers/login/login-protocols"
 import { badRequest, ok, serverError, unauthorized } from "../../src/presentation/helpers/http/http-helper"
 import { MissingParamError  } from "../../src/presentation/errors"
 
@@ -17,7 +17,7 @@ function makeValidation(): Validation {
 const accessToken = "fake_token"
 function makeAuthentication(): Authentication {
   class AuthenticationStub implements Authentication {
-    async auth(email: string, password: string): Promise<string> {
+    async auth(authentication: AuthenticationModel): Promise<string | null> {
       return new Promise(resolve => resolve(accessToken))
     }
   }
@@ -47,7 +47,7 @@ function makeFakeRequest(): HttpRequest {
   return {
     body: {
       email: "valid_email@email.com",
-      password: "!@#123QWEqwe"
+      password: "valid_password"
     }
   }
 }
@@ -60,7 +60,7 @@ describe('Login Controller' , () => {
     const { email, password } = httpRequest.body
     await sut.handle(httpRequest)
 
-    expect(spyAuth).toHaveBeenCalledWith(email, password)
+    expect(spyAuth).toHaveBeenCalledWith({ email, password })
   })
 
   test('Should return 401 if invalid credentials are provided', async () => {
