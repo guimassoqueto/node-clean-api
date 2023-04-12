@@ -45,7 +45,7 @@ function makeHashComparer(): HashComparer {
   return new HashComparerStub()
 }
 
-function makeTokenGenerate(): TokenGenerator {
+function makeTokenGenerator(): TokenGenerator {
   class TokenGenerateStub implements TokenGenerator {
     async generate(id: string): Promise<string> {
       return new Promise(resolve => resolve("any_token"))
@@ -58,7 +58,7 @@ function makeTokenGenerate(): TokenGenerator {
 function makeSut(): SutTypes {
   const loadAccountByEmailRepoStub = makeLoadAccountByEmailRepository()
   const hashComparerStub = makeHashComparer()
-  const tokenGeneratorStub = makeTokenGenerate()
+  const tokenGeneratorStub = makeTokenGenerator()
   const sut = new DbAuthentication(loadAccountByEmailRepoStub, hashComparerStub, tokenGeneratorStub)
 
   return {
@@ -140,5 +140,12 @@ describe('DbAuthentication UseCase' , () => {
     const promise = sut.auth(makeFakeAuthentication())
 
     await expect(promise).rejects.toThrow(error)
+  })
+
+  test('Should return the aceess token if TokenGenerator DbAuthentication succeed', async () => {
+    const { sut } = makeSut()
+    const accessToken = await sut.auth(makeFakeAuthentication())
+
+    expect(accessToken).toEqual("any_token")
   })
 })
