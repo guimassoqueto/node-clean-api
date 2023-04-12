@@ -1,7 +1,7 @@
 import { LoggingControllerDecorator } from "../../src/main/decorators/logging"
 import { Controller, HttpRequest, HttpResponse } from "../../src/presentation/protocols"
 import { serverError,ok } from "../../src/presentation/helpers/http/http-helper"
-import { LoggingErrorRepository } from "../../src/data/protocols/logging-error-repository"
+import { LoggingErrorRepository } from "../../src/data/protocols/db/logging-error-repository"
 import { AccountModel } from "../../src/domain/models/account"
 
 function makeFakeRequest(): HttpRequest {
