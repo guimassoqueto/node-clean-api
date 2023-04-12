@@ -9,14 +9,14 @@ function makeSut(): EmailValidatorAdapter {
 describe('Email Validator Adapter' , () => {
   test('should return false if the email passed is invalid', async () => {
     const sut = makeSut();
-    const isValid = await sut.isValid('invalid_email.com');
+    const isValid = sut.isValid('invalid_email.com');
     expect(isValid).toBe(false);
   })
 
   test('should return true if the email passed is valid', async () => {
     const sut = makeSut()
 
-    const isValid = await sut.isValid('valid_email@gmail.com')
+    const isValid = sut.isValid('valid_email@gmail.com')
     expect(isValid).toBe(true)
   })
 
@@ -26,7 +26,7 @@ describe('Email Validator Adapter' , () => {
 
     // corfirma que o email passado no método é o mesmo email usado na verificação
     const correct_email = "correct_email@gmail.com"
-    await sut.isValid(correct_email)
+    sut.isValid(correct_email)
 
     expect(isEmailSpy).toHaveBeenCalledWith(correct_email)
   })
