@@ -2,7 +2,6 @@ import { SignUpControlller } from "../../src/presentation/controllers/signup/sig
 import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
 import { AccountModel } from "../../src/domain/models/account"
 import { 
-  PasswordValidator, 
   HttpRequest,
   Validation
 } from "../../src/presentation/controllers/signup/signup-protocols"
