@@ -47,6 +47,17 @@ describe('Bcrypt Adapter' , () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should throw if bcrypt.hash throws', async () => {
+    const sut = makeSut()
+    const stringToHash = "any_string"
+    jest.spyOn(bcrypt, 'hash').mockImplementationOnce((data: string | Buffer, saltOrRounds: string | number) => {
+      throw new Error()
+    })
+    const promise = sut.hash(stringToHash)
+
+    await expect(promise).rejects.toThrow()
+  })
+
   test('Should call bcrypt.compare with correct values', async () => {
     const sut = makeSut()
     const stringToHash = "any_string"
