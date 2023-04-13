@@ -94,5 +94,15 @@ describe('Bcrypt Adapter' , () => {
     expect(result).toBe(false)
   })
 
+  test('Should throw if bcrypt.compare throws', async () => {
+    const sut = makeSut()
+    const stringToHash = "any_string"
+    jest.spyOn(bcrypt, 'compare').mockImplementation((data: string | Buffer, encrypted: string) => {
+      throw new Error()
+    })
+    const promise = sut.compare(stringToHash, expectedHash)
+
+    await expect(promise).rejects.toThrow()
+  })
 })
 
