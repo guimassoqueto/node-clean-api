@@ -41,7 +41,7 @@ describe('Add Account Mongo Repository' , () => {
     expect(account.name).toBe(accountToBeAdded.name)
     expect(account.email).toBe(accountToBeAdded.email)
     expect(account.password).toBe(accountToBeAdded.password)
-    })
+  })
 
   test('Should return an account on loadbyEmail success', async () => {
     const sut = makeSut()
@@ -55,6 +55,12 @@ describe('Add Account Mongo Repository' , () => {
     expect(account?.email).toBe(new_account.email)
     expect(account?.password).toBe(new_account.password)
   })
+
+  test('Should throw if email is not found', async () => {
+    const sut = makeSut()
+    const promise = sut.loadByEmail("inexistent_email")
+
+    await expect(promise).rejects.toThrow()
   })
 
 })
