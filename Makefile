@@ -24,7 +24,7 @@ open-repo:
 
 # executa teste de um arquivo especifico
 test-file:
-	${PACKAGE_MANAGER_RUN} test -- tests/unit/data.usecase.db-authentication.spec.ts
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/infra.crypto.jwt-adapter.spec.ts
 
 # inicia a aplicação localmente sem aguardar pela compilação
 start-server:
