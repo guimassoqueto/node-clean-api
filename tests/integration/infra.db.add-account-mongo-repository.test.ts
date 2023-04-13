@@ -43,11 +43,18 @@ describe('Add Account Mongo Repository' , () => {
     expect(account.password).toBe(accountToBeAdded.password)
     })
 
+  test('Should return an account on loadbyEmail success', async () => {
+    const sut = makeSut()
+    const new_account = makeAddAccountModel()
+    accountCollection.insertOne(new_account) // insere uma conta antes de buscá-la
+    const account = await sut.loadByEmail(new_account.email) // busca a conta
+
     expect(account).toBeTruthy()
-    expect(account.id).toBeTruthy()
-    expect(account.name).toBe("bibaman")
-    expect(account.email).toBe("bibaman@email.com")
-    expect(account.password).toBe("bibamanPassword")
+    expect(account?.id).toBeTruthy()
+    expect(account?.name).toBe(new_account.name)
+    expect(account?.email).toBe(new_account.email)
+    expect(account?.password).toBe(new_account.password)
+  })
   })
 
 })
