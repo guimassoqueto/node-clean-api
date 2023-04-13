@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { BcryptAdapter } from "../../src/infra/cryptography/bcrypt-adapter"
+import { BcryptAdapter } from "../../src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
 const expectedHash = "any_hash"
