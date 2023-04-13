@@ -46,7 +46,7 @@ describe('Add Account Mongo Repository' , () => {
   test('Should return an account on loadbyEmail success', async () => {
     const sut = makeSut()
     const new_account = makeAddAccountModel()
-    accountCollection.insertOne(new_account) // insere uma conta antes de buscá-la
+    await accountCollection.insertOne(new_account) // insere uma conta antes de buscá-la
     const account = await sut.loadByEmail(new_account.email) // busca a conta
 
     expect(account).toBeTruthy()
@@ -61,6 +61,16 @@ describe('Add Account Mongo Repository' , () => {
     const promise = sut.loadByEmail("inexistent_email")
 
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should update the account access token on UpdateAccesToken success', async () => {
+    const sut = makeSut()
+    const res = await accountCollection.insertOne(makeAddAccountModel())
+    await sut.updateAccessToken(res.insertedId.toString(), 'any_token') // atualiza o token
+    const account = await accountCollection.findOne({ _id: res.insertedId })
+
+    expect(account).toBeTruthy()
+    expect(account?.accessToken).toBe('any_token')
   })
 
 })
