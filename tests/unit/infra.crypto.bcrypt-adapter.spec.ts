@@ -1,10 +1,15 @@
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 import { BcryptAdapter } from "../../src/infra/cryptography/bcrypt-adapter"
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
+const expectedHash = "any_hash"
 jest.mock('bcrypt', () => ({
   async hash(value?: string): Promise<string> {
-    return new Promise(resolve => resolve("xxx111222"))
+    return new Promise(resolve => resolve(expectedHash))
+  },
+
+  async compare(data: string | Buffer, encrypted: string): Promise<boolean> {
+    return new Promise(resolve => resolve(true))
   }
 }))
 
@@ -17,7 +22,7 @@ function makeSut(): BcryptAdapter {
 }
 
 describe('Bcrypt Adapter' , () => {
-  test('Should call bcrypt with correct values', async () => {
+  test('Should call bcrypt.hash with correct values', async () => {
     const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, "hash")
     const valueToHash = "any_string" 
@@ -26,20 +31,29 @@ describe('Bcrypt Adapter' , () => {
     expect(hashSpy).toHaveBeenCalledWith(valueToHash, BCRYPT_SALT)
   })
 
-  test('Should returns the hash on encryption success', async () => {
+  test('Should returns a valid hash on hashing success', async () => {
     const sut = makeSut()
     const hashedValue = await sut.hash("any_string")
 
-    expect(hashedValue).toBe("xxx111222")
+    expect(hashedValue).toBe(expectedHash)
   })
 
   test('Should throw if encrypt gets an error', async () => {
     const sut = makeSut()
-    const hashSpy = jest.spyOn(sut, "hash").mockReturnValueOnce(new Promise((_, reject) => reject(new Error())))
+    jest.spyOn(sut, "hash").mockReturnValueOnce(new Promise((_, reject) => reject(new Error())))
 
     const promise = sut.hash("any_string")
 
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should call bcrypt.compare with correct values', async () => {
+    const sut = makeSut()
+    const stringToHash = "any_string"
+    const bcrypCompareSpy = jest.spyOn(bcrypt, "compare")
+    await sut.compare(stringToHash, expectedHash)
+
+    expect(bcrypCompareSpy).toBeCalledWith(stringToHash, expectedHash)
   })
 })
 
