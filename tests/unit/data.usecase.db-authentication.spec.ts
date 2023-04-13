@@ -147,7 +147,6 @@ describe('DbAuthentication UseCase' , () => {
     expect(AccessToken).toBeNull()
   })
 
-
   test('Should call Encrypter with correct id', async () => {
     const { sut, encrypterStub } = makeSut()
     const generateSpy = jest.spyOn(encrypterStub, "encrypt")
