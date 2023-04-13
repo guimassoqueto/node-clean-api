@@ -3,6 +3,13 @@ import { Encrypter } from "../../src/data/protocols/cryptography";
 import { JwtAdapter } from "../../src/infra/cryptography/jwt-adapter/jwt-adapter"
 import { JWT_SECRET } from "../settings";
 
+const mockAccessToken = "any_token"
+jest.mock('jsonwebtoken', () => ({
+  sign(): string {
+    return mockAccessToken
+  }
+}))
+
 interface SutTypes {
   sut: Encrypter
 }
@@ -23,5 +30,12 @@ describe('JwtAdapter' , () => {
     await sut.encrypt("any_id")
 
     expect(signSpy).toHaveBeenCalledWith(id, JWT_SECRET)
+  })
+
+  test('Should returns a token on sign success', async () => {
+    const { sut } = makeSut()
+    const accessToken = await sut.encrypt("any_id")
+
+    expect(accessToken).toBe(mockAccessToken)
   })
 })
