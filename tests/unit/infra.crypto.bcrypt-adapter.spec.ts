@@ -1,4 +1,4 @@
-import bcrypt, { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 import { BcryptAdapter } from "../../src/infra/cryptography/bcrypt-adapter"
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
@@ -54,6 +54,22 @@ describe('Bcrypt Adapter' , () => {
     await sut.compare(stringToHash, expectedHash)
 
     expect(bcrypCompareSpy).toBeCalledWith(stringToHash, expectedHash)
+  })
+
+  test('Should return true if compare succeeds', async () => {
+    const sut = makeSut()
+    const stringToHash = "any_string"
+    const result = await sut.compare(stringToHash, expectedHash)
+
+    expect(result).toBe(true)
+  })
+
+  test('Should return true if compare succeeds', async () => {
+    const sut = makeSut()
+    const stringToHash = "any_string"
+    const result = await sut.compare(stringToHash, expectedHash)
+
+    expect(result).toBe(true)
   })
 })
 
