@@ -1,6 +1,6 @@
 import { MONGO_URL } from "../settings"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
-import { AddAccountMongoRepository } from "../../src/infra/db/mongodb/account-repository/account"
+import { AccountMongoRepository } from "../../src/infra/db/mongodb/account-repository/account"
 import { AddAccountModel } from "../../src/domain/usecases/add-account"
 import { Collection } from "mongodb"
 
@@ -12,8 +12,8 @@ function makeAddAccountModel(): AddAccountModel {
   }
 }
 
-function makeSut(): AddAccountMongoRepository {
-  return new AddAccountMongoRepository()
+function makeSut(): AccountMongoRepository {
+  return new AccountMongoRepository()
 }
 
 let accountCollection: Collection
