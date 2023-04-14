@@ -2,9 +2,13 @@ import { type Express, Router } from 'express'
 import fg from 'fast-glob'
 
 export default function setUpRoutes (app: Express): void {
+  // verifica a extensão do arquivo corrente e define o caminho para as routes
+  // isso deve ser feito para evitar erro de exucução do arquivo transpilado para.js
+  const routesPath = __filename.endsWith('.js') ? '**/dist/main/routes/**-routes.js' : '**/src/main/routes/**-routes.ts'
+
   const router = Router()
   app.use('/api', router)
-  fg.sync('**/src/main/routes/**-routes.ts').map(async (file, _) => {
+  fg.sync(routesPath).map(async (file, _) => {
     // imports que não estejam no cabeçalhos devem ser feitos como import()
     // a importação deve ser assíncrona
     // cada arquivo importado contem um export default function, por isso o parenteses e o .default
