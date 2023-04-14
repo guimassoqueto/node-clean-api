@@ -1,6 +1,6 @@
 import { MONGO_URL } from "../settings"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
-import { AccountMongoRepository } from "../../src/infra/db/mongodb/account-repository/account"
+import { AccountMongoRepository } from "../../src/infra/db/mongodb/account/account-mongo-repository"
 import { AddAccountModel } from "../../src/domain/usecases/add-account"
 import { Collection } from "mongodb"
 

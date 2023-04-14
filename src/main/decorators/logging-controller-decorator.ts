@@ -1,5 +1,5 @@
 import { type Controller, type HttpRequest, type HttpResponse } from '../../presentation/protocols'
-import { type LoggingErrorRepository } from '../../data/protocols/db/logging-error-repository'
+import { type LoggingErrorRepository } from '../../data/protocols/db/logging/logging-error-repository'
 
 // decorator que modifica as classes que implementam a interface Controller
 export class LoggingControllerDecorator implements Controller {
