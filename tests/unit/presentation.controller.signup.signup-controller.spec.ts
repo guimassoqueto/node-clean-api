@@ -4,7 +4,7 @@ import { AccountModel } from "../../src/domain/models/account"
 import { 
   HttpRequest,
   Validation
-} from "../../src/presentation/controllers/signup/signup-protocols"
+} from "../../src/presentation/controllers/signup/signup-controller-protocols"
 import { MissingParamError, ServerError } from "../../src/presentation/errors"
 import { ok, badRequest } from "../../src/presentation/helpers/http/http-helper"
 

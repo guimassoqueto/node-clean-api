@@ -1,4 +1,4 @@
-import { makeSignUpValidation } from "../../src/main/factories/signup/signup-validation"
+import { makeSignUpValidation } from "../../src/main/factories/signup/signup-validation-factory"
 import { ValidationComposite } from "../../src/presentation/helpers/validators/validation-composite"
 import { 
   RequiredFieldValidation, 

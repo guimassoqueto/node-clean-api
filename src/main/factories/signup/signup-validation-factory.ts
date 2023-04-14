@@ -5,7 +5,7 @@ import {
   EmailValidation,
   PasswordValidation
 } from '../../../presentation/helpers/validators/validations'
-import { type Validation } from '../../../presentation/controllers/signup/signup-protocols'
+import { type Validation } from '../../../presentation/controllers/signup/signup-controller-protocols'
 import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter'
 import { PasswordValidatorAdapter } from '../../../utils/password-validator-adapter'
 

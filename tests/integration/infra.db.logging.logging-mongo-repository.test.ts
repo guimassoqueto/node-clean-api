@@ -1,6 +1,6 @@
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper";
 import { MONGO_URL } from "../settings";
-import { LoggingMongoRepository } from "../../src/infra/db/mongodb/logging-repository/logging"
+import { LoggingMongoRepository } from "../../src/infra/db/mongodb/logging/logging-mongo-repository"
 import { Collection } from "mongodb";
 
 function makeSut(): LoggingMongoRepository {

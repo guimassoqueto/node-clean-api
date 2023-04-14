@@ -4,7 +4,7 @@ import fg from 'fast-glob'
 export default function setUpRoutes (app: Express): void {
   const router = Router()
   app.use('/api', router)
-  fg.sync('**/src/main/routes/**route.ts').map(async (file, index) => {
+  fg.sync('**/src/main/routes/**.ts').map(async (file, _) => {
     // imports que não estejam no cabeçalhos devem ser feitos como import()
     // a importação deve ser assíncrona
     // cada arquivo importado contem um export default function, por isso o parenteses e o .default

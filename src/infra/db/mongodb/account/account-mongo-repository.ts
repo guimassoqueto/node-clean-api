@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { type AddAccountRepository } from '../../../../data/protocols/db/add-account-repository'
+import { type AddAccountRepository } from '../../../../data/protocols/db/account/add-account-repository'
 import { type LoadAccountByEmailRepository, type UpdateAccessTokenRepository } from '../../../../data/usecases/authentication/db-authentication-protocols'
 import { type AccountModel } from '../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../domain/usecases/add-account'
