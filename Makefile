@@ -1,6 +1,11 @@
+PACKAGE_MANAGER=npm
 PACKAGE_MANAGER_RUN=npm run
 BROWSER=firefox
 DOCKER=docker compose
+
+## instala todos os pacotes requeridos no package.json
+install:
+	${PACKAGE_MANAGER} install
 
 # executa todos os testes da aplicação, verborragicamente, sequencialmente, um a um
 test:
