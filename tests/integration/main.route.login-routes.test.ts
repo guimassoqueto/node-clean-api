@@ -4,7 +4,7 @@ import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
 import { MONGO_URL } from "../settings"
 
 
-describe('SignUp Route' , () => {
+describe('Login Route' , () => {
   beforeAll(async () => {
     await MongoHelper.connect(MONGO_URL);
   })
@@ -18,15 +18,19 @@ describe('SignUp Route' , () => {
     await accountCollection.deleteMany({})
   })
 
-  test('Should return an account on success', async () => {
-    await request(app)
-      .post('/api/signup')
-      .send({
-        name: "Guilherme",
-        email: "guilhermemassoqueto@gmail.com",
-        password: "###!!!123GGGaaa",
-        passwordConfirmation: "###!!!123GGGaaa"
-      })
-      .expect(200)
+  describe('POST /signup' , () => {
+    test('Should return 200 on signup', async () => {
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: "Guilherme",
+          email: "guilhermemassoqueto@gmail.com",
+          password: "###!!!123GGGaaa",
+          passwordConfirmation: "###!!!123GGGaaa"
+        })
+        .expect(200)
+    })
+
   })
+  
 })
