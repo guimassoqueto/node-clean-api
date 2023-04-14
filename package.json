@@ -1,10 +1,12 @@
 {
   "name": "api-clean-architecture",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:server": "ts-node src/main/index.ts",
+    "start:server": "node dist/main/index.js",
+    "build": "tsc",
+    "start:local": "ts-node src/main/index.ts",
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests --runInBand",
     "test:simplified": "npm test -- --silent --noStackTrace --coverage=false",

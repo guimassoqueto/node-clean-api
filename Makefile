@@ -31,9 +31,13 @@ open-repo:
 test-file:
 	${PACKAGE_MANAGER_RUN} test -- tests/unit/infra.crypto.jwt-adapter.spec.ts
 
-# inicia a aplicação localmente sem aguardar pela compilação
+# builda e inicia a aplicação em javascript puro
 start-server:
-	${PACKAGE_MANAGER_RUN} start:server
+	${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
+
+# inicia a aplicação localmente sem transpilar
+start-local:
+	${PACKAGE_MANAGER_RUN} start:local
 
 # inicia o mongodb localmente
 mongodb:
