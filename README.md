@@ -34,3 +34,4 @@ TODO:
 - [x] Evaluate whether tests should have their own settings.ts
 - [ ] Add a logging library to manage application logs. See [Winston](https://www.npmjs.com/package/winston)
 - [ ] Add diagram for LoginController
+- [ ] Define whether JWT_SECRET and SALT_ROUNDS should be defined in settings.ts should be raw written in the code, or be migrated to *.env*
