@@ -1,5 +1,24 @@
 # node-api-clean-architecture
 
+## Requirements (for all users)
+* [Node 19+](https://nodejs.org/en)
+* [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
+
+## Running the application locally
+
+### For Linux (Debian) Users
+1. Install buid-essential package (to be able to run `make` commands): `sudo apt-get install build-essential`
+2. Rename the *.env.example* to *.env*
+3. `make mongodb` to up the mongo container
+4. `make start-server` to run the application
+
+### For Windows Users
+1. Install [Chocolatey Package Manager](https://chocolatey.org/install)
+2. Install make package (to be able to run `make` commands): `choco install make`
+3. Rename the *.env.example* to *.env*
+4. `make start-server` to run the application
+
+
 TODO:
 - [ ] UML Class Diagram
 - [ ] UML Use Case Diagram
