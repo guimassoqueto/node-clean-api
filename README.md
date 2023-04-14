@@ -9,14 +9,16 @@
 ### For Linux (Debian) Users
 1. Install buid-essential package (to be able to run `make` commands): `sudo apt-get install build-essential`
 2. Rename the *.env.example* to *.env*
-3. `make mongodb` to up the mongo container
-4. `make start-server` to run the application
+3. `make install` to install all package.json dependencies
+4. `make mongodb` to up the mongo container
+5. `make start-server` to run the application without transpile the code to javascript
 
 ### For Windows Users
 1. Install [Chocolatey Package Manager](https://chocolatey.org/install)
 2. Install make package (to be able to run `make` commands): `choco install make`
 3. Rename the *.env.example* to *.env*
-4. `make start-server` to run the application
+4. `make install` to install all package.json dependencies
+5. `make start-server` to run the application without transpile the code to javascript
 
 
 TODO:
