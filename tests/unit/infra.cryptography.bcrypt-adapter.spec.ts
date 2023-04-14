@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { BcryptAdapter } from "../../src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
+import { SALT_ROUNDS } from "../settings";
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
 const expectedHash = "any_hash"
@@ -13,12 +14,9 @@ jest.mock('bcrypt', () => ({
   }
 }))
 
-// usada para facilitar os tests quando utilizamos o método hash em bcrypt
-const BCRYPT_SALT = 12;
-
 // Factory para a criação de BcryptAdapter
 function makeSut(): BcryptAdapter {
-  return new BcryptAdapter(BCRYPT_SALT);
+  return new BcryptAdapter(SALT_ROUNDS);
 }
 
 describe('Bcrypt Adapter' , () => {
@@ -28,7 +26,7 @@ describe('Bcrypt Adapter' , () => {
     const valueToHash = "any_string" 
     await sut.hash(valueToHash)
 
-    expect(hashSpy).toHaveBeenCalledWith(valueToHash, BCRYPT_SALT)
+    expect(hashSpy).toHaveBeenCalledWith(valueToHash, SALT_ROUNDS)
   })
 
   test('Should returns a valid hash on hashing success', async () => {
