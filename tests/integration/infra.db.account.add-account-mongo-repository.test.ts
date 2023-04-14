@@ -56,11 +56,11 @@ describe('Add Account Mongo Repository' , () => {
     expect(account?.password).toBe(new_account.password)
   })
 
-  test('Should throw if email is not found', async () => {
+  test('Should return null if the account with the provided email is not found', async () => {
     const sut = makeSut()
     const promise = sut.loadByEmail("inexistent_email")
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).resolves.toBeNull()
   })
 
   test('Should update the account access token on UpdateAccesToken success', async () => {
