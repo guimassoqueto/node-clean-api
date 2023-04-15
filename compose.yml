@@ -1,6 +1,7 @@
 version: '3.9'
 
 services:
+
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -19,7 +20,27 @@ services:
       timeout: 5s
       retries: 2
       start_period: 30s
-      
+
+  node-api:
+    container_name: node-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: clean-node-api
+    env_file:
+      - compose.env
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    networks:
+      - local
+    depends_on:
+      mongodb:
+        condition: service_healthy
+        restart: true
+    working_dir: /app/main/
+    entrypoint: node
+    command: index.js
+
 networks:
   local:
     name: local
