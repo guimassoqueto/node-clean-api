@@ -1,7 +1,15 @@
 PACKAGE_MANAGER=npm
 PACKAGE_MANAGER_RUN=npm run
 BROWSER=firefox
-DOCKER=docker compose
+COMPOSE=docker compose
+DOCKER=docker
+
+# executa a aplicação containerizada, banco de dados e api
+up:
+	${COMPOSE} up -d
+
+down:
+	${COMPOSE} down
 
 ## instala todos os pacotes requeridos no package.json
 install:
@@ -41,4 +49,4 @@ start-local:
 
 # inicia o mongodb localmente
 mongodb:
-	${DOCKER} up -d
+	${COMPOSE} up mongodb -d
