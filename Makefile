@@ -8,6 +8,9 @@ DOCKER=docker
 up:
 	${COMPOSE} up -d
 
+down:
+	${COMPOSE} down
+
 ## instala todos os pacotes requeridos no package.json
 install:
 	${PACKAGE_MANAGER} install
