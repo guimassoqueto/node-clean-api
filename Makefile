@@ -19,6 +19,14 @@ install:
 test:
 	${PACKAGE_MANAGER_RUN} test
 
+# transpila para javascript
+build:
+	${PACKAGE_MANAGER_RUN} build
+
+# roda a aplicação em modo debug (precisa ser transpilado para js primeiro)
+debug: 
+	make build && ${PACKAGE_MANAGER_RUN} debug
+
 # abre o navegador e mostra a cobertura dos testes
 coverage-report:
 	${BROWSER} -url "file://$(CURDIR)/coverage/lcov-report/index.html"
