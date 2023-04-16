@@ -3,11 +3,15 @@ PACKAGE_MANAGER_RUN=npm run
 BROWSER=firefox
 COMPOSE=docker compose
 DOCKER=docker
+REMOVE_FOLDER_RECURSIVE=rm -rf
+COMPILED_CODE_FOLDER=dist/
+REMOVE_DIST_FOLDER=${REMOVE_FOLDER_RECURSIVE} ${COMPILED_CODE_FOLDER}
 
 # executa a aplicação containerizada, banco de dados e api
 up:
 	${COMPOSE} up -d
 
+# derruba os containeres em execução, banco de dados e api
 down:
 	${COMPOSE} down
 
@@ -21,7 +25,7 @@ test:
 
 # transpila para javascript
 build:
-	${PACKAGE_MANAGER_RUN} build
+	${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build
 
 # roda a aplicação em modo debug (precisa ser transpilado para js primeiro)
 debug: 
@@ -49,7 +53,7 @@ test-file:
 
 # builda e inicia a aplicação em javascript puro
 start-server:
-	${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
+	${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
 
 # inicia a aplicação localmente sem transpilar
 start-local:
