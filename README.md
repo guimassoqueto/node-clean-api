@@ -11,14 +11,21 @@
 2. Rename the *.env.example* to *.env*
 3. `make install` to install all package.json dependencies
 4. `make mongodb` to up the mongo container
-5. `make start-server` to run the application without transpile the code to javascript
+
+Choose between:
+5. `make start-local` to run the application without transpile the code to javascript
+5. `make start-server` to transpile the code to javascript and run it
 
 ### For Windows Users
 1. Install [Chocolatey Package Manager](https://chocolatey.org/install)
 2. Install make package (to be able to run `make` commands): `choco install make`
 3. Rename the *.env.example* to *.env*
 4. `make install` to install all package.json dependencies
-5. `make start-server` to run the application without transpile the code to javascript
+
+Choose between:
+5. `make start-local` to run the application without transpile the code to javascript
+5. `make start-server` to transpile the code to javascript and run it
+
 
 
 TODO:
