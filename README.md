@@ -12,7 +12,7 @@
 3. `make install` to install all package.json dependencies
 4. `make mongodb` to up the mongo container
 
-Choose between:
+Choose between:  
 5. `make start-local` to run the application without transpile the code to javascript
 5. `make start-server` to transpile the code to javascript and run it
 
@@ -22,7 +22,7 @@ Choose between:
 3. Rename the *.env.example* to *.env*
 4. `make install` to install all package.json dependencies
 
-Choose between:
+Choose between:  
 5. `make start-local` to run the application without transpile the code to javascript
 5. `make start-server` to transpile the code to javascript and run it
 
