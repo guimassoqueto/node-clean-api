@@ -4,8 +4,9 @@
     "module": "CommonJS",
     "target": "ES2019",
     "esModuleInterop": true,
-    "allowJs": true,
-    "strictNullChecks": true
+    "allowJs": false,
+    "strictNullChecks": true,
+    "sourceMap": true
   },
   "include": ["src/**/*"]
 }
