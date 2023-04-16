@@ -31,7 +31,7 @@ services:
       - compose.env
     ports:
       - "${APP_PORT}:${APP_PORT}"
-      - "9222:9222" # ver "debug" em package.json
+      - "9222:9222" # see command "debug" in package.json
     networks:
       - local
     depends_on:
