@@ -65,4 +65,4 @@ mongodb:
 
 # inicia a api localmente (depende do mongodb estar rodando)
 node-api:
-	${COMPOSE} up mongodb -d
+	${COMPOSE} up node-api -d
