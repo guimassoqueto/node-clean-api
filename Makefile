@@ -62,3 +62,7 @@ start-local:
 # inicia o mongodb localmente
 mongodb:
 	${COMPOSE} up mongodb -d
+
+# inicia a api localmente (depende do mongodb estar rodando)
+node-api:
+	${COMPOSE} up mongodb -d
