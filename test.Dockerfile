@@ -5,4 +5,3 @@ RUN npm install -g npm@latest \
     && npm install \
     && npm run build
 EXPOSE 8000
-CMD ["node", "dist/main/index.js"]
