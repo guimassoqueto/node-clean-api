@@ -25,15 +25,14 @@
 -- `make start-ts` to run the application without transpile the code to javascript  
 -- `make start-js` to transpile the code to javascript and run it
 
-
 ### Additional Commands (see [Makefile](Makefile))
 * `make install`: install all package.json dependencies (including devDependencies)
 * `make down`: stops containers and removes containers, networks, volumes, and images created
 * `make test`: run all tests (unit, integration, and end-to-end)
-* `make build`: transpile the typescript code located in *src/* to javascript (will be located in *dist/*)
-* `make coverage-report`: show the test coverage of the app
 * `make unit-test`: run all the unit tests
 * `make integration-test`: run all the integration tests
+* `make coverage-report`: show the test coverage of the app (first run `make test` or `make unit-test` or `make integration-test`)
+* `make build`: transpile the typescript code located in *src/* to javascript (will be located in *dist/*)
 
 TODO:
 - [ ] UML Class Diagram
