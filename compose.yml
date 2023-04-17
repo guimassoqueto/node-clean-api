@@ -25,22 +25,24 @@ services:
     container_name: node-api
     build:
       context: .
-      dockerfile: Dockerfile
-    image: clean-node-api
+      dockerfile: test.Dockerfile
+    image: node-api
     env_file:
       - compose.env
     ports:
       - "${APP_PORT}:${APP_PORT}"
-      - "9222:9222" # see command "debug" in package.json
     networks:
       - local
     depends_on:
       mongodb:
         condition: service_healthy
         restart: true
-    working_dir: /app/main/
-    entrypoint: node
-    command: index.js
+    expose:
+      - ${APP_PORT}
+    entrypoint:
+      - node
+    command: 
+      - dist/main/index.js
 
 networks:
   local:
