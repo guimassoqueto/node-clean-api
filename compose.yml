@@ -58,6 +58,8 @@ services:
       mongodb:
         condition: service_healthy
         restart: true
+    expose:
+      - ${APP_PORT}
     entrypoint:
       - node
     command: 

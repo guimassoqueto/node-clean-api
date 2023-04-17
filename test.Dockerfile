@@ -4,4 +4,3 @@ COPY . .
 RUN npm install -g npm@latest \
     && npm install \
     && npm run build
-EXPOSE 8000
