@@ -58,7 +58,10 @@ services:
       mongodb:
         condition: service_healthy
         restart: true
-
+    entrypoint:
+      - node
+    command: 
+      - dist/main/index.js
 
 networks:
   local:
