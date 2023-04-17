@@ -6,6 +6,7 @@ DOCKER=docker
 REMOVE_FOLDER_RECURSIVE=rm -rf
 COMPILED_CODE_FOLDER=dist/
 REMOVE_DIST_FOLDER=${REMOVE_FOLDER_RECURSIVE} ${COMPILED_CODE_FOLDER}
+DATABASE_UP=${COMPOSE} up mongodb -d
 
 # executa a aplicação containerizada, banco de dados e api
 up:
@@ -21,7 +22,7 @@ install:
 
 # executa todos os testes da aplicação, verborragicamente, sequencialmente, um a um
 test:
-	${PACKAGE_MANAGER_RUN} test
+	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test
 
 # transpila para javascript
 build:
@@ -41,7 +42,7 @@ unit-test:
 
 # executa testes de integração da aplicação, localizados em tests/integration
 integration-test:
-	${PACKAGE_MANAGER_RUN} test:integration
+	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test:integration
 
 # abre o navegador na página principal do repositório no GitHub 
 open-repo:
@@ -52,17 +53,9 @@ test-file:
 	${PACKAGE_MANAGER_RUN} test -- tests/unit/infra.crypto.jwt-adapter.spec.ts
 
 # builda e inicia a aplicação em javascript puro
-start-server:
-	${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
+start-js:
+	make down && ${DATABASE_UP} && ${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
 
 # inicia a aplicação localmente sem transpilar
-start-local:
-	${PACKAGE_MANAGER_RUN} start:local
-
-# inicia o mongodb localmente
-mongodb:
-	${COMPOSE} up mongodb -d
-
-# inicia a api localmente (depende do mongodb estar rodando)
-node-api:
-	${COMPOSE} up node-api -d
+start-ts:
+	make down && ${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} start:local

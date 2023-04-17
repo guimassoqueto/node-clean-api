@@ -9,13 +9,11 @@
 ### For Linux (Debian) Users
 1. Install buid-essential package (to be able to run `make` commands): `sudo apt-get install build-essential`
 2. Rename the *.env.example* to *.env*
-* To run the app fully containerized (skip steps 3, 4, and 5 in this case): `make up`
+* To run the app fully containerized (skip steps 3 and 4): `make up`
 3. `make install` to install all package.json dependencies
-4. `make mongodb` to up the mongo container
-
-5. Choose between:  
--- `make start-local` to run the application without transpile the code to javascript  
--- `make start-server` to transpile the code to javascript and run it
+4. Choose between:  
+-- `make start-ts` to run the application without transpile the code to javascript  
+-- `make start-js` to transpile the code to javascript and run it
 
 ### For Windows Users
 1. Install [Chocolatey Package Manager](https://chocolatey.org/install)
@@ -23,12 +21,19 @@
 3. Rename the *.env.example* to *.env*
 * To run the app fully containerized (skip steps 3, 4, and 5 in this case): `make up`
 4. `make install` to install all package.json dependencies
+5. Choose between:  
+-- `make start-ts` to run the application without transpile the code to javascript  
+-- `make start-js` to transpile the code to javascript and run it
 
-6. Choose between:  
--- `make start-local` to run the application without transpile the code to javascript  
--- `make start-server` to transpile the code to javascript and run it
 
-
+### Additional Commands (see [Makefile](Makefile))
+* `make install`: install all package.json dependencies (including devDependencies)
+* `make down`: stops containers and removes containers, networks, volumes, and images created
+* `make test`: run all tests (unit, integration, and end-to-end)
+* `make build`: transpile the typescript code located in *src/* to javascript (will be located in *dist/*)
+* `make coverage-report`: show the test coverage of the app
+* `make unit-test`: run all the unit tests
+* `make integration-test`: run all the integration tests
 
 TODO:
 - [ ] UML Class Diagram
