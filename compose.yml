@@ -21,33 +21,12 @@ services:
       retries: 2
       start_period: 30s
 
-  # node-api:
-  #   container_name: node-api
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: clean-node-api
-  #   env_file:
-  #     - compose.env
-  #   ports:
-  #     - "${APP_PORT}:${APP_PORT}"
-  #     - "9222:9222" # see command "debug" in package.json
-  #   networks:
-  #     - local
-  #   depends_on:
-  #     mongodb:
-  #       condition: service_healthy
-  #       restart: true
-  #   working_dir: /app/main/
-  #   entrypoint: node
-  #   command: index.js
-
-  api:
-    container_name: api
+  node-api:
+    container_name: node-api
     build:
       context: .
       dockerfile: test.Dockerfile
-    image: api
+    image: node-api
     env_file:
       - compose.env
     ports:
