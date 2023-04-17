@@ -1,2 +1,2 @@
-export { Controller, HttpRequest, HttpResponse } from "../../protocols";
-export { serverError } from "../../helpers/http/http-helper"
+export * from '../../protocols'
+export * from '../../helpers/http/http-helper'
