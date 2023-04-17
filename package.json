@@ -6,6 +6,8 @@
   "scripts": {
     "start:server": "node dist/main/index.js",
     "build": "tsc",
+    "tsc:watch": "tsc --watch",
+    "node:watch": "node --watch dist/main/index.js",
     "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/index.js",
     "start:local": "ts-node src/main/index.ts",
     "lint:staged": "lint-staged",
