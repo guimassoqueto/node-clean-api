@@ -1,7 +1,7 @@
-import { serverError } from "../../helpers/http/http-helper";
-import { Controller, HttpRequest, HttpResponse } from "../../protocols";
+import { serverError } from '../../helpers/http/http-helper'
+import { type Controller, type HttpRequest, type HttpResponse } from '../../protocols'
 
-export class HealthCheckController implements Controller{
+export class HealthCheckController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const httpResponse: HttpResponse = {
@@ -10,9 +10,8 @@ export class HealthCheckController implements Controller{
           status: "i'm live"
         }
       }
-      return new Promise(resolve => resolve(httpResponse))
-    }
-    catch (error) {
+      return await new Promise(resolve => { resolve(httpResponse) })
+    } catch (error) {
       return serverError(error)
     }
   }
