@@ -7,6 +7,7 @@ REMOVE_FOLDER_RECURSIVE=rm -rf
 COMPILED_CODE_FOLDER=dist/
 REMOVE_DIST_FOLDER=${REMOVE_FOLDER_RECURSIVE} ${COMPILED_CODE_FOLDER}
 DATABASE_UP=${COMPOSE} up mongodb -d
+HUSKY=npx husky install
 
 # executa a aplicação containerizada, banco de dados e api
 up:
@@ -22,7 +23,7 @@ down:
 
 ## instala todos os pacotes requeridos no package.json
 install:
-	${PACKAGE_MANAGER} install
+	${HUSKY} && ${PACKAGE_MANAGER} install
 
 # executa todos os testes da aplicação, verborragicamente, sequencialmente, um a um
 test:
