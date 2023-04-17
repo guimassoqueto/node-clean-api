@@ -10,7 +10,7 @@ DATABASE_UP=${COMPOSE} up mongodb -d
 
 # executa a aplicação containerizada, banco de dados e api
 up:
-	${COMPOSE} up -d
+	make down && ${COMPOSE} up -d
 
 # inicia o container do banco de dados principal (mongodb)
 db:
