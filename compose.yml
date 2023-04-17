@@ -5,7 +5,6 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:latest
-    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
@@ -14,6 +13,7 @@ services:
       - "${MONGO_PORT}:${MONGO_PORT}"
     networks:
       - local
+    restart: always
     healthcheck:
       test: "echo 'db.runCommand(\"ping\").ok' | mongosh 0.0.0.0:${MONGO_PORT}/ --quiet"
       interval: 10s
@@ -37,6 +37,12 @@ services:
       mongodb:
         condition: service_healthy
         restart: true
+    restart: on-failure:5
+    healthcheck:
+      test: ["CMD", "curl", "-f", "0.0.0.0:${APP_PORT}/healthcheck"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
     expose:
       - ${APP_PORT}
     entrypoint:
