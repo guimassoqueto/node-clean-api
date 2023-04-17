@@ -50,6 +50,37 @@ services:
     command: 
       - dist/main/index.js
 
+
+  # node-api:
+  #   container_name: node-api
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: guimassoqueto/node-api:1.2.0
+  #   env_file:
+  #     - compose.env
+  #   ports:
+  #     - "${APP_PORT}:${APP_PORT}"
+  #   networks:
+  #     - local
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #       restart: true
+  #   restart: on-failure:5
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "0.0.0.0:${APP_PORT}/healthcheck"]
+  #     interval: 5s
+  #     timeout: 2s
+  #     retries: 3
+  #   expose:
+  #     - ${APP_PORT}
+  #   entrypoint:
+  #     - node
+  #   command: 
+  #     - dist/main/index.js
+
+
 networks:
   local:
     name: local
