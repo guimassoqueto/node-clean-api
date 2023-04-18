@@ -11,4 +11,4 @@ export const JWT_SECRET = 'k123!@#-15_}{' // secredo usado para encriptar senhas
 export const SALT_ROUNDS = 12 // número de interaçoes na qual o segredo será aplicado no algoritmo de geração da hash. Recomenda-se qualquer valor acima de 10
 
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? 'test'
-export const MONGO_URL = `mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`
+export const MONGO_URL = process.env.MONGO_URL ?? `mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`
