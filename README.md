@@ -27,8 +27,8 @@
 
 ## Environment Variables
 
-**PS**: `MONGO_HOST` must be `mongodb`  in *compose.env* 
-**PS**: `MONGO_URL` ***must not*** be defined in *compose.env*  
+**PS**: `MONGO_HOST` must be `mongodb`  in *compose.env*  
+**PS**: `MONGO_URL` ***must not*** be defined in *compose.env*   
 **PS**: If you change any variable in *.env*, change to the same value in *compose.env*, except for the two variables above  
 
 |     VARIABLE           |DEFAULT VALUE                          |DEFINITION                         | REQUIRED|
