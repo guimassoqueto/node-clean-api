@@ -8,6 +8,7 @@ COMPILED_CODE_FOLDER=dist/
 REMOVE_DIST_FOLDER=${REMOVE_FOLDER_RECURSIVE} ${COMPILED_CODE_FOLDER}
 DATABASE_UP=${COMPOSE} up mongodb -d
 HUSKY=npx husky install
+COPY_ENV_EXAMPLE=cat .env.example 1> .env && echo "MONGO_HOST=\"localhost\"\nMONGO_URL=\"\"" 1>> .env && cat .env.example 1> compose.env && echo "MONGO_HOST=\"mongodb\"" 1>> compose.env
 
 # executa a aplicação containerizada, banco de dados e api
 up:
@@ -20,6 +21,9 @@ db:
 # derruba os containeres em execução, banco de dados e api
 down:
 	${COMPOSE} down
+
+env:
+	${COPY_ENV_EXAMPLE}
 
 ## instala todos os pacotes requeridos no package.json
 install:
