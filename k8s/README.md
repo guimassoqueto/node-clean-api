@@ -19,6 +19,10 @@ Run in sequence:
 3. `kubectl apply -f deployment.yml`
 4. `kubectl apply -f service.yml`
 
+To avoid re-run `minikube start` every time you change any of .yml files, run the command  
+`kubectl replace --force -f <yml-file>`, where `<yml-file>` is the name of the file you have changed, fro example `kubectl replace --force -f namespace.yml`  
+Be cautious running this command.
+
 Ensure you have [xclip](https://howtoinstall.co/en/xclip) installed
 
 5. `minikube service -n node-namespace node-service --url | xclip -selection clipboard`
