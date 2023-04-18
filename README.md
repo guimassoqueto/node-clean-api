@@ -8,7 +8,7 @@
 
 ### For Linux (Debian) Users
 1. Install buid-essential package (to be able to run `make` commands): `sudo apt-get install build-essential`
-2. Rename the *.env.example* to *.env*
+2. `make env` to set *compose.env* and *.env*
 * To run the app fully containerized (skip steps 3 and 4): `make up`
 3. `make install` to install all package.json dependencies
 4. Choose between:  
@@ -18,12 +18,27 @@
 ### For Windows Users
 1. Install [Chocolatey Package Manager](https://chocolatey.org/install)
 2. Install make package (to be able to run `make` commands): `choco install make`
-3. Rename the *.env.example* to *.env*
+3. Set the *.env* file and the *compose.env* file similar to the *.env.example* file. See [Enviromnet Varibles](https://github.com/guimassoqueto/node-api-clean-architecture#environment-variables)
 * To run the app fully containerized (skip steps 3, 4, and 5 in this case): `make up`
 4. `make install` to install all package.json dependencies
 5. Choose between:  
 -- `make start-ts` to run the application without transpile the code to javascript  
 -- `make start-js` to transpile the code to javascript and run it
+
+## Environment Variables
+
+**PS**: `MONGO_HOST` must be `mongodb`  in *compose.env* 
+**PS**: `MONGO_URL` ***must not*** be defined in *compose.env*  
+**PS**: If you change any variable in *.env*, change to the same value in *compose.env*, except for the two variables above  
+
+|     VARIABLE           |DEFAULT VALUE                          |DEFINITION                         | REQUIRED|
+|----------------|-------------------------------|-----------------------------|----|
+|`MONGO_ROOT_USERNAME`|`username`            |mongo user            |:heavy_check_mark:|
+|`MONGO_ROOT_PASSWORD`          |`password`            |mongo password            |:heavy_check_mark:|
+|`MONGO_HOST`         |`localhost`|mongo ip|:heavy_check_mark:|
+|`MONGO_PORT`|`27017`            |port where mongo is listening            |:heavy_check_mark:|
+|`APP_PORT`|`8000`            |api port            |:heavy_check_mark:|
+|`MONGO_URL`|`""`            |mongo url (for remote mongo)           |:heavy_multiplication_x:|
 
 ### Additional Commands (see [Makefile](Makefile))
 * `make install`: install all package.json dependencies (including devDependencies)
@@ -33,6 +48,8 @@
 * `make integration-test`: run all the integration tests
 * `make coverage-report`: show the test coverage of the app (first run `make test` or `make unit-test` or `make integration-test`)
 * `make build`: transpile the typescript code located in *src/* to javascript (will be located in *dist/*)
+
+
 
 TODO:
 - [ ] UML Class Diagram
