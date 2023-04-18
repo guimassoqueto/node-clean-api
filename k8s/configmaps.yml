@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-configmap
+  namespace: node-namespace
+data:
+  MONGO_URL: "<paste-MONGO_URL-here>"

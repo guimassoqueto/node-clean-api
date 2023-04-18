@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api
+  namespace: node-namespace
+spec:
+  selector:
+    matchLabels:
+      app: node-api
+  template:
+    metadata:
+      labels:
+        app: node-api
+    spec:
+      containers:
+      - name: node-api
+        image: guimassoqueto/node-api:1.2.2
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        envFrom:
+          - configMapRef:
+              name: node-configmap
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8000
+          initialDelaySeconds: 20
