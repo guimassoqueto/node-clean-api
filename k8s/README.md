@@ -15,9 +15,9 @@ Wait the minikube local cluster is up and running.
 
 Run in sequence:
 1. `kubectl apply -f namespace.yml`
-2. `kubectl apply -f configmaps.yml`
-3. `kubectl apply -f deployment.yml`
-4. `kubectl apply -f service.yml`
+* Choose secret or configmap folder, set the env vars in configmap.yml, or set secret.yml
+2. `kubectl apply -f secret/secret.yml && kubectl apply -f secret/deployment.yml` or `kubectl apply -f configmap/configmap.yml && kubectl apply -f configmap/deployment.yml`
+3. `kubectl apply -f service.yml`
 
 To avoid re-run `minikube start` every time you change any of .yml files, run the command  
 `kubectl replace --force -f <yml-file>`, where `<yml-file>` is the name of the file you have changed, fro example `kubectl replace --force -f namespace.yml`  
