@@ -1,4 +1,4 @@
-import { ServerError, UnauthorizedError } from '../../errors'
+import { ServerError, UnauthorizedError, EmailAlreadyInUseError } from '../../errors'
 import { type HttpResponse } from '../../protocols'
 
 export function badRequest (error: Error): HttpResponse {
@@ -26,5 +26,12 @@ export function ok (data: any): HttpResponse {
   return {
     statusCode: 200,
     body: data
+  }
+}
+
+export function emailAlreadyInUse (): HttpResponse {
+  return {
+    statusCode: 409,
+    body: new EmailAlreadyInUseError()
   }
 }
