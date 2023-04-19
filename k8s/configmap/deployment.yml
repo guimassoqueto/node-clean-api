@@ -33,6 +33,6 @@ spec:
             httpGet:
               path: /healthcheck
               port: 8000
-            initialDelaySeconds: 20
+            initialDelaySeconds: 5
           securityContext:
             runAsUser: 1000
