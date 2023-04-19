@@ -34,6 +34,37 @@ describe('Login Route' , () => {
     })
   })
 
+  describe('POST /signup' , () => {
+    test('Should return 409 on second signup with an already registered email', async () => {
+      const email = "any_email@email.com"
+      // first try should return 200
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: "Guilherme",
+          email,
+          password: "###!!!123GGGaaa",
+          passwordConfirmation: "###!!!123GGGaaa"
+        })
+        .expect(200)
+
+      // second try should return 409
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: "Guilherme",
+          email,
+          password: "###!!!123GGGaaa",
+          passwordConfirmation: "###!!!123GGGaaa"
+        })
+        .expect(409)
+        
+        // certifica que apenas a primeira inserção foi adicionada ao banco
+        const accounts = await accountCollection.countDocuments({ email })
+        expect(accounts).toBe(1)
+    })
+  })
+
   describe('POST /login' , () => {
     test('Should return 200 on login', async () => {
       const rawPassword = "321!@#qweEWQ"
