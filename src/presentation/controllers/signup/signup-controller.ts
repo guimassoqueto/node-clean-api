@@ -5,7 +5,8 @@ import {
   type HttpResponse,
   type Validation
 } from './signup-controller-protocols'
-import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { badRequest, ok, serverError, emailAlreadyInUse } from '../../helpers/http/http-helper'
+import { EmailAlreadyInUseError } from '../../errors'
 
 export class SignUpControlller implements Controller {
   constructor (
@@ -19,10 +20,13 @@ export class SignUpControlller implements Controller {
       if (error) return badRequest(error)
 
       const { name, email, password } = httpRequest.body
+
       const account = await this.addAccount.add({ name, email, password })
 
       return ok(account)
     } catch (error) {
+      if (error instanceof EmailAlreadyInUseError) return emailAlreadyInUse()
+
       return serverError(error.stack)
     }
   }
