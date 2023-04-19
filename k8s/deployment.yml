@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: node-api
-        image: guimassoqueto/node-api:1.2.3
+        image: guimassoqueto/node-api:latest
         resources:
           limits:
             memory: "256Mi"
