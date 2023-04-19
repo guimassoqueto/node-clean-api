@@ -14,14 +14,10 @@ To run the application in a kubernetes local cluster, follow the steps bellow:
 Wait the minikube local cluster is up and running.
 
 Run in sequence:
-1. `kubectl apply -f namespace.yml`
+1. `kubectl replace --force -f namespace.yml`
 * Choose secret or configmap folder, set the env vars in configmap.yml, or set secret.yml
-2. `kubectl apply -f secret/secret.yml && kubectl apply -f secret/deployment.yml` or `kubectl apply -f configmap/configmap.yml && kubectl apply -f configmap/deployment.yml`
-3. `kubectl apply -f service.yml`
-
-To avoid re-run `minikube start` every time you change any of .yml files, run the command  
-`kubectl replace --force -f <yml-file>`, where `<yml-file>` is the name of the file you have changed, fro example `kubectl replace --force -f namespace.yml`  
-Be cautious running this command.
+2. `kubectl replace --force -f secret/secret.yml && kubectl replace --force -f secret/deployment.yml` or `kubectl replace --force -f configmap/configmap.yml && kubectl replace --force -f configmap/deployment.yml`
+3. `kubectl replace --force -f service.yml`
 
 Ensure you have [xclip](https://howtoinstall.co/en/xclip) installed
 
