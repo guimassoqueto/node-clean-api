@@ -4,10 +4,14 @@ import { type LoadAccountByEmailRepository, type UpdateAccessTokenRepository } f
 import { type AccountModel } from '../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { EmailAlreadyInUseError } from '../../../../presentation/errors'
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
+    const emailAlreadyRegistered = await accountCollection.findOne({ email: accountData.email })
+    if (emailAlreadyRegistered) throw new EmailAlreadyInUseError()
+
     const result = await accountCollection.insertOne(accountData)
     const account = await accountCollection.findOne({ _id: result.insertedId })
 
