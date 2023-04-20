@@ -15,6 +15,7 @@ up:
 	make down && ${COMPOSE} up -d
 
 # inicia o container do banco de dados principal (mongodb)
+# o husky depende desse commando no pre-commit, se mudá-lo, modifique-o tambem em .husk/pre-commit
 db:
 	${DATABASE_UP}
 
