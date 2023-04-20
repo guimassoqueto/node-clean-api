@@ -1,8 +1,8 @@
-This file is just a compiled of the other .yml files, to build the deployment in a single command.
+*shortcut.yaml* is just a compiled of the other .yaml files, to apply configuration of the cluster in a single command.
 
 ### How to run
-Insert the Mongo remote URL in line 12 of *shortcut.yml* and run  
-`kubectl replace --force -f shortcut.yml`  
+Insert the Mongo remote URL in line 12 of *shortcut.yaml* and run  
+`kubectl replace --force -f shortcut.yaml`  
 
 Then:  
 `minikube service -n node-namespace node-service --url | xclip -selection clipboard`  
