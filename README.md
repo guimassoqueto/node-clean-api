@@ -1,4 +1,5 @@
-# node-api-clean-architecture
+# node-clean-api
+A full working API built using the top industry standards. TDD, Object-oriented programming, SOLID principles, Design Patterns, Security, among others.
 
 ## Requirements (for all users)
 * [Node 19+](https://nodejs.org/en)
