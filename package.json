@@ -17,7 +17,7 @@
     "test:watch": "npm test -- --watch --noStackTrace --silent",
     "test:unit": "npm test -- --noStackTrace --silent -c jest-unit.config.ts",
     "test:integration": "npm test -- --noStackTrace --silent -c jest-integration.config.ts",
-    "docker:build": "docker build -t guimassoqueto/node-api ."
+    "docker:build": "docker build -t guimassoqueto/node-api . --quiet"
   },
   "keywords": [],
   "author": "",
