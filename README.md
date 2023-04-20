@@ -5,6 +5,14 @@ A full working API built using the top industry standards. TDD, Object-oriented 
 * [Node 19+](https://nodejs.org/en)
 * [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
 
+## Optional Requirements
+If you want to try the application in a Kubernetes cluster, but before want to test locally:  
+* [kubectl](https://kubernetes.io/docs/tasks/tools/)
+* [minikube](https://minikube.sigs.k8s.io/docs/start/)
+
+If you want to access the application running locally without deploy it in a remote server:
+* [ngrok](https://ngrok.com/)
+
 ## Running the application locally
 
 ### For Linux (Debian) Users
