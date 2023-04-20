@@ -69,7 +69,7 @@ TODO:
 - [ ] Add Performance test reports using [K6](https://k6.io/)
 - [x] Create Kubernetes files to allow the application to run in pods
 - [ ] Deploy the application in AWS EKS or GCP Kubernetes Engine
-- [ ] Integrate the application with [Logtail](https://logtail.com) for observability
+- [x] Integrate the application with [Logtail](https://logtail.com) for observability
 - [x] Evaluate whether tests should have their own settings.ts
 - [ ] Add a logging library to manage application logs. See [Winston](https://www.npmjs.com/package/winston)
 - [ ] Add diagram for LoginController
