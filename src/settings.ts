@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+export const ENVIRONMENT = process.env.ENVIRONMENT ?? 'dev'
+
 const MONGO_ROOT_USERNAME = process.env.MONGO_ROOT_USERNAME ?? 'username'
 const MONGO_ROOT_PASSWORD = process.env.MONGO_ROOT_PASSWORD ?? 'password'
 const MONGO_HOST = process.env.MONGO_HOST ?? '0.0.0.0'
