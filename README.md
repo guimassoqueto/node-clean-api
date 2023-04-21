@@ -42,6 +42,7 @@ If you want to access the application running locally without deploy it in a rem
 
 |     VARIABLE           |DEFAULT VALUE                          |DEFINITION                         | REQUIRED|
 |----------------|-------------------------------|-----------------------------|----|
+|`ENVIRONMENT`|`dev`            |environment in which the app is running            |:heavy_check_mark:|
 |`MONGO_ROOT_USERNAME`|`username`            |mongo user            |:heavy_check_mark:|
 |`MONGO_ROOT_PASSWORD`          |`password`            |mongo password            |:heavy_check_mark:|
 |`MONGO_HOST`         |`localhost`|mongo ip|:heavy_check_mark:|
