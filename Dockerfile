@@ -13,4 +13,4 @@ RUN apk update && apk add curl \
     && npm install -g npm@latest \
     && npm install --production
 ENTRYPOINT [ "node" ]
-CMD [ "dist/main/index.js" ]
+CMD [ "dist/main/main.js" ]
