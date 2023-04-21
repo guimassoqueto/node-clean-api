@@ -38,6 +38,10 @@ test:
 build:
 	${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build
 
+# builda a imagem em docker
+build-image:
+	${DOCKER} build -t guimassoqueto/node-api .
+
 # roda a aplicação em modo debug (precisa ser transpilado para js primeiro)
 debug: 
 	make build && ${PACKAGE_MANAGER_RUN} debug
