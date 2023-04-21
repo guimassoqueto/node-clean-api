@@ -62,6 +62,15 @@ open-repo:
 test-file:
 	${PACKAGE_MANAGER_RUN} test -- tests/unit/infra.crypto.jwt-adapter.spec.ts
 
+# faz a transpilação de tsc para javascript em tempo real, execute em um terminal separado
+tsc-watch:
+	${PACKAGE_MANAGER_RUN} tsc:watch
+
+# executa a applicação em javascript com as mudanças feitas em tempo real, depende do tsc-watch estar em execução
+# deve ser executado em terminal separado, diferente do terminal no qual tsc-watch está sendo executado
+node-watch:
+	${PACKAGE_MANAGER_RUN} node:watch
+
 # builda e inicia a aplicação em javascript puro
 start-js:
 	make down && ${DATABASE_UP} && ${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
