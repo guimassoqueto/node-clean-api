@@ -78,7 +78,7 @@ describe('LoggingController Decorator', () => {
   test('Should return the expected data', async () => {
     const { sut, controllerStub } = makeSut()
     // CS = ControllerStub
-    const spyHandleCS = jest.spyOn(controllerStub, "handle").mockImplementation(async (httpRequest: HttpRequest) => {
+    jest.spyOn(controllerStub, "handle").mockImplementation(async (httpRequest: HttpRequest) => {
       return new Promise(res => res(ok(makeFakeAccount())))
     })
     const httpRequest: HttpRequest = makeFakeRequest()
