@@ -6,7 +6,7 @@ export const MongoHelper = {
 
   async connect (uri: string): Promise<void> {
     this.uri = uri
-    this.client = await MongoClient.connect(this.uri)
+    this.client = await MongoClient.connect(this.uri, { connectTimeoutMS: 5000 })
   },
 
   async disconnect (): Promise<void> {

@@ -48,7 +48,7 @@ services:
     entrypoint:
       - node
     command: 
-      - dist/main/index.js
+      - dist/main/main.js
 
 
   # node-api:
@@ -78,7 +78,7 @@ services:
   #   entrypoint:
   #     - node
   #   command: 
-  #     - dist/main/index.js
+  #     - dist/main/main.js
 
 
 networks:

@@ -4,7 +4,7 @@ import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter/bcrypt
 import { AccountMongoRepository } from '../../../infra/db/mongodb/account/account-mongo-repository'
 import { type Controller } from '../../../presentation/protocols'
 import { LoggingControllerDecorator } from '../../decorators/logging-controller-decorator'
-import { LoggingMongoRepository } from '../../../infra/db/mongodb/logging/logging-mongo-repository'
+import { LoggingWinstonRepository } from '../../../infra/logger/winston/logging-winston-repository'
 import { makeSignUpValidation } from './signup-validation-factory'
 import { SALT_ROUNDS } from '../../../settings'
 
@@ -15,7 +15,7 @@ export function makeSignUpController (): Controller {
 
   const validationComposite = makeSignUpValidation()
   const signUpControlller = new SignUpControlller(dbAddAcccount, validationComposite)
-  const loggingMongoRepository = new LoggingMongoRepository()
+  const loggingWinstonRepository = new LoggingWinstonRepository()
 
-  return new LoggingControllerDecorator(signUpControlller, loggingMongoRepository)
+  return new LoggingControllerDecorator(signUpControlller, loggingWinstonRepository)
 }

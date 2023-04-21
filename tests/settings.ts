@@ -7,4 +7,5 @@ const MONGO_DB_NAME = "node-clean-api-test"
 export const JWT_SECRET = 'secret'
 export const SALT_ROUNDS = 12
 
+export const ENVIRONMENT = 'dev'
 export const MONGO_URL = `mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`

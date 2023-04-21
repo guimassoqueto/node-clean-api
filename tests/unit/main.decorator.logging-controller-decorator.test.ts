@@ -1,7 +1,7 @@
 import { LoggingControllerDecorator } from "../../src/main/decorators/logging-controller-decorator"
 import { Controller, HttpRequest, HttpResponse } from "../../src/presentation/protocols"
-import { serverError,ok } from "../../src/presentation/helpers/http/http-helper"
-import { LoggingErrorRepository } from "../../src/data/protocols/db/logging/logging-error-repository"
+import { serverError, ok } from "../../src/presentation/helpers/http/http-helper"
+import { LoggingRepository } from "../../src/data/protocols/db/logging/logging-error-repository"
 import { AccountModel } from "../../src/domain/models/account"
 
 function makeFakeRequest(): HttpRequest {
@@ -29,40 +29,40 @@ function makeController(): Controller {
   class MockControllerStub implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
       return new Promise(resolve => resolve(ok(makeFakeAccount())))
-    } 
+    }
   }
   return new MockControllerStub()
 }
 
-function makeLoggingErrorRepository(): LoggingErrorRepository {
-  class LoggingErrorRepositoryStub implements LoggingErrorRepository {
-    async logError(stack: string): Promise<void>{
+function makeLoggingRepository(): LoggingRepository {
+  class LoggingRepositoryStub implements LoggingRepository {
+    async logError(stack: string): Promise<void> {
       return new Promise(resolve => resolve())
     }
   }
-  return new LoggingErrorRepositoryStub()
+  return new LoggingRepositoryStub()
 }
 
 interface sutTypes {
   sut: LoggingControllerDecorator,
   controllerStub: Controller,
-  loggingErrorRepositoryStub: LoggingErrorRepository
+  loggingRepositoryStub: LoggingRepository
 }
 
 function makeSut(): sutTypes {
   const controllerStub = makeController()
-  const loggingErrorRepositoryStub = makeLoggingErrorRepository()
-  const loggingControllerDecoratorStub = new LoggingControllerDecorator(controllerStub, loggingErrorRepositoryStub)
-  
+  const loggingRepositoryStub = makeLoggingRepository()
+  const loggingControllerDecoratorStub = new LoggingControllerDecorator(controllerStub, loggingRepositoryStub)
+
   return {
     sut: loggingControllerDecoratorStub,
     controllerStub,
-    loggingErrorRepositoryStub
+    loggingRepositoryStub
   }
 }
 
 
-describe('LoggingController Decorator' , () => {
+describe('LoggingController Decorator', () => {
   test('Should call controller handle with the same arg as LoggingController', async () => {
     const { sut, controllerStub } = makeSut()
     const spyHandleSut = jest.spyOn(sut, "handle")
@@ -78,7 +78,7 @@ describe('LoggingController Decorator' , () => {
   test('Should return the expected data', async () => {
     const { sut, controllerStub } = makeSut()
     // CS = ControllerStub
-    const spyHandleCS = jest.spyOn(controllerStub, "handle").mockImplementation(async (httpRequest: HttpRequest) => {
+    jest.spyOn(controllerStub, "handle").mockImplementation(async (httpRequest: HttpRequest) => {
       return new Promise(res => res(ok(makeFakeAccount())))
     })
     const httpRequest: HttpRequest = makeFakeRequest()
@@ -87,15 +87,15 @@ describe('LoggingController Decorator' , () => {
     expect(promise).toStrictEqual(ok(makeFakeAccount()))
   })
 
-  test('Should call LoggingErrorRepository with correct error if controller return a server error', async () => {
-    const { sut, controllerStub, loggingErrorRepositoryStub } = makeSut()
+  test('Should call LoggingRepository with correct error if controller return a server error', async () => {
+    const { sut, controllerStub, loggingRepositoryStub } = makeSut()
     function makeFakeError(): HttpResponse {
       const fakeError = new Error()
       fakeError.stack = "Any Stack Error"
       return serverError(fakeError)
     }
     jest.spyOn(controllerStub, "handle").mockReturnValueOnce(new Promise(resolve => resolve(makeFakeError())))
-    const loggingSpy = jest.spyOn(loggingErrorRepositoryStub, "logError")
+    const loggingSpy = jest.spyOn(loggingRepositoryStub, "logError")
     const httpRequest: HttpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
 
