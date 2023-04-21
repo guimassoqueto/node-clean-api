@@ -1,8 +1,8 @@
-import { ENVIRONMENT } from '../../../settings'
+import { ENVIRONMENT } from './settings'
 import winston, { format, type Logger } from 'winston'
 const { combine, timestamp, printf, label } = format
 
-export default function loggerFactory (appLabel: string): Logger {
+export default function loggerConfig (appLabel: string): Logger {
   // formato da mensage no logger
   const messageFormat: winston.Logform.Format = printf(({ level, message, label, timestamp }) => {
     return `${timestamp} [${label}][${level}]: ${message}`
