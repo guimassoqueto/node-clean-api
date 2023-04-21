@@ -4,7 +4,7 @@ import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter/bcrypt
 import { AccountMongoRepository } from '../../../infra/db/mongodb/account/account-mongo-repository'
 import { type Controller } from '../../../presentation/protocols'
 import { LoggingControllerDecorator } from '../../decorators/logging-controller-decorator'
-import { LoggingWinstonRepository } from '../../../infra/logger/winston/logging/logging-winston-repository'
+import { LoggingWinstonRepository } from '../../../infra/logger/winston/logging-winston-repository'
 import { makeSignUpValidation } from './signup-validation-factory'
 import { SALT_ROUNDS } from '../../../settings'
 
