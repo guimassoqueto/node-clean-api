@@ -1,10 +1,10 @@
 import winston, { format, type Logger } from 'winston'
-const { combine, timestamp, printf } = format
+const { combine, timestamp, printf, label } = format
 
-function makeLogger (): Logger {
+export default function loggerFactory (appLabel: string): Logger {
   // formato da mensage no logger
-  const messageFormat: winston.Logform.Format = printf(({ level, message, timestamp }) => {
-    return `${timestamp} [${level.toUpperCase()}]: ${message}`
+  const messageFormat: winston.Logform.Format = printf(({ level, message, label, timestamp }) => {
+    return `${timestamp} [${label}][${level}]: ${message}`
   })
   // formato da mensagem: https://github.com/taylorhakes/fecha
   const timestampFormat = { format: 'DD-MM-YYYY Z HH:mm:ss.SSS' }
@@ -15,11 +15,10 @@ function makeLogger (): Logger {
   return winston.createLogger({
     level,
     format: combine(
+      label({ label: appLabel }),
       timestamp(timestampFormat),
       messageFormat
     ),
     transports: [new winston.transports.Console()]
   })
 }
-const logger: Logger = makeLogger()
-export default logger
