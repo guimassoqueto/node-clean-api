@@ -11,6 +11,6 @@ COPY --from=build /app/dist dist/
 COPY package*.json .
 RUN apk update && apk add curl \
     && npm install -g npm@latest \
-    && npm install --production
+    && npm install --omit=dev
 ENTRYPOINT [ "node" ]
 CMD [ "dist/main/main.js" ]
