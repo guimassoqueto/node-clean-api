@@ -5,13 +5,13 @@ import { type LoggingRepository } from '../../data/protocols/db/logging/logging-
 export class LoggingControllerDecorator implements Controller {
   constructor (
     private readonly controller: Controller,
-    private readonly loggingErrorRepository: LoggingRepository
+    private readonly loggingRepository: LoggingRepository
   ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const httpResponse = await this.controller.handle(httpRequest)
 
-    if (httpResponse.statusCode === 500) await this.loggingErrorRepository.logError(httpResponse.body.stack)
+    if (httpResponse.statusCode === 500) await this.loggingRepository.logError(httpResponse.body.stack)
 
     return httpResponse
   }
