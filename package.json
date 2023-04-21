@@ -52,6 +52,6 @@
     "winston": "^3.8.2"
   },
   "engines": {
-    "node": "19.x"
+    "node": "20.x"
   }
 }
