@@ -2,7 +2,7 @@
 A full working API built using the top industry standards. TDD, Object-oriented programming, SOLID principles, Design Patterns, Security, among others.
 
 ## Requirements (for all users)
-* [Node 19+](https://nodejs.org/en)
+* [Node 20+](https://nodejs.org/en)
 * [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
 
 ## Optional Requirements
@@ -58,7 +58,9 @@ If you want to access the application running locally without deploy it in a rem
 * `make integration-test`: run all the integration tests
 * `make coverage-report`: show the test coverage of the app (first run `make test` or `make unit-test` or `make integration-test`)
 * `make build`: transpile the typescript code located in *src/* to javascript (will be located in *dist/*)
-
+* `make build-image`: build the application image using Docker
+* `make tsc-watch`: transpile in real-time the code to javascript
+* `make node-watch`: execute the app with changes in real-time (works with tsc-watch)
 
 
 TODO:
@@ -76,4 +78,4 @@ TODO:
 - [ ] Add diagram for LoginController
 - [ ] Define whether JWT_SECRET and SALT_ROUNDS should be defined in settings.ts should be raw written in the code, or be migrated to *.env*
 
-app version: 1.2.5
+app version: 1.3.0
