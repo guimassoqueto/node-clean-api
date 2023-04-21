@@ -76,4 +76,4 @@ TODO:
 - [ ] Add diagram for LoginController
 - [ ] Define whether JWT_SECRET and SALT_ROUNDS should be defined in settings.ts should be raw written in the code, or be migrated to *.env*
 
-version:1.2.3
+app version: 1.2.5
