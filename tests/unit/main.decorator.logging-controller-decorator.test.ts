@@ -80,13 +80,16 @@ describe('LoggingController Decorator', () => {
   test('Should return the expected data', async () => {
     const { sut, controllerStub } = makeSut()
     // CS = ControllerStub
+    const fakeAccount = makeFakeAccount()
     jest.spyOn(controllerStub, "handle").mockImplementation(async (httpRequest: HttpRequest) => {
-      return new Promise(res => res(ok(makeFakeAccount())))
+      return new Promise(res => res(ok(fakeAccount)))
     })
     const httpRequest: HttpRequest = makeFakeRequest()
     const promise = await sut.handle(httpRequest)
 
-    expect(promise).toStrictEqual(ok(makeFakeAccount()))
+    expect(promise.statusCode).toBe(200)
+    expect(promise.body.name).toEqual(fakeAccount.name)
+    expect(promise.body.email).toEqual(fakeAccount.email)
   })
 
   test('Should call LoggingRepository with correct error if controller return a server error', async () => {

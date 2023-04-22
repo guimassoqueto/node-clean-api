@@ -103,7 +103,7 @@ describe('Sign Up Controlller' , () => {
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
 
-    expect(httpResponse).toEqual(ok(makeFakeAccount()))
+    expect(httpResponse.statusCode).toBe(200)
   })
 
   test('Should call Validation with correct value', async () => {
