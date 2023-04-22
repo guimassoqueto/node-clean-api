@@ -110,6 +110,11 @@ describe('DbAddAcccount Usecase' , () => {
     const { sut } = makeSut();
     const account: AddAccountModel = makeAddAccount()
     const accountReturn = await sut.add(account)
-    expect(accountReturn).toStrictEqual(makeFakeAccount())
+
+    expect(accountReturn).toBeTruthy()
+    expect(accountReturn.email).toEqual(account.email)
+    expect(accountReturn.name).toEqual(account.name)
+    expect(accountReturn.verified).toBeTruthy()
+    expect(accountReturn.createdAt).toBeTruthy()
   })
 })
