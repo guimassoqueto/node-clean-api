@@ -9,6 +9,11 @@ import { EmailAlreadyInUseError } from '../../../../presentation/errors'
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
+
+    // TODO: [Mudar? Assim funciona. Mas o indice é criado a cada novo signup]
+    // a conta é removida do banco de dados após 600 segundos (10 minutos) se não for verificada
+    await accountCollection.createIndex({ createdAt: 1 }, { expireAfterSeconds: 600, partialFilterExpression: { verified: false } })
+
     const emailAlreadyRegistered = await accountCollection.findOne({ email: accountData.email })
     if (emailAlreadyRegistered) throw new EmailAlreadyInUseError()
 
