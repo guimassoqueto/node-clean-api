@@ -29,7 +29,9 @@ function makeFakeAccount(): AccountModel {
     id: "valid_id",
     name: "valid_name",
     password: "hashed_password",
-    email: "valid_email@email.com"
+    email: "valid_email@email.com",
+    verified: true,
+    createdAt: new Date()
   }
 }
 
@@ -108,6 +110,11 @@ describe('DbAddAcccount Usecase' , () => {
     const { sut } = makeSut();
     const account: AddAccountModel = makeAddAccount()
     const accountReturn = await sut.add(account)
-    expect(accountReturn).toStrictEqual(makeFakeAccount())
+
+    expect(accountReturn).toBeTruthy()
+    expect(accountReturn.email).toEqual(account.email)
+    expect(accountReturn.name).toEqual(account.name)
+    expect(accountReturn.verified).toBeTruthy()
+    expect(accountReturn.createdAt).toBeTruthy()
   })
 })
