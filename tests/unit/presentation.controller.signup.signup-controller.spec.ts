@@ -15,7 +15,8 @@ function makeFakeAccount(): AccountModel {
     name: "valid_name",
     email: "valid_email@email.com",
     password: "valid_password",
-    verified: true
+    verified: true,
+    createdAt: new Date()
   }
 }
 
