@@ -68,7 +68,7 @@ If you want to access the application running locally without deploy it in a rem
 
 TODO:
 - [ ] Create an Email interface to handle emails, for validations, password recovery, etc
-- [ ] Create an Adpater that implements Email interface and send emails. The Adapter shoul Implement a email service, like [Sendgrid](https://www.npmjs.com/package/@sendgrid/mail) or [Nodemailer](https://www.npmjs.com/package/nodemailer)
+- [ ] Create an Adpater that implements Email interface and send emails. The Adapter should Implement an email service, like [Sendgrid](https://www.npmjs.com/package/@sendgrid/mail) or [Nodemailer](https://www.npmjs.com/package/nodemailer)
 - [ ] UML Structure - Class Diagram
 - [x] UML Behavior - Use Case Diagram
 - [ ] UML Interaction - Sequence Diagram
