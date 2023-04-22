@@ -12,7 +12,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     const emailAlreadyRegistered = await accountCollection.findOne({ email: accountData.email })
     if (emailAlreadyRegistered) throw new EmailAlreadyInUseError()
 
-    const result = await accountCollection.insertOne({ ...accountData, verified: false })
+    const result = await accountCollection.insertOne({ ...accountData, verified: false, createdAt: new Date() })
     const account = await accountCollection.findOne({ _id: result.insertedId })
 
     return MongoHelper.mapper<AccountModel>(account)
