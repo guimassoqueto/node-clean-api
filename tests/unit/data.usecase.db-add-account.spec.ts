@@ -29,7 +29,8 @@ function makeFakeAccount(): AccountModel {
     id: "valid_id",
     name: "valid_name",
     password: "hashed_password",
-    email: "valid_email@email.com"
+    email: "valid_email@email.com",
+    verified: true
   }
 }
 
