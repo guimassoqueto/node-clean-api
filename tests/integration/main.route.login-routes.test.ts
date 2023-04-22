@@ -32,9 +32,21 @@ describe('Login Route' , () => {
         })
         .expect(200)
     })
-  })
 
-  describe('POST /signup' , () => {
+    test('Should return the field verified being false after every signup', async () => {
+      const response = await request(app)
+        .post('/api/signup')
+        .send({
+          name: "Guilherme",
+          email: "guilhermemassoqueto@gmail.com",
+          password: "###!!!123GGGaaa",
+          passwordConfirmation: "###!!!123GGGaaa"
+        })
+        .expect(200)
+      
+      expect(response.body.verified).toBe(false)
+    })
+
     test('Should return 409 on second signup with an already registered email', async () => {
       const email = "any_email@email.com"
       // first try should return 200
