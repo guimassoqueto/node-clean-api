@@ -1,6 +1,9 @@
 # node-clean-api
 A full working API built using the top industry standards. TDD, Object-oriented programming, SOLID principles, Design Patterns, Security, among others.
 
+## Usecase Diagram
+![Node API Usecase Diagram](/diagrams/UML/node-api.usecase.drawio.png)
+
 ## Requirements (for all users)
 * [Node 20+](https://nodejs.org/en)
 * [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
@@ -64,8 +67,9 @@ If you want to access the application running locally without deploy it in a rem
 
 
 TODO:
-- [ ] UML Class Diagram
-- [ ] UML Use Case Diagram
+- [ ] UML Structure - Class Diagram
+- [x] UML Behavior - Use Case Diagram
+- [ ] UML Interaction - Sequence Diagram
 - [x] Add dependabot
 - [x] Add Github Actions Pipeline
 - [ ] Add MongoDb in Github Actions to run integration tests
