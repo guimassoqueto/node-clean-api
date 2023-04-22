@@ -6,7 +6,7 @@ import { Collection } from "mongodb"
 import { hash } from "bcrypt"
 
 let accountCollection: Collection;
-describe('Login Route' , () => {
+describe('Login Route', () => {
   beforeAll(async () => {
     await MongoHelper.connect(MONGO_URL);
   })
@@ -20,7 +20,7 @@ describe('Login Route' , () => {
     await accountCollection.deleteMany({})
   })
 
-  describe('POST /signup' , () => {
+  describe('POST /signup', () => {
     test('Should return 200 on signup', async () => {
       await request(app)
         .post('/api/signup')
@@ -43,7 +43,7 @@ describe('Login Route' , () => {
           passwordConfirmation: "###!!!123GGGaaa"
         })
         .expect(200)
-      
+
       expect(response.body.verified).toBe(false)
     })
 
@@ -70,22 +70,23 @@ describe('Login Route' , () => {
           passwordConfirmation: "###!!!123GGGaaa"
         })
         .expect(409)
-        
-        // certifica que apenas a primeira inserção foi adicionada ao banco
-        const accounts = await accountCollection.countDocuments({ email })
-        expect(accounts).toBe(1)
+
+      // certifica que apenas a primeira inserção foi adicionada ao banco
+      const accounts = await accountCollection.countDocuments({ email })
+      expect(accounts).toBe(1)
     })
   })
 
-  describe('POST /login' , () => {
+  describe('POST /login', () => {
     test('Should return 200 on login', async () => {
       const rawPassword = "321!@#qweEWQ"
       const passwordHash = await hash(rawPassword, SALT_ROUNDS)
 
-      const newUser: { name: string, email: string, password: string } = {
+      const newUser: { name: string, email: string, password: string, verified: boolean } = {
         name: "any_user",
         email: "any_email@email.com",
-        password: passwordHash
+        password: passwordHash,
+        verified: true
       }
 
       await accountCollection.insertOne(newUser)
@@ -99,6 +100,28 @@ describe('Login Route' , () => {
         .expect(200)
     })
 
+    test('Should return 401 if the user tries to login without verify the email first', async () => {
+      const rawPassword = "321!@#qweEWQ"
+      const passwordHash = await hash(rawPassword, SALT_ROUNDS) 
+
+      // se o campo verified não for passado, a ausencia do mesmo no banco per se é falso
+      const newUser: { name: string, email: string, password: string} = {
+        name: "any_user",
+        email: "any_email@email.com",
+        password: passwordHash,
+      }
+
+      await accountCollection.insertOne(newUser)
+
+      await request(app)
+      .post('/api/login')
+      .send({
+        email: newUser.email,
+        password: rawPassword
+      })
+      .expect(401)
+    })
+
     test('Should return 401 on invalid credentials', async () => {
       await request(app)
         .post('/api/login')
@@ -109,5 +132,5 @@ describe('Login Route' , () => {
         .expect(401)
     })
   })
-  
+
 })
