@@ -75,7 +75,7 @@ TODO:
 - [ ] Create an Adpater that implements Email interface and send emails. The Adapter should Implement an email service, like [Sendgrid](https://www.npmjs.com/package/@sendgrid/mail) or [Nodemailer](https://www.npmjs.com/package/nodemailer)
 - [x] UML Structure - Class Diagram
 - [x] UML Behavior - Use Case Diagram
-- [ ] UML Interaction - Sequence Diagram
+- [x] UML Interaction - Sequence Diagram
 - [x] Add dependabot
 - [x] Add Github Actions Pipeline
 - [ ] Add MongoDb in Github Actions to run integration tests
