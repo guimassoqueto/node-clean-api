@@ -4,6 +4,10 @@ A full working API built using the top industry standards. TDD, Object-oriented 
 ## Usecase Diagram
 ![Node API Usecase Diagram](/diagrams/UML/node-api.usecase.drawio.png)
 
+## Class Diagram
+*PS:* to see the complete diagram, with all methods and behaviors, open [this file](/diagrams/UML/node-api.class.drawio) with the app [Diagrams.net](https://www.diagrams.net/)
+![Node API Class Diagram](/diagrams/UML/node-api.class.drawio.png)
+
 ## Requirements (for all users)
 * [Node 20+](https://nodejs.org/en)
 * [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
@@ -69,7 +73,7 @@ If you want to access the application running locally without deploy it in a rem
 TODO:
 - [ ] Create an Email interface to handle emails, for validations, password recovery, etc
 - [ ] Create an Adpater that implements Email interface and send emails. The Adapter should Implement an email service, like [Sendgrid](https://www.npmjs.com/package/@sendgrid/mail) or [Nodemailer](https://www.npmjs.com/package/nodemailer)
-- [ ] UML Structure - Class Diagram
+- [x] UML Structure - Class Diagram
 - [x] UML Behavior - Use Case Diagram
 - [ ] UML Interaction - Sequence Diagram
 - [x] Add dependabot
