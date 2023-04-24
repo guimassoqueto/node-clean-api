@@ -5,7 +5,7 @@ A full working API built using the top industry standards. TDD, Object-oriented 
 ![Node API Usecase Diagram](/diagrams/UML/node-api.usecase.drawio.png)
 
 ## Class Diagram
-*PS:* to see the complete diagram, with all methods and behaviors, open [this file](/diagrams/UML/node-api.class.drawio) with the app [Diagrams.net](https://www.diagrams.net/)
+*PS:* to see the complete diagram, with states and behaviors, open [this file](/diagrams/UML/node-api.class.drawio) with the app [Diagrams.net](https://www.diagrams.net/)
 ![Node API Class Diagram](/diagrams/UML/node-api.class.drawio.png)
 
 ## Requirements (for all users)
