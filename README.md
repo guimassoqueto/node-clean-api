@@ -11,11 +11,9 @@ A full working API built using the top industry standards. TDD, Object-oriented 
 ## Sequence Diagrams
 
 ### SignUp Diagram
-*PS:* to see the complete diagram, with all methods and behaviors, open [this file](/diagrams/UML/node-api.signup.sequence.drawio.png) with the app [Diagrams.net](https://www.diagrams.net/)
 ![Node API SignUp Sequence Diagram](/diagrams/UML/node-api.signup.sequence.drawio.png)
 
 ### Login Diagram
-*PS:* to see the complete diagram, with all methods and behaviors, open [this file](/diagrams/UML/node-api.login.sequence.drawio) with the app [Diagrams.net](https://www.diagrams.net/)
 ![Node API Class Diagram](/diagrams/UML/node-api.login.sequence.drawio.png)
 
 ## Requirements (for all users)
