@@ -14,3 +14,8 @@ export const SALT_ROUNDS = 12 // número de interaçoes na qual o segredo será 
 
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? 'node-clean-api'
 export const MONGO_URL = process.env.MONGO_URL ?? `mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`
+
+// aws email service
+export const AWS_SES_REGION = process.env.AWS_SES_REGION ?? ''
+export const AWS_ACCESS_KEY_SECRET = process.env.AWS_ACCESS_KEY_SECRET ?? ''
+export const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID ?? ''
