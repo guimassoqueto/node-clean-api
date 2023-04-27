@@ -4,6 +4,17 @@ import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
 import { MONGO_URL, SALT_ROUNDS } from "../settings"
 import { Collection } from "mongodb"
 import { hash } from "bcrypt"
+import { mockClient } from "aws-sdk-client-mock";
+import { SESClient } from'@aws-sdk/client-ses'
+
+// Para mocar o client do SESclient está sendo utilizada a biblioteca aws-sdk-client-mock,
+// que mocka os clientes da aws, nesse caso o servico de email
+// Se o servico de email for alterado, deve-se alterar a estratégia de mock
+const sesMock = mockClient(SESClient);
+sesMock.send.resolves({$metadata: {
+  httpStatusCode: 200
+}});
+
 
 let accountCollection: Collection;
 describe('Login Route', () => {
