@@ -1,13 +1,25 @@
 import { SignUpControlller } from "../../src/presentation/controllers/signup/signup-controller"
 import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
+import { AddUnverifiedAccount } from "../../src/domain/usecases/add-unverified-account"
 import { AccountModel } from "../../src/domain/models/account"
 import { 
   HttpRequest,
-  Validation
+  Validation,
+  EmailService,
+  EmailVerificationData,
+  EmailVerificationResponse,
 } from "../../src/presentation/controllers/signup/signup-controller-protocols"
 import { MissingParamError, ServerError } from "../../src/presentation/errors"
-import { ok, badRequest } from "../../src/presentation/helpers/http/http-helper"
+import { badRequest } from "../../src/presentation/helpers/http/http-helper"
+import { UnverifiedAccountModel } from "../../src/domain/models/unverified-account"
 
+function makeUnverifiedAccount(): UnverifiedAccountModel {
+  return {
+    id: "any_id",
+    encryptedAccountId: "hashed_account_id",
+    createdAt: new Date()
+  }
+}
 
 function makeFakeAccount(): AccountModel {
   return {
@@ -32,6 +44,25 @@ function makeAddAccount(): AddAccount {
   return new AddAccountStub();
 }
 
+function makeAddUnverifiedAccount(): AddUnverifiedAccount {
+  class AddUnverifiedAccountStub implements AddUnverifiedAccount {
+    async add (accountId: string): Promise<UnverifiedAccountModel> {
+      return new Promise(resolve => resolve(makeUnverifiedAccount()))
+    }
+  }
+  return new AddUnverifiedAccountStub()
+}
+
+function makeEmailService(): EmailService {
+  class EmailServiceStub implements EmailService {
+    async sendAccountVerificationEmail (emailVerificationData: EmailVerificationData): Promise<EmailVerificationResponse> {
+      return new Promise(resolve => resolve({ statusCode: 200 }))
+    }
+  }
+
+  return new EmailServiceStub()
+}
+
 function makeValidation(): Validation {
   class ValidationStub implements Validation {
     validate(input: any): Error | null {
@@ -45,19 +76,31 @@ function makeValidation(): Validation {
 interface SutTypes {
   sut: SignUpControlller,
   addAccountStub: AddAccount,
-  validationStub: Validation
+  validationStub: Validation,
+  addUnverifiedAccountStub: AddUnverifiedAccount,
+  emailServiceStub: EmailService
 }
 
 // Factory que cria um SignUpController
 function makeSut(): SutTypes {
-  const addAccountStub = makeAddAccount()
   const validationStub = makeValidation()
-  const sut = new SignUpControlller(addAccountStub, validationStub);
+  const addAccountStub = makeAddAccount()
+  const addUnverifiedAccountStub = makeAddUnverifiedAccount()
+  const emailServiceStub = makeEmailService()
+
+  const sut = new SignUpControlller(
+    validationStub,
+    addAccountStub, 
+    addUnverifiedAccountStub,
+    emailServiceStub
+  );
 
   return {
     sut,
     addAccountStub,
-    validationStub
+    validationStub,
+    addUnverifiedAccountStub,
+    emailServiceStub
   }
 }
 
@@ -125,4 +168,43 @@ describe('Sign Up Controlller' , () => {
     expect(httpResponse).toEqual(badRequest(error))
   })
 
+  test('Should call addUnverifiedAccount with correct values', async () => {
+    const { sut, addUnverifiedAccountStub } = makeSut()
+    const addSpy = jest.spyOn(addUnverifiedAccountStub, "add")
+    await sut.handle(makeFakeRequest())
+
+    expect(addSpy).toHaveBeenCalledWith(makeFakeAccount().id)
+  })
+
+  test('Should return 500 if addUnverifiedAccountStub throws', async () => {
+    const { sut, addUnverifiedAccountStub } = makeSut()
+    const error = new Error("any_error")
+    jest.spyOn(addUnverifiedAccountStub, "add").mockImplementationOnce((accountId: string) => {
+      return new Promise((_, reject) => reject(new Error()))
+    })
+    const response = await sut.handle(makeFakeRequest())
+
+    expect(response.statusCode).toBe(500)
+  })
+
+  test('Should call emailService.sendAccountVerificationEmail with correct values', async () => {
+    const { sut, emailServiceStub } = makeSut()
+    const sendAccountVerificationEmailSpy = jest.spyOn(emailServiceStub, "sendAccountVerificationEmail")
+    const fakeRequest = makeFakeRequest()
+    await sut.handle(fakeRequest)
+    const { email } = fakeRequest.body
+
+    expect(sendAccountVerificationEmailSpy).toHaveBeenCalledWith({ email, hash: makeUnverifiedAccount().encryptedAccountId })
+  })
+
+  test('Should return 500 if sendAccountVerificationEmail throws', async () => {
+    const { sut, emailServiceStub } = makeSut()
+    const error = new Error("any_error")
+    jest.spyOn(emailServiceStub, "sendAccountVerificationEmail").mockImplementationOnce((emailVerificationData: { email: string, hash: string }) => {
+      return new Promise((_, reject) => reject(new Error("sendAccountVerificationEmail error")))
+    })
+    const response = await sut.handle(makeFakeRequest())
+
+    expect(response.statusCode).toBe(500)
+  })
 })
