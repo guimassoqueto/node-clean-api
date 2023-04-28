@@ -60,4 +60,12 @@ describe('VerifyAccountController' , () => {
     expect(response.statusCode).toBe(400)
   })
 
+  test('Should call accountVerification.verify with correct values ', async () => {
+    const { sut, accountVerificationStub } = makeSut()
+    const spyVerify = jest.spyOn(accountVerificationStub, "verify")
+    const request = makeHttpRequest()
+    await sut.handle(request)
+
+    expect(spyVerify).toHaveBeenCalledWith(request.params.accToken)
+  })
 })
