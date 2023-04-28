@@ -57,13 +57,19 @@ If you want to access the application running locally without deploy it in a rem
 
 |     VARIABLE           |DEFAULT VALUE                          |DEFINITION                         | REQUIRED|
 |----------------|-------------------------------|-----------------------------|----|
+|`ENVIRONMENT`|`dev`            |environment in which the app is running (necessary to run logs properly)           |:heavy_multiplication_x:|
+|`AWS_SES_REGION`|`""`            |AWS SES's region           |:heavy_check_mark:|
+|`AWS_SES_ACCESS_KEY_SECRET`|`""`            |AWS SES's Access Key Secret          |:heavy_check_mark:|
+|`AWS_SES_ACCESS_KEY_ID`|`""`            |AWS SES's Access Key ID            |:heavy_check_mark:|
 |`MONGO_ROOT_USERNAME`|`username`            |mongo user            |:heavy_check_mark:|
 |`MONGO_ROOT_PASSWORD`          |`password`            |mongo password            |:heavy_check_mark:|
 |`MONGO_HOST`         |`localhost`|mongo ip|:heavy_check_mark:|
 |`MONGO_PORT`|`27017`            |port where mongo is listening            |:heavy_check_mark:|
-|`APP_PORT`|`8000`            |api port            |:heavy_check_mark:|
+|`APP_HOST`|`localhost`            |API's host           |:heavy_multiplication_x:|
+|`APP_PORT`|`8000`            |API's port            |:heavy_multiplication_x:|
+|`APP_URL`|`${APP_HOST}:${APP_PORT}"`            |API's URL            |:heavy_multiplication_x:|
 |`MONGO_URL`|`""`            |mongo url (for remote mongo)           |:heavy_multiplication_x:|
-|`ENVIRONMENT`|`dev`            |environment in which the app is running            |:heavy_multiplication_x:|
+
 
 ### Additional Commands (see [Makefile](Makefile))
 * `make install`: install all package.json dependencies (including devDependencies)
