@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-04-28T14:52:17.177Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="uZxNZA_liDTdoJXRzlUv" version="21.1.2" type="device">
+<mxfile host="Electron" modified="2023-04-28T18:23:53.604Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="obmfUh63EZbz6GWSraR_" version="21.1.2" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2514" dy="2088" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2261" dy="1950" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -46,7 +46,7 @@
         </mxCell>
         <mxCell id="kCM1FT8XMwVdJC8RZSaU-20" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;AddAccountRepository" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=40;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
           <mxGeometry x="140" y="-490" width="134" height="40" as="geometry">
-            <mxRectangle x="-1274" y="-1090" width="360" height="66" as="alternateBounds" />
+            <mxRectangle x="140" y="-490" width="360" height="66" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="kCM1FT8XMwVdJC8RZSaU-21" value="add (accountData: AddAccountModel): Promise&amp;lt;AccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-20" vertex="1">
@@ -468,7 +468,7 @@
         </mxCell>
         <mxCell id="m0BBNBDtI2D7hg9GQkUa-6" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;AddUnverifiedAccount" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
           <mxGeometry x="480" y="-190" width="160" height="40" as="geometry">
-            <mxRectangle x="596" y="-256" width="329" height="56" as="alternateBounds" />
+            <mxRectangle x="480" y="-190" width="329" height="56" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="m0BBNBDtI2D7hg9GQkUa-7" value="add (accountId: string): Promise&amp;lt;UnverifiedAccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="m0BBNBDtI2D7hg9GQkUa-6" vertex="1">
@@ -491,8 +491,8 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="m0BBNBDtI2D7hg9GQkUa-10" value="DbAddUnverifiedAcccount" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
-          <mxGeometry x="620" y="-340" width="180" height="30" as="geometry">
+        <mxCell id="m0BBNBDtI2D7hg9GQkUa-10" value="AccountVerificationMongoRepository" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
+          <mxGeometry x="620" y="-340" width="240" height="30" as="geometry">
             <mxRectangle x="620" y="-340" width="740" height="112" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -547,7 +547,7 @@
         </mxCell>
         <mxCell id="m0BBNBDtI2D7hg9GQkUa-39" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;AddUnverifiedAccountRepository" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
           <mxGeometry x="730" y="-50" width="220" height="40" as="geometry">
-            <mxRectangle x="710" y="-140" width="380" height="56" as="alternateBounds" />
+            <mxRectangle x="730" y="-50" width="380" height="56" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="m0BBNBDtI2D7hg9GQkUa-42" value="add (encryptedAccountId: string): Promise&amp;lt;UnverifiedAccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="m0BBNBDtI2D7hg9GQkUa-39" vertex="1">
