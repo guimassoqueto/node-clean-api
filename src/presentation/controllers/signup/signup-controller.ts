@@ -9,6 +9,9 @@ import {
 } from './signup-controller-protocols'
 import { badRequest, ok, serverError, emailAlreadyInUse } from '../../helpers/http/http-helper'
 import { EmailAlreadyInUseError } from '../../errors'
+import loggerConfig from '../../../logger-config'
+
+const logger = loggerConfig('signup-controller')
 
 export class SignUpControlller implements Controller {
   constructor (
@@ -34,8 +37,9 @@ export class SignUpControlller implements Controller {
 
       return ok(account)
     } catch (error) {
+      logger.error(error)
       if (error instanceof EmailAlreadyInUseError) return emailAlreadyInUse()
-      return serverError(error.stack)
+      return serverError(error)
     }
   }
 }

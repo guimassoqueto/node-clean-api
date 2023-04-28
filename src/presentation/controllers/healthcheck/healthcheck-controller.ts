@@ -1,5 +1,8 @@
+import loggerConfig from '../../../logger-config'
 import { serverError } from '../../helpers/http/http-helper'
 import { type Controller, type HttpRequest, type HttpResponse } from '../../protocols'
+
+const logger = loggerConfig('healthcheck-controller')
 
 export class HealthCheckController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -12,6 +15,7 @@ export class HealthCheckController implements Controller {
       }
       return await new Promise(resolve => { resolve(httpResponse) })
     } catch (error) {
+      logger.error(error)
       return serverError(error)
     }
   }
