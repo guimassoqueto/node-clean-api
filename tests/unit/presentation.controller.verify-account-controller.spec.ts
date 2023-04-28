@@ -1,4 +1,5 @@
 import { AccountVerification } from "../../src/domain/usecases/account-verification"
+import { AccountVerificationError } from "../../src/presentation/controllers/verify-account/verify-account-protocols"
 import { VerifyAccountController } from "../../src/presentation/controllers/verify-account/verify-accout-controller"
 import { HttpRequest, Validation } from "../../src/presentation/protocols"
 
@@ -67,5 +68,14 @@ describe('VerifyAccountController' , () => {
     await sut.handle(request)
 
     expect(spyVerify).toHaveBeenCalledWith(request.params.accToken)
+  })
+
+  test('Should return 404 if the token passed is invalid/expired', async () => {
+    const { sut, accountVerificationStub } = makeSut()
+    jest.spyOn(accountVerificationStub, "verify").mockResolvedValue(false)
+    const response = await sut.handle(makeHttpRequest())
+
+    expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new AccountVerificationError())
   })
 })
