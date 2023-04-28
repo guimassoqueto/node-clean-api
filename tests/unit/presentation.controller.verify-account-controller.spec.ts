@@ -81,6 +81,16 @@ describe('VerifyAccountController' , () => {
     expect(spyVerify).toHaveBeenCalledWith(request.params.accToken)
   })
 
+  test('Should return 500 if verify throws', async () => {
+    const { sut, accountVerificationStub } = makeSut()
+    jest.spyOn(accountVerificationStub, "verify").mockImplementationOnce(() => {
+      throw new Error("any error")
+    })
+    const response = await sut.handle(makeHttpRequest())
+
+    expect(response.statusCode).toBe(500)
+  })
+
   test('Should return 404 if the token passed is invalid/expired', async () => {
     const { sut, accountVerificationStub } = makeSut()
     jest.spyOn(accountVerificationStub, "verify").mockResolvedValue(false)
