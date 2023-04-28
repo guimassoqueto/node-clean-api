@@ -2,7 +2,7 @@ import { type AddUnverifiedAccountRepository } from '../../../../data/protocols/
 import { type UnverifiedAccountModel } from '../../../../data/usecases/add-unverified-account/db-add-unverified-account-protocols'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class UnverifiedAccountMongoRepository implements AddUnverifiedAccountRepository {
+export class AccountVerificationMongoRepository implements AddUnverifiedAccountRepository {
   async add (encryptedAccountId: string): Promise<UnverifiedAccountModel> {
     const unverifiedAccountCollection = await MongoHelper.getCollection('unverifiedAccounts')
 

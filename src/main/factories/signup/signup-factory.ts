@@ -4,7 +4,7 @@ import { DbAddUnverifiedAcccount } from '../../../data/usecases/add-unverified-a
 import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '../../../infra/cryptography/jwt-adapter/jwt-adapter'
 import { AccountMongoRepository } from '../../../infra/db/mongodb/account/account-mongo-repository'
-import { UnverifiedAccountMongoRepository } from '../../../infra/db/mongodb/account/unverified-account-mongo-repository'
+import { AccountVerificationMongoRepository } from '../../../infra/db/mongodb/account/unverified-account-mongo-repository'
 import { type Controller } from '../../../presentation/protocols'
 import { makeSignUpValidation } from './signup-validation-factory'
 import { SALT_ROUNDS, JWT_SECRET } from '../../../settings'
@@ -16,7 +16,7 @@ export function makeSignUpController (): Controller {
   const dbAddAcccount = new DbAddAcccount(bcryptAdapter, addAccountMongoRepository)
 
   const encrypter = new JwtAdapter(JWT_SECRET)
-  const addUnverifiedAccountRepository = new UnverifiedAccountMongoRepository()
+  const addUnverifiedAccountRepository = new AccountVerificationMongoRepository()
   const dbAddUnverifiedAcccount = new DbAddUnverifiedAcccount(encrypter, addUnverifiedAccountRepository)
 
   const validationComposite = makeSignUpValidation()

@@ -1,18 +1,18 @@
 import { MONGO_URL } from "../settings"
 import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
-import { UnverifiedAccountMongoRepository } from "../../src/infra/db/mongodb/account/unverified-account-mongo-repository"
+import { AccountVerificationMongoRepository } from "../../src/infra/db/mongodb/account/unverified-account-mongo-repository"
 import { Collection } from "mongodb"
 
 function makeEncriptedAccountId(): string {
   return "encripted_account_id"
 }
 
-function makeSut(): UnverifiedAccountMongoRepository {
-  return new UnverifiedAccountMongoRepository()
+function makeSut(): AccountVerificationMongoRepository {
+  return new AccountVerificationMongoRepository()
 }
 
 let accountCollection: Collection
-describe('Add Unverified Account Mongo Repository' , () => {
+describe('Add Unverified Account Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(MONGO_URL);
   })
