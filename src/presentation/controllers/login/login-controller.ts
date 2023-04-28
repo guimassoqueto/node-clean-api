@@ -6,6 +6,9 @@ import {
   type Validation
 } from './login-controller-protocols'
 import { serverError, ok, unauthorized, badRequest } from '../../helpers/http/http-helper'
+import loggerConfig from '../../../logger-config'
+
+const logger = loggerConfig('login-controller')
 
 export class LoginController implements Controller {
   constructor (
@@ -24,7 +27,8 @@ export class LoginController implements Controller {
 
       return ok({ accessToken })
     } catch (error) {
-      return serverError(error.stack)
+      logger.error(error)
+      return serverError(error)
     }
   }
 }

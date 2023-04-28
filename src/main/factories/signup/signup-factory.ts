@@ -6,8 +6,6 @@ import { JwtAdapter } from '../../../infra/cryptography/jwt-adapter/jwt-adapter'
 import { AccountMongoRepository } from '../../../infra/db/mongodb/account/account-mongo-repository'
 import { UnverifiedAccountMongoRepository } from '../../../infra/db/mongodb/account/unverified-account-mongo-repository'
 import { type Controller } from '../../../presentation/protocols'
-import { LoggingControllerDecorator } from '../../decorators/logging-controller-decorator'
-import { LoggingWinstonRepository } from '../../../infra/logger/winston/logging-winston-repository'
 import { makeSignUpValidation } from './signup-validation-factory'
 import { SALT_ROUNDS, JWT_SECRET } from '../../../settings'
 import { makeEmailService } from './signup-email-service-factory'
@@ -23,9 +21,6 @@ export function makeSignUpController (): Controller {
 
   const validationComposite = makeSignUpValidation()
   const emailService = makeEmailService()
-  const signUpControlller = new SignUpControlller(validationComposite, dbAddAcccount, dbAddUnverifiedAcccount, emailService)
 
-  const loggingWinstonRepository = new LoggingWinstonRepository()
-
-  return new LoggingControllerDecorator(signUpControlller, loggingWinstonRepository)
+  return new SignUpControlller(validationComposite, dbAddAcccount, dbAddUnverifiedAcccount, emailService)
 }
