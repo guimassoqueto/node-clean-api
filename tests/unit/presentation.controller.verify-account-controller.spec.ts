@@ -99,4 +99,11 @@ describe('VerifyAccountController' , () => {
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual(new AccountVerificationError())
   })
+
+  test('Should return 200 if everything works as expected', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeHttpRequest())
+
+    expect(response.statusCode).toBe(200)
+  })
 })
