@@ -1,6 +1,6 @@
 import { type SESClient, type SendEmailCommandInput, SendEmailCommand } from '@aws-sdk/client-ses'
 import { type EmailService, type EmailVerificationData, type EmailVerificationResponse } from '../../domain/usecases/email-service'
-import { APP_PORT } from '../../settings'
+import { APP_URL } from '../../settings'
 
 export class AwsSesAdapter implements EmailService {
   constructor (private readonly client: SESClient) {}
@@ -12,7 +12,7 @@ export class AwsSesAdapter implements EmailService {
       Message: {
         Subject: { Data: 'Account Verification' },
         Body: { // TODO: mudar formato do link. Para variável de ambiente?
-          Html: { Data: `<a href="http://localhost:${APP_PORT}/api/account?verificationHash=${emailVerificationInfo.hash}""> Text </a>` }
+          Html: { Data: `<a href="http://${APP_URL}/api/account?verify=${emailVerificationInfo.hash}"> Text </a>` }
         }
       }
     }
