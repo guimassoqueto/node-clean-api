@@ -12,7 +12,7 @@ export class AwsSesAdapter implements EmailService {
       Message: {
         Subject: { Data: 'Account Verification' },
         Body: { // TODO: mudar formato do link. Para variável de ambiente?
-          Html: { Data: `<a href="http://${APP_URL}/api/account-verify?acc=${emailVerificationInfo.hash}"> Text </a>` }
+          Html: { Data: `<a href="http://${APP_URL}/api/account-verify?accToken=${emailVerificationInfo.hash}"> Text </a>` }
         }
       }
     }
