@@ -1,8 +1,6 @@
 import { type Controller } from '../../../presentation/protocols'
 import { LoginController } from '../../../presentation/controllers/login/login-controller'
 import { DbAuthentication } from '../../../data/usecases/authentication/db-authentication-usecase'
-import { LoggingControllerDecorator } from '../../decorators/logging-controller-decorator'
-import { LoggingWinstonRepository } from '../../../infra/logger/winston/logging-winston-repository'
 import { makeLoginValidation } from './login-validation-factory'
 import { AccountMongoRepository } from '../../../infra/db/mongodb/account/account-mongo-repository'
 import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter/bcrypt-adapter'
@@ -17,8 +15,6 @@ export function makeLoginController (): Controller {
   const dbAuthentication = new DbAuthentication(loadAccountByEmailRepository, hashComparer, encrypter, uptadeAccessTokenRepository)
 
   const validationComposite = makeLoginValidation()
-  const loginController = new LoginController(dbAuthentication, validationComposite)
-  const loggingWinstonRepository = new LoggingWinstonRepository()
 
-  return new LoggingControllerDecorator(loginController, loggingWinstonRepository)
+  return new LoginController(dbAuthentication, validationComposite)
 }
