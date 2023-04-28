@@ -104,3 +104,6 @@ dist
 .tern-port
 
 *.env
+
+# Drawio bkp files
+.$*.bkp
