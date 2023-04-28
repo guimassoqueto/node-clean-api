@@ -61,6 +61,17 @@ describe('VerifyAccountController' , () => {
     expect(response.statusCode).toBe(400)
   })
 
+  test('Should return 500 if validation throws', async () => {
+    const { sut, validationStub } = makeSut()
+    const error = new Error("any error")
+    jest.spyOn(validationStub, "validate").mockImplementationOnce(() => {
+      throw error
+    })
+    const response = await sut.handle(makeHttpRequest())
+
+    expect(response.statusCode).toBe(500)
+  })
+
   test('Should call accountVerification.verify with correct values ', async () => {
     const { sut, accountVerificationStub } = makeSut()
     const spyVerify = jest.spyOn(accountVerificationStub, "verify")
