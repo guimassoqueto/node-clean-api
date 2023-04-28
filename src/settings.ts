@@ -20,5 +20,5 @@ export const MONGO_URL = process.env.MONGO_URL ?? `mongodb://${MONGO_ROOT_USERNA
 
 // aws email service
 export const AWS_SES_REGION = process.env.AWS_SES_REGION ?? ''
-export const AWS_ACCESS_KEY_SECRET = process.env.AWS_ACCESS_KEY_SECRET ?? ''
-export const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID ?? ''
+export const AWS_SES_ACCESS_KEY_SECRET = process.env.AWS_SES_ACCESS_KEY_SECRET ?? ''
+export const AWS_SES_ACCESS_KEY_ID = process.env.AWS_SES_ACCESS_KEY_ID ?? ''

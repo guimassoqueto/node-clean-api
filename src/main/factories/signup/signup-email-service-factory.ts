@@ -1,13 +1,13 @@
 import { type EmailService } from '../../../presentation/protocols'
 import { AwsSesAdapter } from '../../../infra/email/aws-ses-adapter'
-import { AWS_SES_REGION, AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_SECRET } from '../../../settings'
+import { AWS_SES_REGION, AWS_SES_ACCESS_KEY_ID, AWS_SES_ACCESS_KEY_SECRET } from '../../../settings'
 import { SESClient, type SESClientConfig } from '@aws-sdk/client-ses'
 
 const awsCredentials: SESClientConfig = {
   region: AWS_SES_REGION,
   credentials: {
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_ACCESS_KEY_SECRET
+    accessKeyId: AWS_SES_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SES_ACCESS_KEY_SECRET
   }
 }
 
