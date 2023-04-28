@@ -48,4 +48,16 @@ function makeSut(): SutTypes {
 }
 
 describe('VerifyAccountController' , () => {
+  test('Should return 400 if accToken param isnt provided', async () => {
+    const { sut, validationStub } = makeSut()
+    const error = new Error("any error")
+    jest.spyOn(validationStub, "validate").mockReturnValue(error)
+    const request = makeHttpRequest()
+    delete request.params.accToken
+    const response = await sut.handle(request)
+
+    expect(request.params.accToken).toBeFalsy()
+    expect(response.statusCode).toBe(400)
+  })
+
 })
