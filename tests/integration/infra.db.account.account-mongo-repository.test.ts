@@ -99,4 +99,22 @@ describe('Add Account Mongo Repository' , () => {
     expect(account_after_update?.verified).toBe(true)
   })
 
+  test('Should change the id of an account, keeping the other fields exact the same', async () => {
+    const sut = makeSut()
+    const account = makeAccount()
+    const res = await accountCollection.insertOne(account)
+    let oldAccount = await accountCollection.findOne({ _id: res.insertedId })
+    
+    expect(oldAccount).toBeTruthy()
+    
+    const newAccount = await sut.changeId(res.insertedId.toString())
+    oldAccount = await accountCollection.findOne({ _id: res.insertedId })
+
+    expect(oldAccount).toBeFalsy()
+    expect(newAccount).toBeTruthy()
+    expect(newAccount?.createdAt).toStrictEqual(account.createdAt)
+    expect(newAccount?.email).toEqual(account.email)
+    expect(newAccount?.password).toEqual(account.password)
+    expect(newAccount?.verified).toEqual(account.verified)
+  })
 })
