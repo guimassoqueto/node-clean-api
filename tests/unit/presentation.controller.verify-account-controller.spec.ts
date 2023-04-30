@@ -6,7 +6,7 @@ import { HttpRequest, Validation } from "../../src/presentation/protocols"
 function makeHttpRequest(): HttpRequest {
   return {
     params: {
-      accToken: "any-account-token"
+      accountToken: "any-account-token"
     },
     body: {}
   }
@@ -14,7 +14,7 @@ function makeHttpRequest(): HttpRequest {
 
 function makeValidation(): Validation {
   class ValidationStub implements Validation {
-    validate (input: any): Error | null {
+    validate(input: any): Error | null {
       return null
     }
   }
@@ -23,8 +23,8 @@ function makeValidation(): Validation {
 
 function makeAccountVerification(): AccountVerification {
   class AccountVerificationStub implements AccountVerification {
-    async verify (accToken: string): Promise<boolean> {
-      return new Promise ( resolve => resolve(true))
+    async verify(accountToken: string): Promise<boolean> {
+      return new Promise(resolve => resolve(true))
     }
   }
   return new AccountVerificationStub()
@@ -48,16 +48,16 @@ function makeSut(): SutTypes {
   }
 }
 
-describe('VerifyAccountController' , () => {
-  test('Should return 400 if accToken param isnt provided', async () => {
+describe('VerifyAccountController', () => {
+  test('Should return 400 if accountToken param isnt provided', async () => {
     const { sut, validationStub } = makeSut()
     const error = new Error("any error")
     jest.spyOn(validationStub, "validate").mockReturnValue(error)
     const request = makeHttpRequest()
-    delete request.params.accToken
+    delete request.params.accountToken
     const response = await sut.handle(request)
 
-    expect(request.params.accToken).toBeFalsy()
+    expect(request.params.accountToken).toBeFalsy()
     expect(response.statusCode).toBe(400)
   })
 
@@ -78,7 +78,7 @@ describe('VerifyAccountController' , () => {
     const request = makeHttpRequest()
     await sut.handle(request)
 
-    expect(spyVerify).toHaveBeenCalledWith(request.params.accToken)
+    expect(spyVerify).toHaveBeenCalledWith(request.params.accountToken)
   })
 
   test('Should return 500 if verify throws', async () => {
