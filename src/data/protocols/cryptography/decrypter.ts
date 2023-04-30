@@ -1,3 +1,5 @@
+type DecryptType = Record<string, any>
+
 export interface Decrypter {
-  decryptAccountToken: (accountToken: string) => Promise<string>
+  decrypt: (encryptedValue: string) => Promise<DecryptType>
 }
