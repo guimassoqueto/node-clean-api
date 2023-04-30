@@ -13,8 +13,9 @@ export function makeVerifyAccountController (): Controller {
   const decrypter = new JwtAdapter(JWT_SECRET)
   const loadAccountByIdRepository = new AccountMongoRepository()
   const updateAccountVerifiedRepository = new AccountMongoRepository()
+  const changeAccountIdRepository = new AccountMongoRepository()
   const deleteUnverifiedAccountByAccountToken = new UnverifiedAccountMongoRepository()
-  const dbAccountVerification = new DbAccountVerification(decrypter, loadAccountByIdRepository, updateAccountVerifiedRepository, deleteUnverifiedAccountByAccountToken)
+  const dbAccountVerification = new DbAccountVerification(decrypter, loadAccountByIdRepository, updateAccountVerifiedRepository, changeAccountIdRepository, deleteUnverifiedAccountByAccountToken)
 
   return new VerifyAccountController(validation, dbAccountVerification)
 }
