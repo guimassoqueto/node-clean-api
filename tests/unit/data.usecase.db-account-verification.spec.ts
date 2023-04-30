@@ -3,7 +3,8 @@ import {
   Decrypter,
   LoadAccountByIdRepository,
   AccountModel,
-  DeleteUnverifiedAccountByAccountTokenRepository
+  DeleteUnverifiedAccountByAccountTokenRepository,
+  ChangeAccountIdRepository
 } from "../../src/data/usecases/account-verification/db-account-verification-protocols"
 import { DbAccountVerification } from "../../src/data/usecases/account-verification/db-account-verification-usecase"
 
@@ -43,6 +44,15 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
   return new UpdateAccountVerifiedRepositoryStub()
 }
 
+function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
+  class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
+    async changeId (id: string): Promise<AccountModel | null> {
+      return new Promise(resolve => resolve(makeFakeAccount("new-id")))
+    }
+  }
+  return new ChangeAccountIdRepositoryStub()
+}
+
 function makeDeleteUnverifiedAccountByAccountTokenRepository(): DeleteUnverifiedAccountByAccountTokenRepository {
   class DeleteUnverifiedAccountByAccountTokenRepository implements DeleteUnverifiedAccountByAccountTokenRepository {
     async deleteByAccountToken(accountToken: string): Promise<void> { }
@@ -55,6 +65,7 @@ type SutTypes = {
   decrypterStub: Decrypter,
   loadAccountByIdRepositoryStub: LoadAccountByIdRepository,
   updateAccountVerifiedRepositoryStub: UpdateAccountVerifiedRepository,
+  changeAccountIdRepositoryStub: ChangeAccountIdRepository,
   deleteUnverifiedAccountByAccountTokenRepositoryStub: DeleteUnverifiedAccountByAccountTokenRepository
 }
 
@@ -62,12 +73,14 @@ function makeSut(): SutTypes {
   const decrypterStub = makeDecrypter()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
+  const changeAccountIdRepositoryStub = makeChangeAccountIdRepository()
   const deleteUnverifiedAccountByAccountTokenRepositoryStub = makeDeleteUnverifiedAccountByAccountTokenRepository()
 
   const sut = new DbAccountVerification(
     decrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
+    changeAccountIdRepositoryStub,
     deleteUnverifiedAccountByAccountTokenRepositoryStub
   )
 
@@ -76,6 +89,7 @@ function makeSut(): SutTypes {
     decrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
+    changeAccountIdRepositoryStub,
     deleteUnverifiedAccountByAccountTokenRepositoryStub
   }
 }
@@ -118,6 +132,22 @@ describe('DbAccountVerification', () => {
   test('Should throw if deleteUnverifiedAccountByAccountToken throws', async () => {
     const { sut, deleteUnverifiedAccountByAccountTokenRepositoryStub } = makeSut()
     jest.spyOn(deleteUnverifiedAccountByAccountTokenRepositoryStub, "deleteByAccountToken").mockRejectedValueOnce(new Error())
+    const promise = sut.verify('any-token')
+
+    await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return false if changeAccountIdRepository dont find the user', async () => {
+    const { sut, changeAccountIdRepositoryStub } = makeSut()
+    jest.spyOn(changeAccountIdRepositoryStub, "changeId").mockResolvedValue(null)
+    const result = await sut.verify('any-token')
+
+    expect(result).toBeFalsy()
+  })
+
+  test('Should throw if changeAccountIdRepository throws', async () => {
+    const { sut, changeAccountIdRepositoryStub } = makeSut()
+    jest.spyOn(changeAccountIdRepositoryStub, "changeId").mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()

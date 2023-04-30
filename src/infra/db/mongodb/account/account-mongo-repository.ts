@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb'
+import { ObjectId, type WithId } from 'mongodb'
 import { type AccountModel } from '../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
@@ -8,10 +8,11 @@ import {
   type LoadAccountByEmailRepository,
   type UpdateAccessTokenRepository,
   type LoadAccountByIdRepository,
-  type UpdateAccountVerifiedRepository
+  type UpdateAccountVerifiedRepository,
+  type ChangeAccountIdRepository
 } from '../../../../data/protocols/db/account'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByIdRepository, UpdateAccountVerifiedRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByIdRepository, UpdateAccountVerifiedRepository, ChangeAccountIdRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
@@ -52,5 +53,18 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   async updateVerified (id: string, verified: boolean): Promise<void> {
     const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { verified } })
+  }
+
+  async changeId (id: string): Promise<AccountModel | null> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+    const oldAccount = await accountCollection.findOne({ _id: new ObjectId(id) })
+    await accountCollection.findOneAndDelete({ _id: new ObjectId(id) })
+
+    const { _id, ...rest } = oldAccount as WithId<Document>
+    const insertedAccount = await accountCollection.insertOne(rest)
+
+    const account = await accountCollection.findOne({ _id: insertedAccount.insertedId })
+
+    return MongoHelper.mapper<AccountModel>(account)
   }
 }

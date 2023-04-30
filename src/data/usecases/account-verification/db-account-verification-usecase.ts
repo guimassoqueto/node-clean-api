@@ -3,7 +3,8 @@ import {
   type Decrypter,
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
-  type DeleteUnverifiedAccountByAccountTokenRepository
+  type DeleteUnverifiedAccountByAccountTokenRepository,
+  type ChangeAccountIdRepository
 } from './db-account-verification-protocols'
 
 export class DbAccountVerification implements AccountVerification {
@@ -11,6 +12,7 @@ export class DbAccountVerification implements AccountVerification {
     private readonly decrypter: Decrypter,
     private readonly loadAccountByIdRepository: LoadAccountByIdRepository,
     private readonly updateAccountVerified: UpdateAccountVerifiedRepository,
+    private readonly changeAccountId: ChangeAccountIdRepository,
     private readonly deleteUnverifiedAccountByAccountToken: DeleteUnverifiedAccountByAccountTokenRepository
   ) { }
 
@@ -21,6 +23,9 @@ export class DbAccountVerification implements AccountVerification {
     if (!account) return false
 
     await this.updateAccountVerified.updateVerified(account.id, true)
+
+    const changedAccount = await this.changeAccountId.changeId(account.id)
+    if (!changedAccount) return false
 
     await this.deleteUnverifiedAccountByAccountToken.deleteByAccountToken(accountToken)
 
