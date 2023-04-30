@@ -99,4 +99,11 @@ describe('DbAccountVerification' , () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should return false if loadAccountByIdRepositoryStub dont find the user', async () => {
+    const { sut, loadAccountByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadAccountByIdRepositoryStub, "loadById").mockResolvedValue(null)
+    const result = await sut.verify('any-token')
+
+    expect(result).toBeFalsy()
+  })
 })
