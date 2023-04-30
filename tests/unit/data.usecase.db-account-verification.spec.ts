@@ -115,4 +115,11 @@ describe('DbAccountVerification' , () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should throw if deleteUnverifiedAccountByAccountToken throws', async () => {
+    const { sut, deleteUnverifiedAccountByAccountTokenRepositoryStub } = makeSut()
+    jest.spyOn(deleteUnverifiedAccountByAccountTokenRepositoryStub, "deleteByAccountToken").mockRejectedValueOnce(new Error())
+    const promise = sut.verify('any-token')
+
+    await expect(promise).rejects.toThrow()
+  })
 })
