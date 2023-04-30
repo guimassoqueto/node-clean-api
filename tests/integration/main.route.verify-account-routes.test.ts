@@ -48,5 +48,12 @@ describe('Verify Account' , () => {
     await accountsCollection.deleteMany({})
   })
 
+  test('Should return 400 if accountToken query param is not passed', async () => {
+    await request(app)
+      .get('/api/verify-account')
+      .send()
+      .expect(400)
+  })
+
 
 })
