@@ -5,7 +5,7 @@ import { HttpRequest, Validation } from "../../src/presentation/protocols"
 
 function makeHttpRequest(): HttpRequest {
   return {
-    params: {
+    query: {
       accountToken: "any-account-token"
     },
     body: {}
@@ -54,10 +54,10 @@ describe('VerifyAccountController', () => {
     const error = new Error("any error")
     jest.spyOn(validationStub, "validate").mockReturnValue(error)
     const request = makeHttpRequest()
-    delete request.params.accountToken
+    delete request.query.accountToken
     const response = await sut.handle(request)
 
-    expect(request.params.accountToken).toBeFalsy()
+    expect(request.query.accountToken).toBeFalsy()
     expect(response.statusCode).toBe(400)
   })
 
@@ -78,7 +78,7 @@ describe('VerifyAccountController', () => {
     const request = makeHttpRequest()
     await sut.handle(request)
 
-    expect(spyVerify).toHaveBeenCalledWith(request.params.accountToken)
+    expect(spyVerify).toHaveBeenCalledWith(request.query.accountToken)
   })
 
   test('Should return 500 if verify throws', async () => {
