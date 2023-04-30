@@ -22,8 +22,8 @@ export class VerifyAccountController implements Controller {
       const error = this.validation.validate(httpRequest.params)
       if (error) return badRequest(error)
 
-      const { accToken } = httpRequest.params
-      const isAccountVerified = await this.accountVerification.verify(accToken)
+      const { accountToken } = httpRequest.params
+      const isAccountVerified = await this.accountVerification.verify(accountToken)
       if (!isAccountVerified) return badRequest(new AccountVerificationError())
 
       return ok('account verificated')
