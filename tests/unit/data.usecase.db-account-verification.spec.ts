@@ -81,4 +81,13 @@ function makeSut (): SutTypes {
 }
 
 describe('DbAccountVerification' , () => {
+  test('Should throws Decrypter throws', async () => {
+    const { sut, decrypterStub } = makeSut()
+    jest.spyOn(decrypterStub, "decryptAccountToken").mockImplementationOnce((accountToken: string) => {
+      throw new Error()
+    })
+    const promise = sut.verify('any-token')
+
+    await expect(promise).rejects.toThrow()
+  })
 })
