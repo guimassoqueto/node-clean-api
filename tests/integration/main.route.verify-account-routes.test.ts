@@ -55,5 +55,13 @@ describe('Verify Account' , () => {
       .expect(400)
   })
 
+  // TODO: mudar controller para retornar outro status code?
+  test('Should return 500 if accountToken is invalid', async () => {
+    await request(app)
+      .get('/api/verify-account')
+      .query({accountToken: "invalid-token"})
+      .send()
+      .expect(500)
+  })
 
 })
