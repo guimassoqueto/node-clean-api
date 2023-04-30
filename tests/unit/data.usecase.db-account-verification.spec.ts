@@ -122,4 +122,11 @@ describe('DbAccountVerification' , () => {
 
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return true if DbAccountVerification works as expected', async () => {
+    const { sut } = makeSut()
+    const result = await sut.verify('any-token')
+
+    expect(result).toBeTruthy()
+  })
 })
