@@ -1,4 +1,4 @@
-import { 
+import {
   UpdateAccountVerifiedRepository,
   Decrypter,
   LoadAccountByIdRepository,
@@ -18,19 +18,19 @@ function makeFakeAccount(id: string = "any-id"): AccountModel {
   }
 }
 
-function makeDecrypter (): Decrypter {
+function makeDecrypter(): Decrypter {
   class DecrypterStub implements Decrypter {
-    async decryptAccountToken (accountToken: string): Promise<string> {
-      return new Promise( resolve => resolve('any-account-id') )
+    async decrypt(encryptedValue: string): Promise<object> {
+      return new Promise(resolve => resolve({ id: 'any-account-id' }))
     }
   }
   return new DecrypterStub()
 }
 
-function makeLoadAccountByIdRepository (): LoadAccountByIdRepository {
+function makeLoadAccountByIdRepository(): LoadAccountByIdRepository {
   class LoadAccountByIdRepositoryStub implements LoadAccountByIdRepository {
-    loadById (id: string): Promise<AccountModel | null> {
-      return new Promise( resolve => resolve(makeFakeAccount()))
+    loadById(id: string): Promise<AccountModel | null> {
+      return new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
   return new LoadAccountByIdRepositoryStub()
@@ -38,14 +38,14 @@ function makeLoadAccountByIdRepository (): LoadAccountByIdRepository {
 
 function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository {
   class UpdateAccountVerifiedRepositoryStub implements UpdateAccountVerifiedRepository {
-    async updateVerified (id: string, verified: boolean): Promise<void> {}
+    async updateVerified(id: string, verified: boolean): Promise<void> { }
   }
   return new UpdateAccountVerifiedRepositoryStub()
 }
 
 function makeDeleteUnverifiedAccountByAccountTokenRepository(): DeleteUnverifiedAccountByAccountTokenRepository {
   class DeleteUnverifiedAccountByAccountTokenRepository implements DeleteUnverifiedAccountByAccountTokenRepository {
-    async deleteByAccountToken (accountToken: string): Promise<void> {}
+    async deleteByAccountToken(accountToken: string): Promise<void> { }
   }
   return new DeleteUnverifiedAccountByAccountTokenRepository()
 }
@@ -58,14 +58,14 @@ type SutTypes = {
   deleteUnverifiedAccountByAccountTokenRepositoryStub: DeleteUnverifiedAccountByAccountTokenRepository
 }
 
-function makeSut (): SutTypes {
+function makeSut(): SutTypes {
   const decrypterStub = makeDecrypter()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
   const deleteUnverifiedAccountByAccountTokenRepositoryStub = makeDeleteUnverifiedAccountByAccountTokenRepository()
 
   const sut = new DbAccountVerification(
-    decrypterStub, 
+    decrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
     deleteUnverifiedAccountByAccountTokenRepositoryStub
@@ -80,10 +80,10 @@ function makeSut (): SutTypes {
   }
 }
 
-describe('DbAccountVerification' , () => {
+describe('DbAccountVerification', () => {
   test('Should throws Decrypter throws', async () => {
     const { sut, decrypterStub } = makeSut()
-    jest.spyOn(decrypterStub, "decryptAccountToken").mockImplementationOnce((accountToken: string) => {
+    jest.spyOn(decrypterStub, "decrypt").mockImplementationOnce((encryptedValue: string) => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
@@ -107,7 +107,7 @@ describe('DbAccountVerification' , () => {
     expect(result).toBeFalsy()
   })
 
-  test('Should throw if updateAccountVerified throws', async () => { 
+  test('Should throw if updateAccountVerified throws', async () => {
     const { sut, updateAccountVerifiedRepositoryStub } = makeSut()
     jest.spyOn(updateAccountVerifiedRepositoryStub, "updateVerified").mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
