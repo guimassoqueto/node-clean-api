@@ -1,4 +1,4 @@
 export interface AccountVerification {
   // TODO: mudar tipo de retorno?
-  verify: (accToken: string) => Promise<boolean>
+  verify: (accountToken: string) => Promise<boolean>
 }
