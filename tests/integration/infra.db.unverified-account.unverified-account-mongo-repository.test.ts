@@ -26,5 +26,13 @@ describe('Add Unverified Account Mongo Repository', () => {
     await unverifiedAccountCollection.deleteMany({})
   })
 
+  test('Should return unverifiedAccount', async () => {
+    const sut = makeSut()
+    const unverifiedAccount = await sut.add(makeAccountToken("some-random-token"))
+
+    expect(unverifiedAccount).toBeTruthy()
+    expect(unverifiedAccount.accountToken).toBe("some-random-token")
+    expect(unverifiedAccount.id).toBeTruthy()
+  })
 
 })
