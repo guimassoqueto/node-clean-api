@@ -64,4 +64,21 @@ describe('Verify Account' , () => {
       .expect(500)
   })
 
+  test('Should verify account if the token provided is valid', async () => {
+    const account = await accountsCollection.insertOne(makeAccount())
+    const [ uAccount , accountToken ] = makeUnverifiedAccount({id: account.insertedId.toString()})
+    await unverifiedAccountsCollection.insertOne(uAccount)
+
+    let accountAdded = await accountsCollection.findOne({ _id: account.insertedId })
+    expect(accountAdded?.verified).toBe(false)
+
+    await request(app)
+      .get('/api/verify-account')
+      .query({ accountToken })
+      .send()
+      .expect(200)
+
+    accountAdded = await accountsCollection.findOne({ _id: account.insertedId })
+    expect(accountAdded?.verified).toBe(true)
+  })
 })
