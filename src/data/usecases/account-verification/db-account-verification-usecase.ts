@@ -12,10 +12,10 @@ export class DbAccountVerification implements AccountVerification {
     private readonly loadAccountByIdRepository: LoadAccountByIdRepository,
     private readonly updateAccountVerified: UpdateAccountVerifiedRepository,
     private readonly deleteUnverifiedAccountByAccountToken: DeleteUnverifiedAccountByAccountTokenRepository
-  ) {}
+  ) { }
 
   async verify (accountToken: string): Promise<boolean> {
-    const id = await this.decrypter.decryptAccountToken(accountToken)
+    const { id } = await this.decrypter.decrypt(accountToken)
 
     const account = await this.loadAccountByIdRepository.loadById(id)
     if (!account) return false
