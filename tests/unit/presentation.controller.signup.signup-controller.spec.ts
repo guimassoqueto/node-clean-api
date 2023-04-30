@@ -2,7 +2,7 @@ import { SignUpControlller } from "../../src/presentation/controllers/signup/sig
 import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
 import { AddUnverifiedAccount } from "../../src/domain/usecases/add-unverified-account"
 import { AccountModel } from "../../src/domain/models/account"
-import { 
+import {
   HttpRequest,
   Validation,
   EmailService,
@@ -16,7 +16,7 @@ import { UnverifiedAccountModel } from "../../src/domain/models/unverified-accou
 function makeUnverifiedAccount(): UnverifiedAccountModel {
   return {
     id: "any_id",
-    encryptedAccountId: "hashed_account_id",
+    accountToken: "hashed_account_id",
     createdAt: new Date()
   }
 }
@@ -46,7 +46,7 @@ function makeAddAccount(): AddAccount {
 
 function makeAddUnverifiedAccount(): AddUnverifiedAccount {
   class AddUnverifiedAccountStub implements AddUnverifiedAccount {
-    async add (accountId: string): Promise<UnverifiedAccountModel> {
+    async add(accountId: string): Promise<UnverifiedAccountModel> {
       return new Promise(resolve => resolve(makeUnverifiedAccount()))
     }
   }
@@ -55,7 +55,7 @@ function makeAddUnverifiedAccount(): AddUnverifiedAccount {
 
 function makeEmailService(): EmailService {
   class EmailServiceStub implements EmailService {
-    async sendAccountVerificationEmail (emailVerificationData: EmailVerificationData): Promise<EmailVerificationResponse> {
+    async sendAccountVerificationEmail(emailVerificationData: EmailVerificationData): Promise<EmailVerificationResponse> {
       return new Promise(resolve => resolve({ statusCode: 200 }))
     }
   }
@@ -90,7 +90,7 @@ function makeSut(): SutTypes {
 
   const sut = new SignUpControlller(
     validationStub,
-    addAccountStub, 
+    addAccountStub,
     addUnverifiedAccountStub,
     emailServiceStub
   );
@@ -115,14 +115,14 @@ function makeFakeRequest(): HttpRequest {
   }
 }
 
-describe('Sign Up Controlller' , () => {
+describe('Sign Up Controlller', () => {
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut();
     const addSpy = jest.spyOn(addAccountStub, "add")
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
 
-    expect(addSpy).toHaveBeenCalledWith({ 
+    expect(addSpy).toHaveBeenCalledWith({
       name: httpRequest.body.name,
       email: httpRequest.body.email,
       password: httpRequest.body.password
@@ -131,7 +131,7 @@ describe('Sign Up Controlller' , () => {
 
   test('Should return 500 when AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, "add").mockImplementationOnce((account: AddAccountModel) => { 
+    jest.spyOn(addAccountStub, "add").mockImplementationOnce((account: AddAccountModel) => {
       return new Promise((_, reject) => reject(new ServerError()))
     })
     const httpRequest = makeFakeRequest()
@@ -159,7 +159,7 @@ describe('Sign Up Controlller' , () => {
   })
 
   test('Should return 400 if Validation return an error', async () => {
-    const { sut,validationStub } = makeSut()
+    const { sut, validationStub } = makeSut()
     const error = new MissingParamError("any_field")
     jest.spyOn(validationStub, "validate").mockReturnValueOnce(error)
     const httpRequest = makeFakeRequest()
@@ -194,13 +194,13 @@ describe('Sign Up Controlller' , () => {
     await sut.handle(fakeRequest)
     const { email } = fakeRequest.body
 
-    expect(sendAccountVerificationEmailSpy).toHaveBeenCalledWith({ email, hash: makeUnverifiedAccount().encryptedAccountId })
+    expect(sendAccountVerificationEmailSpy).toHaveBeenCalledWith({ email, accountToken: makeUnverifiedAccount().accountToken })
   })
 
   test('Should return 500 if sendAccountVerificationEmail throws', async () => {
     const { sut, emailServiceStub } = makeSut()
     const error = new Error("any_error")
-    jest.spyOn(emailServiceStub, "sendAccountVerificationEmail").mockImplementationOnce((emailVerificationData: { email: string, hash: string }) => {
+    jest.spyOn(emailServiceStub, "sendAccountVerificationEmail").mockImplementationOnce(() => {
       return new Promise((_, reject) => reject(new Error("sendAccountVerificationEmail error")))
     })
     const response = await sut.handle(makeFakeRequest())
