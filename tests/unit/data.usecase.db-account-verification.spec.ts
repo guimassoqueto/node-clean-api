@@ -106,4 +106,13 @@ describe('DbAccountVerification' , () => {
 
     expect(result).toBeFalsy()
   })
+
+  test('Should throw if updateAccountVerified throws', async () => { 
+    const { sut, updateAccountVerifiedRepositoryStub } = makeSut()
+    jest.spyOn(updateAccountVerifiedRepositoryStub, "updateVerified").mockRejectedValueOnce(new Error())
+    const promise = sut.verify('any-token')
+
+    await expect(promise).rejects.toThrow()
+  })
+
 })
