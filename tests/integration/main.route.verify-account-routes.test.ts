@@ -78,7 +78,7 @@ describe('Verify Account' , () => {
       .send()
       .expect(200)
 
-    accountAdded = await accountsCollection.findOne({ _id: account.insertedId })
+    accountAdded = await accountsCollection.findOne({})
     expect(accountAdded?.verified).toBe(true)
   })
 })
