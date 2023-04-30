@@ -1,5 +1,5 @@
 export interface UnverifiedAccountModel {
   id: string
-  encryptedAccountId: string
+  accountToken: string
   createdAt: Date
 }

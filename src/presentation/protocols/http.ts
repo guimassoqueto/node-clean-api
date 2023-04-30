@@ -1,4 +1,5 @@
 export interface HttpRequest {
+  query?: any
   body: any
 }
 

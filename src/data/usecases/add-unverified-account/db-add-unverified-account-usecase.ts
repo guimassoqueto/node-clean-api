@@ -12,8 +12,8 @@ export class DbAddUnverifiedAcccount implements AddUnverifiedAccount {
   ) {}
 
   async add (accountId: string): Promise<UnverifiedAccountModel> {
-    const encryptedAccountId = await this.encrypter.encrypt(accountId)
-    const unverifiedAccount = await this.addUnverifiedAccountRepository.add(encryptedAccountId)
+    const accountToken = await this.encrypter.encrypt(accountId)
+    const unverifiedAccount = await this.addUnverifiedAccountRepository.add(accountToken)
     return unverifiedAccount
   }
 }

@@ -31,9 +31,9 @@ export class SignUpControlller implements Controller {
       const account = await this.addAccount.add({ name, email, password })
 
       // encripta a id do usuário e prenche essa cript no banco
-      const accountIdHash = await this.addUnverifiedAccount.add(account.id)
+      const unverifiedAccount = await this.addUnverifiedAccount.add(account.id)
 
-      await this.emailService.sendAccountVerificationEmail({ email, hash: accountIdHash.encryptedAccountId })
+      await this.emailService.sendAccountVerificationEmail({ email, accountToken: unverifiedAccount.accountToken })
 
       return ok(account)
     } catch (error) {

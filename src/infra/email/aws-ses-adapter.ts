@@ -3,16 +3,18 @@ import { type EmailService, type EmailVerificationData, type EmailVerificationRe
 import { APP_URL } from '../../settings'
 
 export class AwsSesAdapter implements EmailService {
-  constructor (private readonly client: SESClient) {}
+  constructor (private readonly client: SESClient) { }
 
   async sendAccountVerificationEmail (emailVerificationInfo: EmailVerificationData): Promise<EmailVerificationResponse> {
+    const { email, accountToken } = emailVerificationInfo
+
     const message: SendEmailCommandInput = {
       Source: 'node-clean-api@yopmail.com',
-      Destination: { ToAddresses: [emailVerificationInfo.email] },
+      Destination: { ToAddresses: [email] },
       Message: {
         Subject: { Data: 'Account Verification' },
         Body: { // TODO: mudar formato do link. Para variável de ambiente?
-          Html: { Data: `<a href="http://${APP_URL}/api/account-verify?acc=${emailVerificationInfo.hash}"> Text </a>` }
+          Html: { Data: `<a href="http://${APP_URL}/api/verify-account?accountToken=${accountToken}"> Text </a>` }
         }
       }
     }

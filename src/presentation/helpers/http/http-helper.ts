@@ -8,6 +8,13 @@ export function badRequest (error: Error): HttpResponse {
   }
 }
 
+export function notFound (error?: Error): HttpResponse {
+  return {
+    statusCode: 404,
+    body: error
+  }
+}
+
 export function serverError (error: Error): HttpResponse {
   return {
     statusCode: 500,

@@ -10,6 +10,7 @@ import { type Request, type Response } from 'express'
 export function expressRouteAdapter (controller: Controller) {
   return async (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {
+      query: req.query,
       body: req.body
     }
     const httpResponse: HttpResponse = await controller.handle(httpRequest)
