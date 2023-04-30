@@ -19,14 +19,14 @@ export class VerifyAccountController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.params)
+      const error = this.validation.validate(httpRequest.query)
       if (error) return badRequest(error)
 
-      const { accountToken } = httpRequest.params
+      const { accountToken } = httpRequest.query
       const isAccountVerified = await this.accountVerification.verify(accountToken)
       if (!isAccountVerified) return badRequest(new AccountVerificationError())
 
-      return ok('account verificated')
+      return ok({ status: 'account verified' })
     } catch (error) {
       logger.error(error)
       return serverError(error)
