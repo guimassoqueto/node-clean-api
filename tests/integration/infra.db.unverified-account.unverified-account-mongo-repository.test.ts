@@ -35,4 +35,13 @@ describe('Add Unverified Account Mongo Repository', () => {
     expect(unverifiedAccount.id).toBeTruthy()
   })
 
+  test('Should insert unverifiedAccount corretly in the database', async () => {
+    const sut = makeSut()
+    const res = await sut.add(makeAccountToken("some-random-token"))
+    const accountMongo = await unverifiedAccountCollection.findOne({ _id: new ObjectId(res.id)})    
+    
+    expect(accountMongo).toBeTruthy()
+    expect(accountMongo?._id.toString()).toEqual(res.id)
+    expect(accountMongo?.accountToken).toEqual(res.accountToken)
+  }) 
 })
