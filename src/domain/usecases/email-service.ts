@@ -4,7 +4,7 @@ export interface EmailVerificationResponse {
 
 export interface EmailVerificationData {
   email: string
-  hash: string
+  accountToken: string
 }
 
 // TODO: mover para presentation? Ou algum outro local?
