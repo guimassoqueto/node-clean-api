@@ -23,8 +23,8 @@ function makeValidation(): Validation {
 
 function makeAccountVerification(): AccountVerification {
   class AccountVerificationStub implements AccountVerification {
-    async verify(accountToken: string): Promise<boolean> {
-      return new Promise(resolve => resolve(true))
+    async verify(accountToken: string): Promise<string | null> {
+      return new Promise(resolve => resolve("any-token"))
     }
   }
   return new AccountVerificationStub()
@@ -93,7 +93,7 @@ describe('VerifyAccountController', () => {
 
   test('Should return 404 if the token passed is invalid/expired', async () => {
     const { sut, accountVerificationStub } = makeSut()
-    jest.spyOn(accountVerificationStub, "verify").mockResolvedValue(false)
+    jest.spyOn(accountVerificationStub, "verify").mockResolvedValue(null)
     const response = await sut.handle(makeHttpRequest())
 
     expect(response.statusCode).toBe(409)
