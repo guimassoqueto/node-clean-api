@@ -21,8 +21,8 @@ function makeFakeAccount(id: string = "any-id"): AccountModel {
 
 function makeDecrypter(): Decrypter {
   class DecrypterStub implements Decrypter {
-    async decrypt(encryptedValue: string): Promise<object> {
-      return new Promise(resolve => resolve({ id: 'any-account-id' }))
+    async decrypt(encryptedValue: string): Promise<string> {
+      return new Promise(resolve => resolve('any-account-id'))
     }
   }
   return new DecrypterStub()
