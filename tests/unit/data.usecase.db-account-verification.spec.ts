@@ -4,7 +4,9 @@ import {
   LoadAccountByIdRepository,
   AccountModel,
   DeleteUnverifiedAccountByAccountTokenRepository,
-  ChangeAccountIdRepository
+  ChangeAccountIdRepository,
+  UpdateAccessTokenRepository,
+  Encrypter
 } from "../../src/data/usecases/account-verification/db-account-verification-protocols"
 import { DbAccountVerification } from "../../src/data/usecases/account-verification/db-account-verification-usecase"
 
@@ -26,6 +28,15 @@ function makeDecrypter(): Decrypter {
     }
   }
   return new DecrypterStub()
+}
+
+function makeEncrypter(): Encrypter {
+  class EncrypterStub implements Encrypter {
+    async encrypt (encryptedValue: string): Promise<string> {
+      return new Promise(resolve => resolve("any-token"))
+    }
+  }
+  return new EncrypterStub()
 }
 
 function makeLoadAccountByIdRepository(): LoadAccountByIdRepository {
@@ -54,42 +65,57 @@ function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
 }
 
 function makeDeleteUnverifiedAccountByAccountTokenRepository(): DeleteUnverifiedAccountByAccountTokenRepository {
-  class DeleteUnverifiedAccountByAccountTokenRepository implements DeleteUnverifiedAccountByAccountTokenRepository {
+  class DeleteUnverifiedAccountByAccountTokenRepositoryStub implements DeleteUnverifiedAccountByAccountTokenRepository {
     async deleteByAccountToken(accountToken: string): Promise<void> { }
   }
-  return new DeleteUnverifiedAccountByAccountTokenRepository()
+  return new DeleteUnverifiedAccountByAccountTokenRepositoryStub()
+}
+
+function makeUpdateAccessTokenRepository(): UpdateAccessTokenRepository {
+  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
+    async updateAccessToken (id: string, token: string): Promise<void> {}
+  }
+  return new UpdateAccessTokenRepositoryStub()
 }
 
 type SutTypes = {
   sut: DbAccountVerification,
   decrypterStub: Decrypter,
+  encrypterStub: Encrypter,
   loadAccountByIdRepositoryStub: LoadAccountByIdRepository,
   updateAccountVerifiedRepositoryStub: UpdateAccountVerifiedRepository,
   changeAccountIdRepositoryStub: ChangeAccountIdRepository,
+  updateAccessTokenRepositoryStub: UpdateAccessTokenRepository,
   deleteUnverifiedAccountByAccountTokenRepositoryStub: DeleteUnverifiedAccountByAccountTokenRepository
 }
 
 function makeSut(): SutTypes {
   const decrypterStub = makeDecrypter()
+  const encrypterStub = makeEncrypter()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
   const changeAccountIdRepositoryStub = makeChangeAccountIdRepository()
+  const updateAccessTokenRepositoryStub = makeUpdateAccessTokenRepository()
   const deleteUnverifiedAccountByAccountTokenRepositoryStub = makeDeleteUnverifiedAccountByAccountTokenRepository()
 
   const sut = new DbAccountVerification(
     decrypterStub,
+    encrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
     changeAccountIdRepositoryStub,
+    updateAccessTokenRepositoryStub,
     deleteUnverifiedAccountByAccountTokenRepositoryStub
   )
 
   return {
     sut,
     decrypterStub,
+    encrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
     changeAccountIdRepositoryStub,
+    updateAccessTokenRepositoryStub,
     deleteUnverifiedAccountByAccountTokenRepositoryStub
   }
 }
