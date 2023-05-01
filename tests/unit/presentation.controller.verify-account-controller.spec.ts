@@ -1,6 +1,6 @@
 import { AccountVerification } from "../../src/domain/usecases/account-verification"
-import { AccountVerificationError } from "../../src/presentation/controllers/verify-account/verify-account-protocols"
 import { VerifyAccountController } from "../../src/presentation/controllers/verify-account/verify-accout-controller"
+import { AccountAlreadyVerifiedError } from "../../src/presentation/errors"
 import { HttpRequest, Validation } from "../../src/presentation/protocols"
 
 function makeHttpRequest(): HttpRequest {
@@ -96,8 +96,8 @@ describe('VerifyAccountController', () => {
     jest.spyOn(accountVerificationStub, "verify").mockResolvedValue(false)
     const response = await sut.handle(makeHttpRequest())
 
-    expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new AccountVerificationError())
+    expect(response.statusCode).toBe(409)
+    expect(response.body).toEqual(new AccountAlreadyVerifiedError())
   })
 
   test('Should return 200 if everything works as expected', async () => {

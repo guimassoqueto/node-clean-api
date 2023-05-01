@@ -17,7 +17,7 @@ function makeAccount() {
 }
 
 type MakeUnverifiedAccount = [ object, string ]
-function makeUnverifiedAccount(accountId: {id: string}): MakeUnverifiedAccount {
+function makeUnverifiedAccount(accountId: string): MakeUnverifiedAccount {
   const accountToken: string = sign(accountId, JWT_SECRET)
   const unverifiedAccount: object = {
     accountToken,
@@ -56,19 +56,18 @@ describe('Verify Account' , () => {
   })
 
   // TODO: mudar controller para retornar outro status code?
-  test('Should return 500 if accountToken is invalid', async () => {
+  test('Should return 409 if accountToken is invalid', async () => {
     await request(app)
       .get('/api/verify-account')
       .query({accountToken: "invalid-token"})
       .send()
-      .expect(500)
+      .expect(409)
   })
 
   test('Should verify account if the token provided is valid', async () => {
     const account = await accountsCollection.insertOne(makeAccount())
-    const [ uAccount , accountToken ] = makeUnverifiedAccount({id: account.insertedId.toString()})
+    const [ uAccount , accountToken ] = makeUnverifiedAccount(account.insertedId.toString())
     await unverifiedAccountsCollection.insertOne(uAccount)
-
     let accountAdded = await accountsCollection.findOne({ _id: account.insertedId })
     expect(accountAdded?.verified).toBe(false)
 

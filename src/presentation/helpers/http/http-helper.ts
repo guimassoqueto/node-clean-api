@@ -1,4 +1,4 @@
-import { ServerError, AuthorizationError, EmailAlreadyInUseError } from '../../errors'
+import { ServerError, AuthorizationError } from '../../errors'
 import { type HttpResponse } from '../../protocols'
 
 export function badRequest (error: Error): HttpResponse {
@@ -36,9 +36,9 @@ export function ok (data: any): HttpResponse {
   }
 }
 
-export function emailAlreadyInUse (): HttpResponse {
+export function conflict (error: Error): HttpResponse {
   return {
     statusCode: 409,
-    body: new EmailAlreadyInUseError()
+    body: error
   }
 }

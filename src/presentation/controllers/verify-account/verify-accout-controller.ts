@@ -2,12 +2,12 @@ import {
   type Controller,
   type HttpRequest,
   type HttpResponse,
-  type Validation,
-  AccountVerificationError
+  type Validation
 } from './verify-account-protocols'
 import loggerConfig from '../../../logger-config'
-import { serverError, badRequest, ok } from '../../helpers/http/http-helper'
+import { serverError, badRequest, ok, conflict } from '../../helpers/http/http-helper'
 import { type AccountVerification } from '../../../domain/usecases/account-verification'
+import { AccountAlreadyVerifiedError } from '../../errors'
 
 const logger = loggerConfig('verify-account-controller')
 
@@ -24,7 +24,7 @@ export class VerifyAccountController implements Controller {
 
       const { accountToken } = httpRequest.query
       const isAccountVerified = await this.accountVerification.verify(accountToken)
-      if (!isAccountVerified) return badRequest(new AccountVerificationError())
+      if (!isAccountVerified) return conflict(new AccountAlreadyVerifiedError())
 
       return ok({ status: 'account verified' })
     } catch (error) {

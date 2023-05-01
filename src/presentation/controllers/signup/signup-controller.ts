@@ -7,7 +7,7 @@ import {
   type EmailService,
   type AddUnverifiedAccount
 } from './signup-controller-protocols'
-import { badRequest, ok, serverError, emailAlreadyInUse } from '../../helpers/http/http-helper'
+import { badRequest, ok, serverError, conflict } from '../../helpers/http/http-helper'
 import { EmailAlreadyInUseError } from '../../errors'
 import loggerConfig from '../../../logger-config'
 
@@ -38,7 +38,7 @@ export class SignUpControlller implements Controller {
       return ok(account)
     } catch (error) {
       logger.error(error)
-      if (error instanceof EmailAlreadyInUseError) return emailAlreadyInUse()
+      if (error instanceof EmailAlreadyInUseError) return conflict(error)
       return serverError(error)
     }
   }
