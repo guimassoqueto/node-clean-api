@@ -1,34 +1,41 @@
 import {
   type AccountVerification,
   type Decrypter,
+  type Encrypter,
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
   type DeleteUnverifiedAccountByAccountTokenRepository,
-  type ChangeAccountIdRepository
+  type ChangeAccountIdRepository,
+  type UpdateAccessTokenRepository
 } from './db-account-verification-protocols'
 
 export class DbAccountVerification implements AccountVerification {
   constructor (
     private readonly decrypter: Decrypter,
+    private readonly encrypter: Encrypter,
     private readonly loadAccountByIdRepository: LoadAccountByIdRepository,
     private readonly updateAccountVerified: UpdateAccountVerifiedRepository,
     private readonly changeAccountId: ChangeAccountIdRepository,
+    private readonly uptadeAccessTokenRepository: UpdateAccessTokenRepository,
     private readonly deleteUnverifiedAccountByAccountToken: DeleteUnverifiedAccountByAccountTokenRepository
   ) { }
 
-  async verify (accountToken: string): Promise<boolean> {
+  async verify (accountToken: string): Promise<string | null> {
     const id = await this.decrypter.decrypt(accountToken)
 
-    const account = await this.loadAccountByIdRepository.loadById(id)
-    if (!account) return false
+    const oldAccount = await this.loadAccountByIdRepository.loadById(id)
+    if (!oldAccount) return null
 
-    await this.updateAccountVerified.updateVerified(account.id, true)
+    await this.updateAccountVerified.updateVerified(oldAccount.id, true)
 
-    const changedAccount = await this.changeAccountId.changeId(account.id)
-    if (!changedAccount) return false
+    const account = await this.changeAccountId.changeId(oldAccount.id)
+    if (!account) return null
 
     await this.deleteUnverifiedAccountByAccountToken.deleteByAccountToken(accountToken)
 
-    return true
+    const accessToken = await this.encrypter.encrypt(account.id)
+    await this.uptadeAccessTokenRepository.updateAccessToken(account.id, accessToken)
+
+    return accessToken
   }
 }
