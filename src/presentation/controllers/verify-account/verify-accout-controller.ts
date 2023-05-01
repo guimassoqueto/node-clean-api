@@ -23,10 +23,10 @@ export class VerifyAccountController implements Controller {
       if (error) return badRequest(error)
 
       const { accountToken } = httpRequest.query
-      const isAccountVerified = await this.accountVerification.verify(accountToken)
-      if (!isAccountVerified) return conflict(new AccountAlreadyVerifiedError())
+      const accessToken = await this.accountVerification.verify(accountToken)
+      if (!accessToken) return conflict(new AccountAlreadyVerifiedError())
 
-      return ok({ status: 'account verified' })
+      return ok({ status: 'account verified', accessToken })
     } catch (error) {
       logger.error(error)
       return serverError(error)
