@@ -131,6 +131,16 @@ describe('DbAccountVerification', () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should throws Encrypter throws', async () => {
+    const { sut, encrypterStub } = makeSut()
+    jest.spyOn(encrypterStub, "encrypt").mockImplementationOnce((encryptedValue: string) => {
+      throw new Error()
+    })
+    const promise = sut.verify('any-token')
+
+    await expect(promise).rejects.toThrow()
+  })
+
   test('Should throw if LoadAccountByIdRepository throws', async () => {
     const { sut, loadAccountByIdRepositoryStub } = makeSut()
     jest.spyOn(loadAccountByIdRepositoryStub, "loadById").mockRejectedValueOnce(new Error())
