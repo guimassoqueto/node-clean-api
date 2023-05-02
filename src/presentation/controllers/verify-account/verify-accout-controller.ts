@@ -7,7 +7,7 @@ import {
 import loggerConfig from '../../../logger-config'
 import { serverError, badRequest, ok, conflict } from '../../helpers/http/http-helper'
 import { type AccountVerification } from '../../../domain/usecases/account-verification'
-import { AccountAlreadyVerifiedError } from '../../errors'
+import { AccountAlreadyVerifiedError } from '../../../errors'
 
 const logger = loggerConfig('verify-account-controller')
 
@@ -15,7 +15,7 @@ export class VerifyAccountController implements Controller {
   constructor (
     private readonly validation: Validation,
     private readonly accountVerification: AccountVerification
-  ) {}
+  ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

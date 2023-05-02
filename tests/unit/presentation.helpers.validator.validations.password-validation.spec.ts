@@ -1,6 +1,6 @@
 import { PasswordValidator } from "../../src/presentation/protocols";
-import { PasswordValidation } from "../../src/presentation/helpers/validators/validations" 
-import { InvalidParamError } from "../../src/presentation/errors";
+import { PasswordValidation } from "../../src/validation/validations" 
+import { InvalidParamError } from "../../src/errors";
 
 // Factory que cria um PasswordValidator
 function makePasswordValidator(): PasswordValidator {

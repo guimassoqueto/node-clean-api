@@ -9,7 +9,7 @@ import {
   EmailVerificationData,
   EmailVerificationResponse,
 } from "../../src/presentation/controllers/signup/signup-controller-protocols"
-import { MissingParamError, ServerError } from "../../src/presentation/errors"
+import { MissingParamError, ServerError } from "../../src/errors"
 import { badRequest } from "../../src/presentation/helpers/http/http-helper"
 import { UnverifiedAccountModel } from "../../src/domain/models/unverified-account"
 

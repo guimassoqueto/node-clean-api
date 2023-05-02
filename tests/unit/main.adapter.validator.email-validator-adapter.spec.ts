@@ -1,4 +1,4 @@
-import { EmailValidatorAdapter } from "../../src/main/adapters/validator";
+import { EmailValidatorAdapter } from "../../src/infra/validator";
 
 // Factory que cria um EmailValidator
 function makeSut(): EmailValidatorAdapter {

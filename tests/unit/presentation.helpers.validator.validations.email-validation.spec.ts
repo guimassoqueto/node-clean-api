@@ -1,6 +1,6 @@
 import { EmailValidator } from "../../src/presentation/protocols";
-import { EmailValidation } from "../../src/presentation/helpers/validators/validations"
-import { InvalidParamError } from "../../src/presentation/errors";
+import { EmailValidation } from "../../src/validation/validations"
+import { InvalidParamError } from "../../src/errors";
 
 function makeEmailValidator(): EmailValidator {
   class EmailValidatorStub implements EmailValidator {

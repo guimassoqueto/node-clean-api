@@ -1,13 +1,13 @@
-import { ValidationComposite } from '../../../presentation/helpers/validators/validation-composite'
+import { ValidationComposite } from '../../../validation/validation-composite'
 import {
   RequiredFieldValidation,
   FieldsComparisonValidation,
   EmailValidation,
   PasswordValidation
-} from '../../../presentation/helpers/validators/validations'
+} from '../../../validation/validations'
 import { type Validation } from '../../../presentation/controllers/signup/signup-controller-protocols'
-import { EmailValidatorAdapter } from '../../adapters/validator/email-validator-adapter'
-import { PasswordValidatorAdapter } from '../../adapters/validator/password-validator-adapter'
+import { EmailValidatorAdapter } from '../../../infra/validator/email-validator-adapter'
+import { PasswordValidatorAdapter } from '../../../infra/validator/password-validator-adapter'
 
 export function makeSignUpValidation (): ValidationComposite {
   const validations: Validation[] = []
