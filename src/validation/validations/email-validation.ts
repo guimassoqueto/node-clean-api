@@ -1,6 +1,6 @@
-import { InvalidParamError } from '../../../errors'
-import { type Validation } from '../../../protocols/validation'
-import { type EmailValidator } from '../../../protocols'
+import { InvalidParamError } from '../../errors'
+import { type Validation } from '../../presentation/protocols/validation'
+import { type EmailValidator } from '../../presentation/protocols/'
 
 /**
  * Verifica se o email passado na requisição é válido
