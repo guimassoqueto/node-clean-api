@@ -34,6 +34,10 @@ install:
 test:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test
 
+# executa os testes de modo simplificado
+test-simplified:
+	${PACKAGE_MANAGER_RUN} test:simplified
+
 # transpila para javascript
 build:
 	${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build
