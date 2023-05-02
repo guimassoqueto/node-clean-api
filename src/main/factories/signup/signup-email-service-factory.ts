@@ -1,4 +1,4 @@
-import { type EmailService } from '../../../presentation/protocols'
+import { type EmailService } from '../../../domain/usecases/email-service'
 import { AwsSesAdapter } from '../../../infra/email/aws-ses-adapter'
 import { AWS_SES_REGION, AWS_SES_ACCESS_KEY_ID, AWS_SES_ACCESS_KEY_SECRET } from '../../../settings'
 import { SESClient, type SESClientConfig } from '@aws-sdk/client-ses'
