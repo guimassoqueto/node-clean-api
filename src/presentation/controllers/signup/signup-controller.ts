@@ -8,7 +8,7 @@ import {
   type AddUnverifiedAccount
 } from './signup-controller-protocols'
 import { badRequest, ok, serverError, conflict } from '../../helpers/http/http-helper'
-import { EmailAlreadyInUseError } from '../../errors'
+import { EmailAlreadyInUseError } from '../../../errors'
 import loggerConfig from '../../../logger-config'
 
 const logger = loggerConfig('signup-controller')
@@ -19,7 +19,7 @@ export class SignUpControlller implements Controller {
     private readonly addAccount: AddAccount,
     private readonly addUnverifiedAccount: AddUnverifiedAccount,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   public async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

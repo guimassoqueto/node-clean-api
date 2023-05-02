@@ -1,7 +1,7 @@
-import { ValidationComposite } from '../../../presentation/helpers/validation/validation-composite'
+import { ValidationComposite } from '../../../validation/validation-composite'
 import {
   RequiredFieldValidation
-} from '../../../presentation/helpers/validation/validations'
+} from '../../../validation/validations'
 import { type Validation } from '../../../presentation/controllers/login/login-controller-protocols'
 
 export function makeVerifyAccountValidation (): ValidationComposite {

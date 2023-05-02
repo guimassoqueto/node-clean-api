@@ -2,7 +2,7 @@ import { ObjectId, type WithId } from 'mongodb'
 import { type AccountModel } from '../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { EmailAlreadyInUseError } from '../../../../presentation/errors'
+import { EmailAlreadyInUseError } from '../../../../errors'
 import {
   type AddAccountRepository,
   type LoadAccountByEmailRepository,

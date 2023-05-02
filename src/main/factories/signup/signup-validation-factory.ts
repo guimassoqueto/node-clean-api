@@ -1,10 +1,10 @@
-import { ValidationComposite } from '../../../presentation/helpers/validation/validation-composite'
+import { ValidationComposite } from '../../../validation/validation-composite'
 import {
   RequiredFieldValidation,
   FieldsComparisonValidation,
   EmailValidation,
   PasswordValidation
-} from '../../../presentation/helpers/validation/validations'
+} from '../../../validation/validations'
 import { type Validation } from '../../../presentation/controllers/signup/signup-controller-protocols'
 import { EmailValidatorAdapter } from '../../adapters/validator/email-validator-adapter'
 import { PasswordValidatorAdapter } from '../../adapters/validator/password-validator-adapter'
