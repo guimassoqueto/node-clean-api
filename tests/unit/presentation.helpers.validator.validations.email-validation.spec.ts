@@ -1,5 +1,5 @@
 import { EmailValidator } from "../../src/presentation/protocols";
-import { EmailValidation } from "../../src/presentation/helpers/validators/validations"
+import { EmailValidation } from "../../src/presentation/helpers/validation/validations"
 import { InvalidParamError } from "../../src/presentation/errors";
 
 function makeEmailValidator(): EmailValidator {

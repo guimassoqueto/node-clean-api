@@ -1,5 +1,5 @@
 import { PasswordValidator } from "../../src/presentation/protocols";
-import { PasswordValidation } from "../../src/presentation/helpers/validators/validations" 
+import { PasswordValidation } from "../../src/presentation/helpers/validation/validations" 
 import { InvalidParamError } from "../../src/presentation/errors";
 
 // Factory que cria um PasswordValidator
