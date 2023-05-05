@@ -36,7 +36,7 @@ test:
 
 # executa os testes de modo simplificado
 test-simplified:
-	${PACKAGE_MANAGER_RUN} test:simplified
+	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test:simplified
 
 # transpila para javascript
 build:
