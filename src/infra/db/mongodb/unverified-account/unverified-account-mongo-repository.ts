@@ -7,7 +7,8 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class UnverifiedAccountMongoRepository implements AddUnverifiedAccountRepository, DeleteUnverifiedAccountByAccountTokenRepository {
   async add (accountToken: string): Promise<UnverifiedAccountModel> {
-    const unverifiedAccountCollection = await MongoHelper.getCollection('unverifiedAccounts')
+    const mongo = MongoHelper.getInstance()
+    const unverifiedAccountCollection = await mongo.getCollection('unverifiedAccounts')
 
     // TODO: [Mudar? Assim funciona. Mas o indice é criado a cada novo signup]
     // a hash é removida do banco de dados após 600 segundos (10 minutos) se não for verificada
@@ -16,11 +17,12 @@ export class UnverifiedAccountMongoRepository implements AddUnverifiedAccountRep
     const result = await unverifiedAccountCollection.insertOne({ accountToken, createdAt: new Date() })
     const unverifiedAccount = await unverifiedAccountCollection.findOne({ _id: result.insertedId })
 
-    return MongoHelper.mapper<UnverifiedAccountModel>(unverifiedAccount)
+    return mongo.mapper<UnverifiedAccountModel>(unverifiedAccount)
   }
 
   async deleteByAccountToken (accountToken: string): Promise<void> {
-    const unverifiedAccountCollection = await MongoHelper.getCollection('unverifiedAccounts')
+    const mongo = MongoHelper.getInstance()
+    const unverifiedAccountCollection = await mongo.getCollection('unverifiedAccounts')
     await unverifiedAccountCollection.deleteOne({ accountToken })
   }
 }

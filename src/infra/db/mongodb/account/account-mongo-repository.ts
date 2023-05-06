@@ -14,7 +14,8 @@ import {
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByIdRepository, UpdateAccountVerifiedRepository, ChangeAccountIdRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
 
     // TODO: [Mudar? Assim funciona. Mas o indice é criado a cada novo signup]
     // a conta é removida do banco de dados após 600 segundos (10 minutos) se não for verificada
@@ -26,37 +27,46 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     const result = await accountCollection.insertOne({ ...accountData, verified: false, createdAt: new Date() })
     const account = await accountCollection.findOne({ _id: result.insertedId })
 
-    return MongoHelper.mapper<AccountModel>(account)
+    return mongo.mapper<AccountModel>(account)
   }
 
   async loadByEmail (email: string): Promise<AccountModel | null> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
+
     const account = await accountCollection.findOne({ email })
     if (!account) return null
 
-    return MongoHelper.mapper<AccountModel>(account)
+    return mongo.mapper<AccountModel>(account)
   }
 
   async loadById (id: string): Promise<AccountModel | null> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
+
     const account = await accountCollection.findOne({ _id: new ObjectId(id) })
     if (!account) return null
 
-    return MongoHelper.mapper<AccountModel>(account)
+    return mongo.mapper<AccountModel>(account)
   }
 
   async updateAccessToken (id: string, token: string): Promise<void> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
+
     await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken: token } })
   }
 
   async updateVerified (id: string, verified: boolean): Promise<void> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
     await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { verified } })
   }
 
   async changeId (id: string): Promise<AccountModel | null> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
+
     const oldAccount = await accountCollection.findOne({ _id: new ObjectId(id) })
     await accountCollection.findOneAndDelete({ _id: new ObjectId(id) })
 
@@ -65,6 +75,6 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
 
     const account = await accountCollection.findOne({ _id: insertedAccount.insertedId })
 
-    return MongoHelper.mapper<AccountModel>(account)
+    return mongo.mapper<AccountModel>(account)
   }
 }
