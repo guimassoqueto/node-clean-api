@@ -1,24 +1,14 @@
-import { MongoHelper as sut } from "../../src/infra/db/mongodb/helpers/mongo-helper" 
+import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper" 
 import { MONGO_URL } from "../settings"
 
+let sut: MongoHelper
 describe('Mongo Helper' , () => {
-  afterEach(async () => {
-    await sut.disconnect()
+  beforeAll(() => {
+    sut = MongoHelper.getInstance()
   })
 
-  test('Should set and unset values when connects and diconnects', async () => {
-    await sut.connect(MONGO_URL)
-    let accountCollection = sut.getCollection("accounts")
-    
-    expect(accountCollection).toBeTruthy()
-    expect(sut.client).toBeTruthy()
-    expect(sut.uri).toBeTruthy()
-
+  afterEach(async () => {
     await sut.disconnect()
-    expect(sut.client).toBeFalsy()
-
-    // a uri permanece definida, só sendo modificada em uma nova connect()
-    expect(sut.uri).toBeTruthy()
   })
 
   test('Should reconnect if connection is down', async () => {

@@ -12,17 +12,19 @@ function makeSut(): UnverifiedAccountMongoRepository {
 }
 
 let unverifiedAccountCollection: Collection
+let mongo: MongoHelper
 describe('Add Unverified Account Mongo Repository', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL);
+    mongo = MongoHelper.getInstance()
+    await mongo.connect(MONGO_URL)
   })
 
   afterAll(async () => {
-    await MongoHelper.disconnect();
+    await mongo.disconnect();
   })
 
   afterEach(async () => {
-    unverifiedAccountCollection = await MongoHelper.getCollection("unverifiedAccounts")
+    unverifiedAccountCollection = await mongo.getCollection("unverifiedAccounts")
     await unverifiedAccountCollection.deleteMany({})
   })
 

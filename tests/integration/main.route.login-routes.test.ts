@@ -17,17 +17,19 @@ sesMock.send.resolves({$metadata: {
 
 
 let accountCollection: Collection;
+let mongo: MongoHelper
 describe('Login Route', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL);
+    mongo = MongoHelper.getInstance()
+    await mongo.connect(MONGO_URL)
   })
 
   afterAll(async () => {
-    await MongoHelper.disconnect();
+    await mongo.disconnect()
   })
 
-  afterEach(async () => {
-    accountCollection = await MongoHelper.getCollection("accounts")
+  beforeEach(async () => {
+    accountCollection = await mongo.getCollection("accounts")
     await accountCollection.deleteMany({})
   })
 
