@@ -29,18 +29,20 @@ function makeUnverifiedAccount(accountId: string): MakeUnverifiedAccount {
 
 let accountsCollection: Collection
 let unverifiedAccountsCollection: Collection
+let mongo: MongoHelper
 describe('Verify Account' , () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL);
+    mongo = MongoHelper.getInstance()
+    await mongo.connect(MONGO_URL);
   })
 
   afterAll(async () => {
-    await MongoHelper.disconnect();
+    await mongo.disconnect();
   })
 
   beforeEach(async () => {
-    accountsCollection = await MongoHelper.getCollection("accounts")
-    unverifiedAccountsCollection = await MongoHelper.getCollection("unverifiedAccounts")
+    accountsCollection = await mongo.getCollection("accounts")
+    unverifiedAccountsCollection = await mongo.getCollection("unverifiedAccounts")
   })
 
   afterEach(async () => {

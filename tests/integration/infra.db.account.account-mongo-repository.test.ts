@@ -18,17 +18,19 @@ function makeSut(): AccountMongoRepository {
 }
 
 let accountCollection: Collection
+let mongo: MongoHelper 
 describe('Add Account Mongo Repository' , () => {
   beforeAll(async () => {
-    await MongoHelper.connect(MONGO_URL);
+    mongo = MongoHelper.getInstance()
+    await mongo.connect(MONGO_URL)
   })
 
   afterAll(async () => {
-    await MongoHelper.disconnect();
+    await mongo.disconnect();
   })
 
   afterEach(async () => {
-    accountCollection = await MongoHelper.getCollection("accounts")
+    accountCollection = await mongo.getCollection("accounts")
     await accountCollection.deleteMany({})
   })
 
