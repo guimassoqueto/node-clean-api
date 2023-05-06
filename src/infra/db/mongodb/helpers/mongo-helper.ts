@@ -1,36 +1,36 @@
 import { type Collection, MongoClient } from 'mongodb'
 
-export const MongoHelper = {
-  client: null,
-  uri: null,
+export class MongoHelper {
+  public client: MongoClient
+  public uri: string
 
-  async connect (uri: string): Promise<void> {
+  private static instance: MongoHelper
+
+  private constructor () {}
+
+  public static getInstance (): MongoHelper {
+    if (!MongoHelper.instance) {
+      MongoHelper.instance = new MongoHelper()
+    }
+
+    return MongoHelper.instance
+  }
+
+  public async connect (uri: string): Promise<void> {
     this.uri = uri
     this.client = await MongoClient.connect(this.uri, { connectTimeoutMS: 5000 })
-  },
+  }
 
-  async disconnect (): Promise<void> {
-    if (this.client) await (this.client as MongoClient).close()
-    this.client = null
-  },
+  public async disconnect (): Promise<void> {
+    if (this.client) await this.client.close()
+  }
 
-  /**
-   * Busca ou cria uma collection
-   * @param name nome da collection
-   * @returns a collection para CRUD
-   */
   async getCollection (name: string): Promise<Collection> {
     if (!this.client) await this.connect(this.uri)
-    return (this.client as MongoClient).db().collection(name)
-  },
+    return this.client.db().collection(name)
+  }
 
-  /**
-   * Analisa do objeto retornado em uma consulta feita no mongo e o adequa para
-   * se encaixar no formato definido no genérico
-   * @param object um objeto que representa um dado qualquer retornado do MongoDb
-   * @returns O objeto formatado de acordo com a interface/tipo definida pelo genérico
-   */
-  mapper<T>(obj: any): T {
+  public mapper<T>(obj: any): T {
     if (!obj) throw new Error()
     const { _id, ...rest } = obj
     return Object.assign({}, rest, { id: _id.toString() }) as T
