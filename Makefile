@@ -1,6 +1,5 @@
 PACKAGE_MANAGER=npm
 PACKAGE_MANAGER_RUN=npm run
-BROWSER=firefox
 COMPOSE=docker compose
 DOCKER=docker
 REMOVE_FOLDER_RECURSIVE=rm -rf
@@ -64,7 +63,7 @@ integration-test:
 
 # abre o navegador na página principal do repositório no GitHub 
 open-repo:
-	${BROWSER} -url "https://github.com/guimassoqueto/node-clean-api"
+	open "https://github.com/guimassoqueto/node-clean-api"
 
 # executa teste de um arquivo especifico
 test-file:
