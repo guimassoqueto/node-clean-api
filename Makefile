@@ -8,6 +8,7 @@ REMOVE_DIST_FOLDER=${REMOVE_FOLDER_RECURSIVE} ${COMPILED_CODE_FOLDER}
 DATABASE_UP=${COMPOSE} up mongodb -d
 HUSKY=npx husky install
 COPY_ENV_EXAMPLE=cat .env.example 1> .env && echo "MONGO_HOST=\"localhost\"" 1>> .env && cat .env.example 1> compose.env && echo "MONGO_HOST=\"mongodb\"" 1>> compose.env
+DIR=xdg-open
 
 # executa a aplicação containerizada, banco de dados e api
 up:
@@ -62,8 +63,12 @@ integration-test:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test:integration
 
 # abre o navegador na página principal do repositório no GitHub 
-open-repo:
+or:
 	open "https://github.com/guimassoqueto/node-clean-api"
+
+# abre com a GUI o diretorio local do repositório
+od:
+	${DIR} .
 
 # executa teste de um arquivo especifico
 test-file:
