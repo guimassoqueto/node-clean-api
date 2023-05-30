@@ -27,7 +27,7 @@ env:
 	${COPY_ENV_EXAMPLE}
 
 ## instala todos os pacotes requeridos no package.json
-install:
+i:
 	${HUSKY} && ${PACKAGE_MANAGER} install
 
 # executa todos os testes da aplicação, verborragicamente, sequencialmente, um a um
@@ -35,7 +35,7 @@ test:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test
 
 # executa os testes de modo simplificado
-test-simplified:
+test-simple:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test:simplified
 
 # transpila para javascript
@@ -59,7 +59,7 @@ unit-test:
 	${PACKAGE_MANAGER_RUN} test:unit
 
 # executa testes de integração da aplicação, localizados em tests/integration
-integration-test:
+int-test:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} test:integration
 
 # abre o navegador na página principal do repositório no GitHub 
