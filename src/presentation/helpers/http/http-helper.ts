@@ -22,6 +22,13 @@ export function serverError (error: Error): HttpResponse {
   }
 }
 
+export function noContent (): HttpResponse {
+  return {
+    statusCode: 204,
+    body: null
+  }
+}
+
 export function unauthorized (): HttpResponse {
   return {
     statusCode: 401,
