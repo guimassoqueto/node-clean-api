@@ -1,9 +1,14 @@
 import { HttpRequest } from "../../../src/presentation/protocols"
 import { AuthMiddleware } from "../../../src/presentation/middlewares/auth-middleware"
-import { forbidden, ok, serverError } from "../../../src/presentation/helpers/http/http-helper"
-import { AccessDeniedError } from "../../../src/errors"
-import { LoadAccountByToken } from "../../../src/domain/usecases/load-account-by-token"
-import { AccountModel } from "../../../src/domain/models/account"
+import {
+  forbidden,
+  ok,
+  serverError,
+  AccessDeniedError,
+  LoadAccountByToken,
+  AccountModel
+} from "../../../src/presentation/middlewares/auth-middleware-protocols"
+
 
 function makeFakeRequest(): HttpRequest {
   return {
