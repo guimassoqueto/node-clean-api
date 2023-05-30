@@ -1,7 +1,7 @@
 import request from "supertest"
-import app from "../../src/main/config/app"
-import { MongoHelper } from "../../src/infra/db/mongodb/helpers/mongo-helper"
-import { MONGO_URL, SALT_ROUNDS } from "../settings"
+import app from "../../../src/main/config/app"
+import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper"
+import { MONGO_URL, SALT_ROUNDS } from "../../settings"
 import { Collection } from "mongodb"
 import { hash } from "bcrypt"
 import { mockClient } from "aws-sdk-client-mock";

@@ -6,8 +6,8 @@ import {
   UpdateAccessTokenRepository,
   Authentication,
   AuthenticationModel
-} from "../../src/data/usecases/authentication/db-authentication-protocols"
-import { DbAuthentication } from "../../src/data/usecases/authentication/db-authentication-usecase"
+} from "../../../src/data/usecases/authentication/db-authentication-protocols"
+import { DbAuthentication } from "../../../src/data/usecases/authentication/db-authentication-usecase"
 
 function makeFakeAuthentication(): AuthenticationModel {
   return {

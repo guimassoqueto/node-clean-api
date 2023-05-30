@@ -1,4 +1,4 @@
-import { HealthCheckController } from "../../src/presentation/controllers/healthcheck/healthcheck-controller"
+import { HealthCheckController } from "../../../src/presentation/controllers/healthcheck/healthcheck-controller"
 
 describe('Healthcheck Controller' , () => {
   test('Should return 500 if LoginController Throws', async () => {

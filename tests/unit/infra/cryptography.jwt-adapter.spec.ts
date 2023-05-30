@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { Encrypter } from "../../src/data/protocols/cryptography";
-import { JwtAdapter } from "../../src/infra/cryptography/jwt-adapter/jwt-adapter"
-import { JWT_SECRET } from "../settings";
+import { Encrypter } from "../../../src/data/protocols/cryptography";
+import { JwtAdapter } from "../../../src/infra/cryptography/jwt-adapter/jwt-adapter"
+import { JWT_SECRET } from "../../settings";
 
 const mockAccessToken = "any_token"
 jest.mock('jsonwebtoken', () => ({
