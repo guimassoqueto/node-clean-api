@@ -5,8 +5,8 @@ import {
   type Authentication,
   type Validation
 } from './login-controller-protocols'
-import { serverError, ok, unauthorized, badRequest } from '../../helpers/http/http-helper'
-import loggerConfig from '../../../logger-config'
+import { serverError, ok, unauthorized, badRequest } from '../../../helpers/http/http-helper'
+import loggerConfig from '../../../../logger-config'
 
 const logger = loggerConfig('login-controller')
 

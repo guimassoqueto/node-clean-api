@@ -1,4 +1,4 @@
-import { SignUpControlller } from "../../src/presentation/controllers/signup/signup-controller"
+import { SignUpControlller } from "../../src/presentation/controllers/user/signup/signup-controller"
 import { AddAccount, AddAccountModel } from "../../src/domain/usecases/add-account"
 import { AddUnverifiedAccount } from "../../src/domain/usecases/add-unverified-account"
 import { AccountModel } from "../../src/domain/models/account"
@@ -8,7 +8,7 @@ import {
   EmailService,
   EmailVerificationData,
   EmailVerificationResponse,
-} from "../../src/presentation/controllers/signup/signup-controller-protocols"
+} from "../../src/presentation/controllers/user/signup/signup-controller-protocols"
 import { MissingParamError, ServerError } from "../../src/errors"
 import { badRequest } from "../../src/presentation/helpers/http/http-helper"
 import { UnverifiedAccountModel } from "../../src/domain/models/unverified-account"
