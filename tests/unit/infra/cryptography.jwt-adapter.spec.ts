@@ -90,5 +90,14 @@ describe('JwtAdapter' , () => {
     })
   })
 
+  describe('verify()' , () => {
+    test('Should call decode with correct values', async () => {
+      const { sut } = makeSut()
+      const verifySpy = jest.spyOn(jwt, "verify")
+      const value = "any-value"
+      sut.decrypt(value)
+  
+      expect(verifySpy).toHaveBeenCalledWith(value, JWT_SECRET)
+    })
   })
 })
