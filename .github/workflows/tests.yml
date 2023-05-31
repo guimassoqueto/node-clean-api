@@ -1,5 +1,8 @@
 name: Node.js CI
 
+env:
+  MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME }}
+
 on:
   push:
     branches: [ main ]
@@ -14,6 +17,8 @@ jobs:
     strategy:
       matrix:
         node-version: [ 20.x ]
+        mongodb-version: ['latest']
+
 
     steps:
       - uses: actions/checkout@v3
@@ -21,5 +26,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i
-      - run: npm run test:unit
+      
+      
+      - name: MongoDB in GitHub Actions
+        uses: supercharge/mongodb-github-action@1.9.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}  
+          mongodb-username: 'user'
+          mongodb-password: 'pwd'
+          mongodb-db: 'node-clean-api' 
+      
+      - name: Run All Tests
+        run: npm install && npm run test:unit
+        
