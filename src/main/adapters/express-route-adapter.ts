@@ -1,4 +1,4 @@
-import { type Controller, type HttpRequest, type HttpResponse } from '../../../presentation/protocols'
+import { type Controller, type HttpRequest, type HttpResponse } from '../../presentation/protocols'
 import { type Request, type Response } from 'express'
 
 /**
