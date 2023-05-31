@@ -42,7 +42,12 @@ ChangeAccountIdRepository {
     const mongo = MongoHelper.getInstance()
     const accountCollection = await mongo.getCollection('accounts')
 
-    const account = await accountCollection.findOne({ accessToken, role })
+    // TODO: mudar a funcionalidade de acrdo com o nível de acesso da conta, assim está ruim
+    // relacionado ao teste: https://vscode.dev/github/guimassoqueto/node-clean-api/blob/feat/add-survey/tests/integration/infra/db.account-mongo-repository.test.ts#L174
+    const account = await accountCollection.findOne({
+      accessToken,
+      $or: [{ role }, { role: 'ADMIN' }]
+    })
 
     if (!account) return null
 
