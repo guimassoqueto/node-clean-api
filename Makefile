@@ -71,8 +71,8 @@ od:
 	${DIR} .
 
 # executa teste de um arquivo especifico
-test-file:
-	${PACKAGE_MANAGER_RUN} test -- tests/unit/infra.crypto.jwt-adapter.spec.ts
+tf:
+	${PACKAGE_MANAGER_RUN} test -- tests/integration/infra/db.account-mongo-repository.test.ts
 
 # faz a transpilação de tsc para javascript em tempo real, execute em um terminal separado
 tsc-watch:
@@ -85,8 +85,8 @@ node-watch:
 
 # builda e inicia a aplicação em javascript puro
 start-js:
-	make down && ${DATABASE_UP} && ${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
+	${DATABASE_UP} && ${REMOVE_DIST_FOLDER} && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} start:server
 
 # inicia a aplicação localmente sem transpilar
 start-ts:
-	make down && ${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} start:local
+	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} start:ts

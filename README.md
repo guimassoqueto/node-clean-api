@@ -68,6 +68,8 @@ If you want to access the application running locally without deploy it in a rem
 |`APP_HOST`|`localhost`            |API's host           |:heavy_multiplication_x:|
 |`APP_PORT`|`8000`            |API's port            |:heavy_multiplication_x:|
 |`APP_URL`|`${APP_HOST}:${APP_PORT}"`            |API's URL            |:heavy_multiplication_x:|
+|`JWT_SECRET`|`secret`            |Private Secret for jwt            |:heavy_multiplication_x:|
+|`SALT_ROUNDS`|`12`            |number of rounds for encryption            |:heavy_multiplication_x:|
 |`MONGO_URL`|`""`            |mongo url (for remote mongo)           |:heavy_multiplication_x:|
 
 

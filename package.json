@@ -9,7 +9,7 @@
     "tsc:watch": "tsc --watch",
     "node:watch": "node --watch dist/main/main.js",
     "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/main.js",
-    "start:local": "ts-node src/main/main.ts",
+    "start:ts": "ts-node src/main/main.ts",
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests --runInBand",
     "test:simplified": "npm test -- --silent --noStackTrace --coverage=false",
