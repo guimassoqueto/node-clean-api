@@ -73,4 +73,12 @@ describe('DbLoadAccountByToken' , () => {
     expect(account).toBeNull()
   })
 
+
+  test('Should return an account if loadAccountByTokenRepository returns an account', async () => {
+    const { sut } = makeSut()
+    const account = await sut.load('any-token', 'any-role')
+
+    expect(account).toStrictEqual(makeFakeAccount())
+  })
+
 })
