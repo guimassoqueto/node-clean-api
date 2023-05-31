@@ -37,14 +37,5 @@ jobs:
           mongodb-db: 'node-clean-api' 
       
       - name: Run All Tests
-        run: npm install && npm run test:simplified
+        run: npm install && npm run test:unit
         
-      # - name: Run Integration Tests
-      #   run: npm install && npm run test:integration
-      #   env:
-      #     MONGO_ROOT_USERNAME: ${{ vars.MONGO_ROOT_USERNAME }}
-      #     MONGO_ROOT_PASSWORD: ${{ vars.MONGO_ROOT_PASSWORD }}
-      #     MONGO_HOST: ${{ vars.MONGO_HOST }}
-      #     MONGO_PORT: ${{ vars.MONGO_PORT }}
-      #     MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME }}
-      #     MONGO_URL: ${{ vars.MONGO_URL }}
