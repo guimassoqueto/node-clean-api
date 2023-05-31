@@ -160,6 +160,13 @@ describe('Add Account Mongo Repository' , () => {
       expect(account?.email).toBe(new_account.email)
       expect(account?.password).toBe(new_account.password)
     })
+
+    test('Should return null if loadByToken fails', async () => {
+      const sut = makeSut()
+      const account = await sut.loadByToken('any-token', 'any-role')
+  
+      expect(account).toBeNull()
+    })
   })
   
   
