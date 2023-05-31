@@ -71,8 +71,8 @@ od:
 	${DIR} .
 
 # executa teste de um arquivo especifico
-test-file:
-	${PACKAGE_MANAGER_RUN} test -- tests/integration/main/route.survey-routes.test.ts
+tf:
+	${PACKAGE_MANAGER_RUN} test -- tests/integration/infra/db.account-mongo-repository.test.ts
 
 # faz a transpilação de tsc para javascript em tempo real, execute em um terminal separado
 tsc-watch:
