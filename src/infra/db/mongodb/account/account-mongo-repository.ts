@@ -6,13 +6,21 @@ import { EmailAlreadyInUseError } from '../../../../errors'
 import {
   type AddAccountRepository,
   type LoadAccountByEmailRepository,
+  type LoadAccountByTokenRepository,
   type UpdateAccessTokenRepository,
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
   type ChangeAccountIdRepository
 } from '../../../../data/protocols/db/account'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByIdRepository, UpdateAccountVerifiedRepository, ChangeAccountIdRepository {
+export class AccountMongoRepository implements
+AddAccountRepository,
+LoadAccountByEmailRepository,
+LoadAccountByTokenRepository,
+UpdateAccessTokenRepository,
+LoadAccountByIdRepository,
+UpdateAccountVerifiedRepository,
+ChangeAccountIdRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const mongo = MongoHelper.getInstance()
     const accountCollection = await mongo.getCollection('accounts')
@@ -26,6 +34,17 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
 
     const result = await accountCollection.insertOne({ ...accountData, verified: false, createdAt: new Date() })
     const account = await accountCollection.findOne({ _id: result.insertedId })
+
+    return mongo.mapper<AccountModel>(account)
+  }
+
+  async loadByToken (accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
+    const mongo = MongoHelper.getInstance()
+    const accountCollection = await mongo.getCollection('accounts')
+
+    const account = await accountCollection.findOne({ accessToken, role })
+
+    if (!account) return null
 
     return mongo.mapper<AccountModel>(account)
   }
