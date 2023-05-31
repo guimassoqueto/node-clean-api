@@ -1,4 +1,4 @@
-import { makeAddSurveyValidation } from "../../../src/main/factories/surveys/add-survey/add-survey-validation-factory"
+import { makeAddSurveyValidation } from "../../../src/main/factories/controllers/surveys/add-survey/add-survey-validation-factory"
 import { ValidationComposite } from "../../../src/validation/validation-composite"
 import { RequiredFieldValidation } from "../../../src/validation/validations"
 import { Validation } from "../../../src/presentation/protocols"

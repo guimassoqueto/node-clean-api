@@ -1,8 +1,8 @@
-import { ValidationComposite } from '../../../../validation/validation-composite'
+import { ValidationComposite } from '../../../../../validation/validation-composite'
 import {
   RequiredFieldValidation
-} from '../../../../validation/validations'
-import { type Validation } from '../../../../presentation/controllers/user/login/login-controller-protocols'
+} from '../../../../../validation/validations'
+import { type Validation } from '../../../../../presentation/controllers/user/login/login-controller-protocols'
 
 export function makeVerifyAccountValidation (): ValidationComposite {
   const validations: Validation[] = []
