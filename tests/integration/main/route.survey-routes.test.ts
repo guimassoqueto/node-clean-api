@@ -39,10 +39,10 @@ describe('Surveys Route', () => {
   })
 
 
-  test('Should return 204 on signup', async () => {
+  test('Should return 403 if user did not provide a valid accessToken', async () => {
     await request(app)
       .post('/api/surveys')
       .send(makeFakeSurvey())
-      .expect(204)
+      .expect(403)
   })
 })
