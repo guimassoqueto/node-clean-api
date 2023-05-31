@@ -1,6 +1,6 @@
 import {
   type AccountVerification,
-  type Decrypter,
+  type Decoder,
   type Encrypter,
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
@@ -11,7 +11,7 @@ import {
 
 export class DbAccountVerification implements AccountVerification {
   constructor (
-    private readonly decrypter: Decrypter,
+    private readonly decoder: Decoder,
     private readonly encrypter: Encrypter,
     private readonly loadAccountByIdRepository: LoadAccountByIdRepository,
     private readonly updateAccountVerified: UpdateAccountVerifiedRepository,
@@ -21,7 +21,7 @@ export class DbAccountVerification implements AccountVerification {
   ) { }
 
   async verify (accountToken: string): Promise<string | null> {
-    const id = await this.decrypter.decrypt(accountToken)
+    const id = await this.decoder.decode(accountToken)
 
     const oldAccount = await this.loadAccountByIdRepository.loadById(id)
     if (!oldAccount) return null

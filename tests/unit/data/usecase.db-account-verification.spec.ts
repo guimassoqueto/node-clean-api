@@ -1,6 +1,6 @@
 import {
   UpdateAccountVerifiedRepository,
-  Decrypter,
+  Decoder,
   LoadAccountByIdRepository,
   AccountModel,
   DeleteUnverifiedAccountByAccountTokenRepository,
@@ -21,13 +21,13 @@ function makeFakeAccount(id: string = "any-id"): AccountModel {
   }
 }
 
-function makeDecrypter(): Decrypter {
-  class DecrypterStub implements Decrypter {
-    async decrypt(encryptedValue: string): Promise<string> {
+function makeDecoder(): Decoder {
+  class DecoderStub implements Decoder {
+    async decode(encodedValue: string): Promise<string> {
       return new Promise(resolve => resolve('any-account-id'))
     }
   }
-  return new DecrypterStub()
+  return new DecoderStub()
 }
 
 function makeEncrypter(): Encrypter {
@@ -80,7 +80,7 @@ function makeUpdateAccessTokenRepository(): UpdateAccessTokenRepository {
 
 type SutTypes = {
   sut: DbAccountVerification,
-  decrypterStub: Decrypter,
+  decoderStub: Decoder,
   encrypterStub: Encrypter,
   loadAccountByIdRepositoryStub: LoadAccountByIdRepository,
   updateAccountVerifiedRepositoryStub: UpdateAccountVerifiedRepository,
@@ -90,7 +90,7 @@ type SutTypes = {
 }
 
 function makeSut(): SutTypes {
-  const decrypterStub = makeDecrypter()
+  const decoderStub = makeDecoder()
   const encrypterStub = makeEncrypter()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
@@ -99,7 +99,7 @@ function makeSut(): SutTypes {
   const deleteUnverifiedAccountByAccountTokenRepositoryStub = makeDeleteUnverifiedAccountByAccountTokenRepository()
 
   const sut = new DbAccountVerification(
-    decrypterStub,
+    decoderStub,
     encrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
@@ -110,7 +110,7 @@ function makeSut(): SutTypes {
 
   return {
     sut,
-    decrypterStub,
+    decoderStub,
     encrypterStub,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
@@ -121,9 +121,9 @@ function makeSut(): SutTypes {
 }
 
 describe('DbAccountVerification', () => {
-  test('Should throws Decrypter throws', async () => {
-    const { sut, decrypterStub } = makeSut()
-    jest.spyOn(decrypterStub, "decrypt").mockImplementationOnce((encryptedValue: string) => {
+  test('Should throws Decoder throws', async () => {
+    const { sut, decoderStub } = makeSut()
+    jest.spyOn(decoderStub, "decode").mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
