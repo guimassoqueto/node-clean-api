@@ -36,14 +36,11 @@ jobs:
           mongodb-password: 'pwd'
           mongodb-db: 'node-clean-api' 
       
-      - name: Install dependencies
-        run: npm i
-
       - name: Run Unit Tests
-        run: npm run test:unit
+        run: npm install && npm run test:unit
         
       - name: Run Integration Tests
-        run: npm run test:integration
+        run: npm install && test:integration
         env:
           MONGO_ROOT_USERNAME: ${{ vars.MONGO_ROOT_USERNAME }}
           MONGO_ROOT_PASSWORD: ${{ vars.MONGO_ROOT_PASSWORD }}
