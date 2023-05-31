@@ -4,11 +4,11 @@ import { LoadAccountByTokenRepository } from '../../../src/data/protocols/db/acc
 
 function makeFakeAccount(): AccountModel {
   return {
-    id: "any-id",
-    email: "any-email",
-    password: "any-password",
+    id: 'any-id',
+    email: 'any-email',
+    password: 'any-password',
     createdAt: new Date(2023, 11, 31),
-    name: "any-name",
+    name: 'any-name',
     verified: true
   }
 }
@@ -16,7 +16,7 @@ function makeFakeAccount(): AccountModel {
 function makeDecrypter(): Decrypter {
   class DecrypterStub implements Decrypter {
     decrypt (encryptedValue: string): Promise<string> {
-      return new Promise(resolve => resolve("decrypted-value"))
+      return new Promise(resolve => resolve('decrypted-value'))
     }
   }
   return new DecrypterStub()
@@ -30,7 +30,7 @@ type SutType = {
 
 function makeLoadAccountByToken(): LoadAccountByTokenRepository {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
-    async load(accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
+    async loadByToken(accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
       return new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -51,9 +51,18 @@ function makeSut(): SutType {
 describe('DbLoadAccountByToken' , () => {
   test('Should call Decrypter with correct values', async () => {
     const { sut, decrypterStub } = makeSut()
-    const decryptSpy = jest.spyOn(decrypterStub, "decrypt")
-    await sut.load('any-token')
+    const decryptSpy = jest.spyOn(decrypterStub, 'decrypt')
+    await sut.load('any-token', 'any-role')
 
     expect(decryptSpy).toHaveBeenCalledWith('any-token')
   })
+
+  test('Should call loadAccountByTokenRepository with correct values', async () => {
+    const { sut, loadAccountByTokenRepositoryStub } = makeSut()
+    const loadByTokenSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken')
+    await sut.load('any-token', 'any-role')
+
+    expect(loadByTokenSpy).toHaveBeenCalledWith('decrypted-value', 'any-role')
+  })
+
 })
