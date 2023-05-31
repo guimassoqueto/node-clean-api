@@ -9,7 +9,8 @@ function makeAccount() {
     email: "any_email",
     password: "any_password",
     verified: false,
-    createdAt: new Date(2023, 11, 31)
+    createdAt: new Date(2023, 11, 31),
+    accessToken: 'any-token',
   }
 }
 
@@ -134,10 +135,24 @@ describe('Add Account Mongo Repository' , () => {
     test('Should return an account on loadByToken success without role', async () => {
       const sut = makeSut()
       const new_account = makeAccount()
-      new_account['accessToken'] = 'any-token'
+  
+      await accountCollection.insertOne(new_account) 
+      const account = await sut.loadByToken(new_account.accessToken)
+  
+      expect(account).toBeTruthy()
+      expect(account?.id).toBeTruthy()
+      expect(account?.name).toBe(new_account.name)
+      expect(account?.email).toBe(new_account.email)
+      expect(account?.password).toBe(new_account.password)
+    })
+
+    test('Should return an account on loadByToken success with role', async () => {
+      const sut = makeSut()
+      const new_account = makeAccount()
+      new_account['role'] = 'any-role'
 
       await accountCollection.insertOne(new_account) 
-      const account = await sut.loadByToken(new_account['accessToken'])
+      const account = await sut.loadByToken(new_account.accessToken, 'any-role')
   
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
