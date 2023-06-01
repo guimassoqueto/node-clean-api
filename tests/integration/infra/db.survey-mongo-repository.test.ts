@@ -11,10 +11,6 @@ class MockDate extends RealDate {
   }
 }
 
-function makeSut(): SurveyMongoRepository {
-  return new SurveyMongoRepository()
-}
-
 function makeSurveyData(questionNumber: number): AddSurveyModel {
   return {
     createdAt: new Date(),
@@ -56,7 +52,7 @@ describe('SurveyMongoRepository' , () => {
 
   describe('add()' , () => {
     test('Should add a survey on success', async () => {
-      const sut = makeSut()
+      const sut = new SurveyMongoRepository()
       await sut.add(makeSurveyData(1))
       const survey = await surveyCollection.findOne({question: 'any-question1'})
       expect(survey).toBeTruthy()
