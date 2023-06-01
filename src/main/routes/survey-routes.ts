@@ -2,7 +2,7 @@ import { type Router } from 'express'
 import { expressRouteAdapter } from '../adapters/express-route-adapter'
 import { makeAddSurveyController } from '../factories/controllers/surveys/add-survey/add-survey-controller-factory'
 import { makeLoadSurveysController } from '../factories/controllers/surveys/load-surveys/load-surveys-controller-factory'
-import { adminAuthorization, authorization } from '../middlewares/authorizations'
+import { adminAuthorization, anyUserAuthorization } from '../middlewares/authorizations'
 
 export default function (router: Router): void {
   router.post(
@@ -13,7 +13,7 @@ export default function (router: Router): void {
 
   router.get(
     '/surveys',
-    authorization,
+    anyUserAuthorization,
     expressRouteAdapter(makeLoadSurveysController())
   )
 }
