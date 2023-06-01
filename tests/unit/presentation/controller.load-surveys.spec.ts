@@ -1,6 +1,6 @@
 import { LoadSurveysController } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-controller'
 import { SurveyModel, LoadSurveys } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
-import { ok, serverError } from '../../../src/presentation/helpers/http/http-helper'
+import { noContent, ok, serverError } from '../../../src/presentation/helpers/http/http-helper'
 
 function makeFakeSurveys(): SurveyModel[] {
   return [
@@ -67,6 +67,14 @@ describe('LoadSurveysController' , () => {
     const response = await sut.handle({})
 
     expect(response).toEqual(serverError(error))
+  })
+
+  test('Should return 204 if LoadSurveys return an empty list', async () => {
+    const { sut, loadSurveysStub } = makeSut()
+    jest.spyOn(loadSurveysStub, "load").mockResolvedValue([])
+    const response = await sut.handle({})
+
+    expect(response).toEqual(noContent())
   })
 
 })
