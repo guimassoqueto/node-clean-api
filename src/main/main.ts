@@ -1,4 +1,4 @@
-import { APP_PORT, APP_URL, MONGO_URL } from '../settings'
+import { APP_PORT, APP_URL, MONGO_URL } from '@/settings'
 import { MongoHelper } from '../infra/db/mongodb/helpers/mongo-helper'
 import loggerConfig from '../logger-config'
 
