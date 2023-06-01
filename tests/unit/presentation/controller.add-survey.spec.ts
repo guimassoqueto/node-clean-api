@@ -2,8 +2,8 @@ import {
   AddSurvey, 
   AddSurveyModel, 
   HttpRequest 
-} from "../../../src/presentation/controllers/survey/add-survey-protocols"
-import { AddSurveyController } from '../../../src/presentation/controllers/survey/add-survey-controller'
+} from "../../../src/presentation/controllers/survey/add-survey/add-survey-protocols"
+import { AddSurveyController } from '../../../src/presentation/controllers/survey/add-survey/add-survey-controller'
 import { Validation } from '../../../src/presentation/protocols'
 import { noContent, serverError } from "../../../src/presentation/helpers/http/http-helper"
 
