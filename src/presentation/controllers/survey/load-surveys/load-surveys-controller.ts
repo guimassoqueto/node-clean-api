@@ -12,7 +12,7 @@ export class LoadSurveysController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveys.load()
-    return await new Promise(resolve => { resolve(ok('')) })
+    const surveys = await this.loadSurveys.load()
+    return ok(surveys)
   }
 }
