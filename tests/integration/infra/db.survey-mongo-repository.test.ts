@@ -70,5 +70,11 @@ describe('SurveyMongoRepository' , () => {
       expect(surveys[1].question).toEqual('any-question1')
     })
 
+    test('Should return a empty list loadAll if there is no Surveys on DB', async () => {
+      const sut = new SurveyMongoRepository()
+      const surveys = await sut.loadAll()
+      expect(surveys).toStrictEqual([])
+      expect(surveys.length).toStrictEqual(0)
+    })
   })
 })
