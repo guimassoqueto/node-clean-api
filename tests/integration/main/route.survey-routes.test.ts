@@ -50,26 +50,27 @@ describe('Surveys Route', () => {
     await accountCollection.deleteMany({})
   })
 
-
-  test('Should return 403 if user did not provide a valid accessToken', async () => {
-    await request(app)
-      .post('/api/surveys')
-      .send(makeFakeSurvey())
-      .expect(403)
-  })
-
-  test('Should return 204 if user provide a valid accessToken', async () => {
-    const accountWithRole = Object.assign(makeFakeAccount(), { role: 'ADMIN' })
-    const account = await accountCollection.insertOne(accountWithRole)
-    const id = account.insertedId.toString()
-    const accessToken = sign(id, JWT_SECRET)
-
-    await accountCollection.updateOne({_id: new ObjectId(id)}, { $set: { accessToken } })
-
-    await request(app)
-      .post('/api/surveys')
-      .set('x-access-token', accessToken)
-      .send(makeFakeSurvey())
-      .expect(204)
+  describe('POST /surveys' , () => {
+    test('Should return 403 if user did not provide a valid accessToken', async () => {
+      await request(app)
+        .post('/api/surveys')
+        .send(makeFakeSurvey())
+        .expect(403)
+    })
+  
+    test('Should return 204 if user provide a valid accessToken', async () => {
+      const accountWithRole = Object.assign(makeFakeAccount(), { role: 'ADMIN' })
+      const account = await accountCollection.insertOne(accountWithRole)
+      const id = account.insertedId.toString()
+      const accessToken = sign(id, JWT_SECRET)
+  
+      await accountCollection.updateOne({_id: new ObjectId(id)}, { $set: { accessToken } })
+  
+      await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send(makeFakeSurvey())
+        .expect(204)
+    })
   })
 })
