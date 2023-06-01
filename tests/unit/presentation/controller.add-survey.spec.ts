@@ -7,9 +7,18 @@ import { AddSurveyController } from '../../../src/presentation/controllers/surve
 import { Validation } from '../../../src/presentation/protocols'
 import { noContent, serverError } from "../../../src/presentation/helpers/http/http-helper"
 
+// mock Date object
+const RealDate = Date;
+class MockDate extends RealDate {
+  constructor() {
+    super('2030-01-01T00:00:00Z');
+  }
+}
+
 function makeFakeRequest(): HttpRequest {
   return {
     body: {
+      createdAt: new Date(),
       question: 'any_question',
       answers: [{
         image: "any-image",
@@ -56,6 +65,13 @@ function makeSut(): SutTypes {
 }
 
 describe('Add Survey Controller' , () => {
+  beforeAll(() => {
+    (global as any).Date = MockDate;
+  })
+  afterAll(() => {
+    (global as any).Date = RealDate;
+  })
+
   test('Shoul call validation with correct values', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, "validate")

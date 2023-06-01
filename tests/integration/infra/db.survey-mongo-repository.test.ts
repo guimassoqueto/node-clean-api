@@ -10,6 +10,7 @@ function makeSut(): SurveyMongoRepository {
 
 function makeSurveyData(): AddSurveyModel {
   return {
+    createdAt: new Date(2023, 11, 31),
     question: 'any-question',
     answers: [
       {
