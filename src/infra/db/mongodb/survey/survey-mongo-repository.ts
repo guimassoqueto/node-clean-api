@@ -1,4 +1,4 @@
-import { type AddSurveyRepository } from '../../../../data/protocols/db/add-survey'
+import { type AddSurveyRepository } from '../../../../data/protocols/db/survey'
 import { type AddSurveyModel } from '../../../../data/usecases/add-survey/db-add-survey-protocols'
 import { MongoHelper } from '../../../db/mongodb/helpers/mongo-helper'
 
