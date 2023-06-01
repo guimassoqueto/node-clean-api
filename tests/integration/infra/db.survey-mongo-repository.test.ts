@@ -63,4 +63,16 @@ describe('SurveyMongoRepository' , () => {
       expect(survey?._id).toBeTruthy()
     })
   })
+  
+  describe('loadAll()' , () => {
+    test('Should return a correct quantity of Surveys on loadAll success', async () => {
+      await surveyCollection.insertMany([ makeSurveyData(0), makeSurveyData(1) ])
+      const sut = new SurveyMongoRepository()
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(2)
+      expect(surveys[0].question).toEqual('any-question0')
+      expect(surveys[1].question).toEqual('any-question1')
+    })
+
+  })
 })
