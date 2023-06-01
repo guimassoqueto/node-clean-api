@@ -4,13 +4,17 @@ import { MONGO_URL } from "../../settings"
 import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper"
 import { Collection } from "mongodb"
 
-function makeSut(): SurveyMongoRepository {
-  return new SurveyMongoRepository()
+const RealDate = Date;
+class MockDate extends RealDate {
+  constructor() {
+    super('2030-01-01T00:00:00Z');
+  }
 }
 
-function makeSurveyData(): AddSurveyModel {
+function makeSurveyData(questionNumber: number): AddSurveyModel {
   return {
-    question: 'any-question',
+    createdAt: new Date(),
+    question: `any-question${questionNumber}`,
     answers: [
       {
         image:'image1',
@@ -27,11 +31,13 @@ let surveyCollection: Collection
 let mongo: MongoHelper 
 describe('SurveyMongoRepository' , () => {
   beforeAll(async () => {
+    (global as any).Date = MockDate;
     mongo = MongoHelper.getInstance()
     await mongo.connect(MONGO_URL)
   })
 
   afterAll(async () => {
+    (global as any).Date = RealDate;
     await mongo.disconnect();
   })
 
@@ -44,11 +50,31 @@ describe('SurveyMongoRepository' , () => {
     await surveyCollection.deleteMany({})
   })
 
-  test('Should add a survey on success', async () => {
-    const sut = makeSut()
-    await sut.add(makeSurveyData())
-    const survey = await surveyCollection.findOne({question: 'any-question'})
-    expect(survey).toBeTruthy()
-    expect(survey?._id).toBeTruthy()
+  describe('add()' , () => {
+    test('Should add a survey on success', async () => {
+      const sut = new SurveyMongoRepository()
+      await sut.add(makeSurveyData(1))
+      const survey = await surveyCollection.findOne({question: 'any-question1'})
+      expect(survey).toBeTruthy()
+      expect(survey?._id).toBeTruthy()
+    })
+  })
+  
+  describe('loadAll()' , () => {
+    test('Should return a correct quantity of Surveys on loadAll success', async () => {
+      await surveyCollection.insertMany([ makeSurveyData(0), makeSurveyData(1) ])
+      const sut = new SurveyMongoRepository()
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(2)
+      expect(surveys[0].question).toEqual('any-question0')
+      expect(surveys[1].question).toEqual('any-question1')
+    })
+
+    test('Should return a empty list loadAll if there is no Surveys on DB', async () => {
+      const sut = new SurveyMongoRepository()
+      const surveys = await sut.loadAll()
+      expect(surveys).toStrictEqual([])
+      expect(surveys.length).toStrictEqual(0)
+    })
   })
 })

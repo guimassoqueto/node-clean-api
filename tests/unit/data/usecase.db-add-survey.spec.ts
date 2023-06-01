@@ -3,6 +3,7 @@ import { DbAddSurvey } from './../../../src/data/usecases/add-survey/db-add-surv
 
 function makeFakeSurvey(): AddSurveyModel {
   return {
+    createdAt: new Date(2023, 11, 31),
     question: "any-question",
     answers: [
       { image: "any-image", answer: "any-answer" }
