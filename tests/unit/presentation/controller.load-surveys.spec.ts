@@ -1,6 +1,6 @@
 import { LoadSurveysController } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-controller'
 import { SurveyModel, LoadSurveys } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
-import { ok } from '../../../src/presentation/helpers/http/http-helper'
+import { ok, serverError } from '../../../src/presentation/helpers/http/http-helper'
 
 function makeFakeSurveys(): SurveyModel[] {
   return [
@@ -59,4 +59,14 @@ describe('LoadSurveysController' , () => {
     
     expect(response).toEqual(ok(makeFakeSurveys()))
   })
+
+  test('Should throw if LoadSurveys throws', async () => {
+    const { sut, loadSurveysStub } = makeSut()
+    const error = new Error()
+    jest.spyOn(loadSurveysStub, "load").mockRejectedValueOnce(error)
+    const response = await sut.handle({})
+
+    expect(response).toEqual(serverError(error))
+  })
+
 })
