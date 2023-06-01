@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "module": "CommonJS",
     "target": "ES2019",
@@ -8,10 +8,11 @@
     "allowJs": false,
     "strictNullChecks": true,
     "sourceMap": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@src/*": ["src/*"],
+      "@tests/*": ["tests/*"],
     },
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }
