@@ -1,4 +1,4 @@
-import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper" 
+import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper" 
 import { MONGO_URL } from "../../settings"
 
 let sut: MongoHelper

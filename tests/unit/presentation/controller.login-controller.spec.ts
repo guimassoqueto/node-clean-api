@@ -1,7 +1,7 @@
-import { LoginController } from "../../../src/presentation/controllers/user/login/login-controller"
-import { HttpRequest, Authentication, Validation, AuthenticationModel } from "../../../src/presentation/controllers/user/login/login-controller-protocols"
-import { badRequest, ok, serverError, unauthorized } from "../../../src/presentation/helpers/http/http-helper"
-import { MissingParamError  } from "../../../src/errors"
+import { LoginController } from "@src/presentation/controllers/user/login/login-controller"
+import { HttpRequest, Authentication, Validation, AuthenticationModel } from "@src/presentation/controllers/user/login/login-controller-protocols"
+import { badRequest, ok, serverError, unauthorized } from "@src/presentation/helpers/http/http-helper"
+import { MissingParamError  } from "@src/errors"
 
 
 function makeValidation(): Validation {

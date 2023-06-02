@@ -1,7 +1,7 @@
-import { SurveyMongoRepository } from '../../../src/infra/db/mongodb/survey/survey-mongo-repository'
-import { AddSurveyModel } from '../../../src/data/usecases/add-survey/db-add-survey-protocols'
+import { SurveyMongoRepository } from '@src/infra/db/mongodb/survey/survey-mongo-repository'
+import { AddSurveyModel } from '@src/data/usecases/add-survey/db-add-survey-protocols'
 import { MONGO_URL } from "../../settings"
-import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper"
+import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
 import { Collection } from "mongodb"
 
 const RealDate = Date;

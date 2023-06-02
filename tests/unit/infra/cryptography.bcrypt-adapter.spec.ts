@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { BcryptAdapter } from "../../../src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
+import { BcryptAdapter } from "@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
 import { SALT_ROUNDS } from "../../settings";
 
 // Mockando o método hash do bcrypt para retornar um valor esperado

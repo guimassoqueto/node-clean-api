@@ -1,6 +1,6 @@
-import { LoadSurveysController } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-controller'
-import { SurveyModel, LoadSurveys } from '../../../src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
-import { noContent, ok, serverError } from '../../../src/presentation/helpers/http/http-helper'
+import { LoadSurveysController } from '@src/presentation/controllers/survey/load-surveys/load-surveys-controller'
+import { SurveyModel, LoadSurveys } from '@src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
+import { noContent, ok, serverError } from '@src/presentation/helpers/http/http-helper'
 
 function makeFakeSurveys(): SurveyModel[] {
   return [

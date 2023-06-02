@@ -1,5 +1,5 @@
-import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper";
-import app from "../../../src/main/config/app"
+import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper";
+import app from "@src/main/config/app"
 import request from "supertest"
 import { MONGO_URL, JWT_SECRET } from "../../settings";
 import { Collection } from "mongodb";

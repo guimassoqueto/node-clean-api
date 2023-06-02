@@ -1,6 +1,6 @@
-import { DbLoadSurveys } from '../../../src/data/usecases/load-surveys/db-load-surveys'
-import { LoadSurveysRepository } from '../../../src/data/protocols/db/survey'
-import { SurveyModel } from '../../../src/domain/models/survey'
+import { DbLoadSurveys } from '@src/data/usecases/load-surveys/db-load-surveys'
+import { LoadSurveysRepository } from '@src/data/protocols/db/survey'
+import { SurveyModel } from '@src/domain/models/survey'
 
 function makeFakeSurveys(): SurveyModel[] {
   return [

@@ -1,6 +1,6 @@
-import { DbLoadAccountByToken } from '../../../src/data/usecases/load-account-by-token/db-load-account-by-token'
-import { AccountModel, Decrypter } from '../../../src/data/usecases/load-account-by-token/db-load-account-by-token-protocols'
-import { LoadAccountByTokenRepository } from '../../../src/data/protocols/db/account/load-account-by-token-repository'
+import { DbLoadAccountByToken } from '@src/data/usecases/load-account-by-token/db-load-account-by-token'
+import { AccountModel, Decrypter } from '@src/data/usecases/load-account-by-token/db-load-account-by-token-protocols'
+import { LoadAccountByTokenRepository } from '@src/data/protocols/db/account/load-account-by-token-repository'
 
 function makeFakeAccount(): AccountModel {
   return {
