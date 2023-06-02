@@ -1,8 +1,8 @@
 import {
   type AddUnverifiedAccountRepository,
   type DeleteUnverifiedAccountByAccountTokenRepository
-} from '../../../../data/protocols/db/unverified-account'
-import { type UnverifiedAccountModel } from '../../../../data/usecases/add-unverified-account/db-add-unverified-account-protocols'
+} from '@src/data/protocols/db/unverified-account'
+import { type UnverifiedAccountModel } from '@src/data/usecases/add-unverified-account/db-add-unverified-account-protocols'
 import { MongoHelper } from '../helpers/mongo-helper'
 
 export class UnverifiedAccountMongoRepository implements AddUnverifiedAccountRepository, DeleteUnverifiedAccountByAccountTokenRepository {

@@ -11,7 +11,7 @@ import {
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
   type ChangeAccountIdRepository
-} from '../../../../data/protocols/db/account'
+} from '@src/data/protocols/db/account'
 
 export class AccountMongoRepository implements
 AddAccountRepository,
