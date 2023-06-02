@@ -7,7 +7,7 @@ import {
 import loggerConfig from '../../../../logger-config'
 import { serverError, badRequest, ok, conflict } from '../../../helpers/http/http-helper'
 import { type AccountVerification } from '@src/domain/usecases/account-verification'
-import { AccountAlreadyVerifiedError } from '../../../../errors'
+import { AccountAlreadyVerifiedError } from '@src/errors'
 
 const logger = loggerConfig('verify-account-controller')
 
