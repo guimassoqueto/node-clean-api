@@ -9,7 +9,7 @@ import {
 } from './signup-controller-protocols'
 import { badRequest, ok, serverError, conflict } from '../../../helpers/http/http-helper'
 import { EmailAlreadyInUseError } from '@src/errors'
-import loggerConfig from '../../../../logger-config'
+import loggerConfig from '@src/logger-config'
 
 const logger = loggerConfig('signup-controller')
 

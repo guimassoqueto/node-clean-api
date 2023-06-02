@@ -1,6 +1,6 @@
 import { APP_PORT, APP_URL, MONGO_URL } from '@src/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
-import loggerConfig from '../logger-config'
+import loggerConfig from '@src/logger-config'
 
 const logger = loggerConfig('main')
 
