@@ -1,8 +1,8 @@
-import { ValidationComposite } from '../../../../../validation/validation-composite'
+import { ValidationComposite } from '@src/validation/validation-composite'
 import {
   RequiredFieldValidation,
   EmailValidation
-} from '../../../../../validation/validations'
+} from '@src/validation/validations'
 import { type Validation } from '@src/presentation/controllers/user/login/login-controller-protocols'
 import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator-adapter'
 

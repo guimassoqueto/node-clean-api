@@ -1,5 +1,5 @@
-import { ValidationComposite } from '../../../../../validation/validation-composite'
-import { RequiredFieldValidation } from '../../../../../validation/validations'
+import { ValidationComposite } from '@src/validation/validation-composite'
+import { RequiredFieldValidation } from '@src/validation/validations'
 import { type Validation } from '@src/presentation/controllers/user/login/login-controller-protocols'
 
 export function makeAddSurveyValidation (): ValidationComposite {

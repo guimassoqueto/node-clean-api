@@ -1,10 +1,10 @@
-import { ValidationComposite } from '../../../../../validation/validation-composite'
+import { ValidationComposite } from '@src/validation/validation-composite'
 import {
   RequiredFieldValidation,
   FieldsComparisonValidation,
   EmailValidation,
   PasswordValidation
-} from '../../../../../validation/validations'
+} from '@src/validation/validations'
 import { type Validation } from '@src/presentation/protocols'
 import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator-adapter'
 import { PasswordValidatorAdapter } from '../../../../../infra/validator/password-validator-adapter'
