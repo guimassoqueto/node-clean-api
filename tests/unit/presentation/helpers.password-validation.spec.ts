@@ -14,12 +14,12 @@ function makePasswordValidator(): PasswordValidator {
   return new PasswordValidatorStub();
 }
 
-interface sutTypes {
+type SutTypes =  {
   sut: PasswordValidation,
   passwordValidatorStub: PasswordValidator
 }
 
-function makeSut(): sutTypes {
+function makeSut(): SutTypes {
   const passwordValidatorStub = makePasswordValidator()
   const sut = new PasswordValidation("password", passwordValidatorStub)
 

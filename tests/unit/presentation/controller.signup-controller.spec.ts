@@ -73,7 +73,7 @@ function makeValidation(): Validation {
   return new ValidationStub()
 }
 
-interface SutTypes {
+type SutTypes =  {
   sut: SignUpControlller,
   addAccountStub: AddAccount,
   validationStub: Validation,

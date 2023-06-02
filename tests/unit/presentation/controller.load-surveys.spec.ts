@@ -30,12 +30,12 @@ function makeLoadSurveys(): LoadSurveys {
 }
 
 
-type SutType = {
+type SutTypes = {
   sut: LoadSurveysController,
   loadSurveysStub: LoadSurveys
 }
 
-function makeSut(): SutType {
+function makeSut(): SutTypes {
   const loadSurveysStub = makeLoadSurveys()
   const sut = new LoadSurveysController(loadSurveysStub)
   return {

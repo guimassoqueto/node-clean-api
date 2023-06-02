@@ -22,7 +22,7 @@ function makeDecrypter(): Decrypter {
   return new DecrypterStub()
 }
 
-type SutType = {
+type SutTypes = {
   sut: DbLoadAccountByToken,
   decrypterStub: Decrypter,
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository
@@ -37,7 +37,7 @@ function makeLoadAccountByToken(): LoadAccountByTokenRepository {
   return new LoadAccountByTokenRepositoryStub()
 }
 
-function makeSut(): SutType {
+function makeSut(): SutTypes {
   const decrypterStub = makeDecrypter()
   const loadAccountByTokenRepositoryStub = makeLoadAccountByToken()
   const sut = new DbLoadAccountByToken(decrypterStub, loadAccountByTokenRepositoryStub)

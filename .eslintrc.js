@@ -11,6 +11,7 @@ module.exports = {
         "checksVoidReturn": false
       }
     ],
-    "@typescript-eslint/restrict-template-expressions": "off" // if you remove this live eslint will throw an error related to file src/logger.ts
+    "@typescript-eslint/restrict-template-expressions": "off", // if you remove this live eslint will throw an error related to file src/logger.ts
+    "@typescript-eslint/consistent-type-definitions": "off"
   }
 }

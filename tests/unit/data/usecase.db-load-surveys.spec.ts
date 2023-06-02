@@ -28,12 +28,12 @@ function makeLoadSurveyRepo(): LoadSurveysRepository {
   return new LoadSurveysRepositoryStub()
 }
 
-type SutType = {
+type SutTypes = {
   sut: DbLoadSurveys,
   loadSurveysRepositoryStub: LoadSurveysRepository
 }
 
-function makeSut(): SutType {
+function makeSut(): SutTypes {
   const loadSurveysRepositoryStub = makeLoadSurveyRepo()
   const sut = new DbLoadSurveys(loadSurveysRepositoryStub)
   return {

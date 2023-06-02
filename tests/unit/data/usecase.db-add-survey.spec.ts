@@ -20,12 +20,12 @@ function makeAddSurveyRepository(): AddSurveyRepository {
   return new AddSurveyRepositoryStub()
 }
 
-type SutType = {
+type SutTypes = {
   sut: DbAddSurvey,
   addSurveyRepositoryStub: AddSurveyRepository
 }
 
-function makeSut(): SutType {
+function makeSut(): SutTypes {
   const addSurveyRepositoryStub = makeAddSurveyRepository()
   const sut = new DbAddSurvey(addSurveyRepositoryStub)
 
