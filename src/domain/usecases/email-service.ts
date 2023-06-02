@@ -1,13 +1,13 @@
-export interface EmailVerificationResponse {
+export type EmailVerificationResponse = {
   statusCode?: number
 }
 
-export interface EmailVerificationData {
+export type EmailVerificationData = {
   email: string
   accountToken: string
 }
 
 // TODO: mover para presentation? Ou algum outro local?
-export interface EmailService {
+export type EmailService = {
   sendAccountVerificationEmail: (emailVerificationInfo: EmailVerificationData) => Promise<EmailVerificationResponse>
 }
