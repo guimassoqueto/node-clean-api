@@ -5,7 +5,7 @@ import {
   EmailValidation,
   PasswordValidation
 } from '../../../../../validation/validations'
-import { type Validation } from '../../../../../presentation/protocols'
+import { type Validation } from '@src/presentation/protocols'
 import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator-adapter'
 import { PasswordValidatorAdapter } from '../../../../../infra/validator/password-validator-adapter'
 

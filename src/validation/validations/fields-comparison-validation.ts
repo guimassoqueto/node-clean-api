@@ -1,5 +1,5 @@
 import { InvalidParamError } from '../../errors'
-import { type Validation } from '../../presentation/protocols'
+import { type Validation } from '@src/presentation/protocols'
 
 /**
  * Faz uma comparação entre os campos da requisição, retornando erro se forem diferentes

@@ -1,6 +1,6 @@
 import { makeVerifyAccountValidation } from './verify-account-validation-factory'
-import { VerifyAccountController } from '../../../../../presentation/controllers/user/verify-account/verify-accout-controller'
-import { type Controller } from '../../../../../presentation/protocols'
+import { VerifyAccountController } from '@src/presentation/controllers/user/verify-account/verify-accout-controller'
+import { type Controller } from '@src/presentation/protocols'
 import { DbAccountVerification } from '../../../../../data/usecases/account-verification/db-account-verification-usecase'
 import { JwtAdapter } from '../../../../../infra/cryptography/jwt-adapter/jwt-adapter'
 import { JWT_SECRET } from '../../../../../settings'

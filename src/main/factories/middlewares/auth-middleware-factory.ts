@@ -1,5 +1,5 @@
-import { type Middleware } from '../../../presentation/protocols'
-import { AuthMiddleware } from '../../../presentation/middlewares/auth-middleware'
+import { type Middleware } from '@src/presentation/protocols'
+import { AuthMiddleware } from '@src/presentation/middlewares/auth-middleware'
 import { DbLoadAccountByToken } from '../../../data/usecases/load-account-by-token/db-load-account-by-token'
 import { JwtAdapter } from '../../../infra/cryptography/jwt-adapter/jwt-adapter'
 import { JWT_SECRET } from '../../../settings'
