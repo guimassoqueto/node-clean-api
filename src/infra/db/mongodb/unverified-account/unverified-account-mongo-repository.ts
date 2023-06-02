@@ -3,7 +3,7 @@ import {
   type DeleteUnverifiedAccountByAccountTokenRepository
 } from '@src/data/protocols/db/unverified-account'
 import { type UnverifiedAccountModel } from '@src/data/usecases/add-unverified-account/db-add-unverified-account-protocols'
-import { MongoHelper } from '../helpers/mongo-helper'
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 
 export class UnverifiedAccountMongoRepository implements AddUnverifiedAccountRepository, DeleteUnverifiedAccountByAccountTokenRepository {
   async add (accountToken: string): Promise<UnverifiedAccountModel> {

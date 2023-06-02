@@ -3,7 +3,7 @@ import {
   bodyParser,
   cors,
   contentType
-} from '../middlewares'
+} from '@src/main/middlewares'
 
 export default function setUpMiddlewares (app: Express): void {
   app.use(bodyParser)

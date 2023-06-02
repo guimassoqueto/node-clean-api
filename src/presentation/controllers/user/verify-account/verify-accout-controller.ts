@@ -5,7 +5,7 @@ import {
   type Validation
 } from './verify-account-protocols'
 import loggerConfig from '@src/logger-config'
-import { serverError, badRequest, ok, conflict } from '../../../helpers/http/http-helper'
+import { serverError, badRequest, ok, conflict } from '@src/presentation/helpers/http/http-helper'
 import { type AccountVerification } from '@src/domain/usecases/account-verification'
 import { AccountAlreadyVerifiedError } from '@src/errors'
 

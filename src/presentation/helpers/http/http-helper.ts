@@ -1,5 +1,5 @@
 import { ServerError, AuthorizationError } from '@src/errors'
-import { type HttpResponse } from '../../protocols'
+import { type HttpResponse } from '@src/presentation/protocols'
 
 export function badRequest (error: Error): HttpResponse {
   return {

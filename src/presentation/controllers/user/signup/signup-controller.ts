@@ -7,7 +7,7 @@ import {
   type EmailService,
   type AddUnverifiedAccount
 } from './signup-controller-protocols'
-import { badRequest, ok, serverError, conflict } from '../../../helpers/http/http-helper'
+import { badRequest, ok, serverError, conflict } from '@src/presentation/helpers/http/http-helper'
 import { EmailAlreadyInUseError } from '@src/errors'
 import loggerConfig from '@src/logger-config'
 
