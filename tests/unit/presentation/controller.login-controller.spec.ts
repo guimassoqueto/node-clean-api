@@ -24,7 +24,7 @@ function makeAuthentication(): Authentication {
   return new AuthenticationStub()
 }
 
-interface SutTypes {
+type SutTypes =  {
   sut: LoginController
   validationStub: Validation,
   authenticationStub: Authentication

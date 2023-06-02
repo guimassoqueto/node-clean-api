@@ -45,7 +45,7 @@ function makeAddAccountRepository(): AddAccountRepository {
 }
 
 
-interface SutTypes {
+type SutTypes =  {
   sut: DbAddAcccount,
   hasherStub: Hasher,
   addAccountRepositoryStub: AddAccountRepository

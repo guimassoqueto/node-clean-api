@@ -65,7 +65,7 @@ function makeUpdateAccessTokenRepositoryStub(): UpdateAccessTokenRepository {
   return new UpdateAccessTokenRepositoryStub()
 }
 
-interface SutTypes {
+type SutTypes =  {
   sut: Authentication,
   loadAccountByEmailRepoStub: LoadAccountByEmailRepository,
   hashComparerStub: HashComparer, 

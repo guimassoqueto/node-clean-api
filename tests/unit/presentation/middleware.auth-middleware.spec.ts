@@ -38,12 +38,12 @@ function makeLoadAccountByToken(): LoadAccountByToken {
   return new LoadAccountByTokenStub()
 }
 
-type SutType = {
+type SutTypes = {
   sut: AuthMiddleware,
   loadAccountByTokenStub: LoadAccountByToken
 }
 
-function makeSut(role?: string): SutType {
+function makeSut(role?: string): SutTypes {
   const loadAccountByTokenStub = makeLoadAccountByToken()
   const sut = new AuthMiddleware(loadAccountByTokenStub, role)
   return {
