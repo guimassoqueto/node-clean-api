@@ -1,4 +1,4 @@
-import { type LoadAccountByTokenRepository } from '../../protocols/db/account'
+import { type LoadAccountByTokenRepository } from '@src/data/protocols/db/account'
 import {
   type LoadAccountByToken,
   type AccountModel,
