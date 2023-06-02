@@ -2,10 +2,10 @@ import { makeVerifyAccountValidation } from './verify-account-validation-factory
 import { VerifyAccountController } from '@src/presentation/controllers/user/verify-account/verify-accout-controller'
 import { type Controller } from '@src/presentation/protocols'
 import { DbAccountVerification } from '../../../../../data/usecases/account-verification/db-account-verification-usecase'
-import { JwtAdapter } from '../../../../../infra/cryptography/jwt-adapter/jwt-adapter'
+import { JwtAdapter } from '@src/infra/cryptography/jwt-adapter/jwt-adapter'
 import { JWT_SECRET } from '../../../../../settings'
-import { AccountMongoRepository } from '../../../../../infra/db/mongodb/account/account-mongo-repository'
-import { UnverifiedAccountMongoRepository } from '../../../../../infra/db/mongodb/unverified-account/unverified-account-mongo-repository'
+import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'
+import { UnverifiedAccountMongoRepository } from '@src/infra/db/mongodb/unverified-account/unverified-account-mongo-repository'
 
 export function makeVerifyAccountController (): Controller {
   const validation = makeVerifyAccountValidation()

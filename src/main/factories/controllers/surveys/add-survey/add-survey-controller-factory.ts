@@ -1,7 +1,7 @@
 import { type Controller } from '@src/presentation/protocols'
 import { AddSurveyController } from '@src/presentation/controllers/survey/add-survey/add-survey-controller'
 import { makeAddSurveyValidation } from './add-survey-validation-factory'
-import { SurveyMongoRepository } from '../../../../../infra/db/mongodb/survey/survey-mongo-repository'
+import { SurveyMongoRepository } from '@src/infra/db/mongodb/survey/survey-mongo-repository'
 import { DbAddSurvey } from '../../../../../data/usecases/add-survey/db-add-survey-usecase'
 
 export function makeAddSurveyController (): Controller {

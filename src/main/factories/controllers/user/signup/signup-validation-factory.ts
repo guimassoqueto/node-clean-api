@@ -6,8 +6,8 @@ import {
   PasswordValidation
 } from '@src/validation/validations'
 import { type Validation } from '@src/presentation/protocols'
-import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator-adapter'
-import { PasswordValidatorAdapter } from '../../../../../infra/validator/password-validator-adapter'
+import { EmailValidatorAdapter } from '@src/infra/validator/email-validator-adapter'
+import { PasswordValidatorAdapter } from '@src/infra/validator/password-validator-adapter'
 
 export function makeSignUpValidation (): ValidationComposite {
   const validations: Validation[] = []
