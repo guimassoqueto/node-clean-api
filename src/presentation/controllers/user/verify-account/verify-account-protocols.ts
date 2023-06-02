@@ -1,2 +1,2 @@
 export * from '../../../protocols'
-export * from '../../../../errors/account-verification-error'
+export * from '@src/errors/account-verification-error'
