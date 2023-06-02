@@ -1,4 +1,4 @@
-import { type SurveyModel } from '../../../../domain/models/survey'
+import { type SurveyModel } from '@src/domain/models/survey'
 
 export interface LoadSurveysRepository {
   loadAll: () => Promise<SurveyModel[]>
