@@ -7,7 +7,7 @@ import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mo
 import { UnverifiedAccountMongoRepository } from '@src/infra/db/mongodb/unverified-account/unverified-account-mongo-repository'
 import { type Controller } from '@src/presentation/protocols'
 import { makeSignUpValidation } from './signup-validation-factory'
-import { SALT_ROUNDS, JWT_SECRET } from '../../../../../settings'
+import { SALT_ROUNDS, JWT_SECRET } from '@src/settings'
 import { makeEmailService } from './signup-email-service-factory'
 
 export function makeSignUpController (): Controller {

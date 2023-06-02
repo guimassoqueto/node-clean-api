@@ -5,7 +5,7 @@ import { makeLoginValidation } from './login-validation-factory'
 import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'
 import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '@src/infra/cryptography/jwt-adapter/jwt-adapter'
-import { JWT_SECRET, SALT_ROUNDS } from '../../../../../settings'
+import { JWT_SECRET, SALT_ROUNDS } from '@src/settings'
 
 export function makeLoginController (): Controller {
   const loadAccountByEmailRepository = new AccountMongoRepository()
