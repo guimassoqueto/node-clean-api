@@ -1,10 +1,10 @@
-import { ValidationComposite } from '../../../../../validation/validation-composite'
+import { ValidationComposite } from '@src/validation/validation-composite'
 import {
   RequiredFieldValidation,
   EmailValidation
-} from '../../../../../validation/validations'
-import { type Validation } from '../../../../../presentation/controllers/user/login/login-controller-protocols'
-import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator-adapter'
+} from '@src/validation/validations'
+import { type Validation } from '@src/presentation/controllers/user/login/login-controller-protocols'
+import { EmailValidatorAdapter } from '@src/infra/validator/email-validator-adapter'
 
 export function makeLoginValidation (): ValidationComposite {
   const validations: Validation[] = []

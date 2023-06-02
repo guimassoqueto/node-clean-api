@@ -1,5 +1,5 @@
 import request from "supertest"
-import app from "../../../src/main/config/app"
+import app from "@src/main/config/app"
 import { Request, Response } from "express"
 
 describe('Cors Middleware' , () => {

@@ -1,4 +1,4 @@
-import { type Middleware, type HttpRequest, type HttpResponse } from '../../presentation/protocols'
+import { type Middleware, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 import { type Request, type Response, type NextFunction } from 'express'
 
 // Design Pattern: Proxy

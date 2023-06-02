@@ -1,5 +1,5 @@
-import { type Controller } from '../../../../presentation/protocols'
-import { HealthCheckController } from '../../../../presentation/controllers/healthcheck/healthcheck-controller'
+import { type Controller } from '@src/presentation/protocols'
+import { HealthCheckController } from '@src/presentation/controllers/healthcheck/healthcheck-controller'
 
 export function makeHealthCheckController (): Controller {
   return new HealthCheckController()

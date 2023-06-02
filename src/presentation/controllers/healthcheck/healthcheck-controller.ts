@@ -1,6 +1,6 @@
-import loggerConfig from '../../../logger-config'
-import { serverError } from '../../helpers/http/http-helper'
-import { type Controller, type HttpRequest, type HttpResponse } from '../../protocols'
+import loggerConfig from '@src/logger-config'
+import { serverError } from '@src/presentation/helpers/http/http-helper'
+import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 
 const logger = loggerConfig('healthcheck-controller')
 

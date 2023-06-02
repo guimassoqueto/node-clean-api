@@ -1,6 +1,6 @@
-import { MONGO_URL } from "../../settings"
-import { MongoHelper } from "../../../src/infra/db/mongodb/helpers/mongo-helper"
-import { UnverifiedAccountMongoRepository } from "../../../src/infra/db/mongodb/unverified-account/unverified-account-mongo-repository"
+import { MONGO_URL } from "@tests/settings"
+import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
+import { UnverifiedAccountMongoRepository } from "@src/infra/db/mongodb/unverified-account/unverified-account-mongo-repository"
 import { Collection, ObjectId } from "mongodb"
 
 function makeAccountToken(accountToken: string = "encripted_account_id"): string {

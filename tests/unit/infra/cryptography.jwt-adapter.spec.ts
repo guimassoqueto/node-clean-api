@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { JwtAdapter } from "../../../src/infra/cryptography/jwt-adapter/jwt-adapter"
-import { JWT_SECRET } from "../../settings";
+import { JwtAdapter } from "@src/infra/cryptography/jwt-adapter/jwt-adapter"
+import { JWT_SECRET } from "@tests/settings";
 
 const token = "any_token"
 const verifiedToken = "decrypted_token"

@@ -7,7 +7,12 @@
     "esModuleInterop": true,
     "allowJs": false,
     "strictNullChecks": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@src/*": ["./*"],
+      "@tests/*": ["../tests/*"],
+    },
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }

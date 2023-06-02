@@ -1,8 +1,8 @@
 import { ObjectId, type WithId } from 'mongodb'
-import { type AccountModel } from '../../../../domain/models/account'
-import { type AddAccountModel } from '../../../../domain/usecases/add-account'
-import { MongoHelper } from '../helpers/mongo-helper'
-import { EmailAlreadyInUseError } from '../../../../errors'
+import { type AccountModel } from '@src/domain/models/account'
+import { type AddAccountModel } from '@src/domain/usecases/add-account'
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
+import { EmailAlreadyInUseError } from '@src/errors'
 import {
   type AddAccountRepository,
   type LoadAccountByEmailRepository,
@@ -11,7 +11,7 @@ import {
   type LoadAccountByIdRepository,
   type UpdateAccountVerifiedRepository,
   type ChangeAccountIdRepository
-} from '../../../../data/protocols/db/account'
+} from '@src/data/protocols/db/account'
 
 export class AccountMongoRepository implements
 AddAccountRepository,

@@ -1,5 +1,5 @@
-import { InvalidParamError } from '../../errors'
-import { type Validation, type PasswordValidator } from '../../presentation/protocols'
+import { InvalidParamError } from '@src/errors'
+import { type Validation, type PasswordValidator } from '@src/presentation/protocols'
 
 /**
  * Verifica se a senha fornecida pelo cliente é forte

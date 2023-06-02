@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from './settings'
+import { ENVIRONMENT } from '@src/settings'
 import winston, { format, type Logger } from 'winston'
 const { combine, timestamp, printf, label } = format
 

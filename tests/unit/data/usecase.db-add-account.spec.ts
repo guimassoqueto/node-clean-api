@@ -1,10 +1,10 @@
-import { DbAddAcccount } from "../../../src/data/usecases/add-account/db-add-account-usecase"
+import { DbAddAcccount } from "@src/data/usecases/add-account/db-add-account-usecase"
 import { 
   Hasher, 
   AddAccountModel, 
   AccountModel,
   AddAccountRepository
-} from "../../../src/data/usecases/add-account/db-add-account-protocols"
+} from "@src/data/usecases/add-account/db-add-account-protocols"
 
 
 function makeHasher(): Hasher {
