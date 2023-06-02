@@ -1,7 +1,7 @@
 import request from 'supertest'
 import app from '@src/main/config/app'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
-import { JWT_SECRET, MONGO_URL } from '../../settings'
+import { JWT_SECRET, MONGO_URL } from '@tests/settings'
 import { Collection, ObjectId } from 'mongodb'
 import { AddAccountModel } from '@src/domain/usecases/add-account'
 import { AddSurveyModel } from '@src/domain/usecases/add-survey'

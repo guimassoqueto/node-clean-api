@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { BcryptAdapter } from "@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
-import { SALT_ROUNDS } from "../../settings";
+import { SALT_ROUNDS } from "@tests/settings";
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
 const expectedHash = "any_hash"

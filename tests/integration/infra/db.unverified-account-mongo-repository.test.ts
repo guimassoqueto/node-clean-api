@@ -1,4 +1,4 @@
-import { MONGO_URL } from "../../settings"
+import { MONGO_URL } from "@tests/settings"
 import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
 import { UnverifiedAccountMongoRepository } from "@src/infra/db/mongodb/unverified-account/unverified-account-mongo-repository"
 import { Collection, ObjectId } from "mongodb"
