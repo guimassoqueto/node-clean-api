@@ -1,4 +1,4 @@
-import { InvalidParamError } from '../../errors'
+import { InvalidParamError } from '@src/errors'
 import { type Validation, type EmailValidator } from '@src/presentation/protocols/'
 
 /**
