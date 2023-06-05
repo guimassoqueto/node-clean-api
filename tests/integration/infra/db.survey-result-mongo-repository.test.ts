@@ -99,5 +99,28 @@ describe('SurveyResultMongoRepository' , () => {
       expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.answer).toEqual(survey.answers[0].answer)
     })
+
+    test('Should update survey result if it is not new', async () => {
+      const survey = await createDbSurvey()
+      const account = await createDbAccount()
+      const result = await surveyResultCollection.insertOne({
+        surveyId: survey.id,
+        answer: survey.answers[0].answer,
+        accountId: account.id,
+        date: new Date(2030, 11, 31)
+      })
+
+      const sut = new SurveyResultMongoRepository()
+      const surveyResult = await sut.save({
+        surveyId: survey.id,
+        answer: survey.answers[1].answer,
+        accountId: account.id,
+        date: new Date(2030, 11, 31)
+      })
+
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toEqual(result.insertedId.toString())
+      expect(surveyResult.answer).toEqual(survey.answers[1].answer)
+    })
   })
 })
