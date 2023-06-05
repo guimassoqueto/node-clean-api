@@ -8,7 +8,7 @@ class MockDate extends RealDate {
   }
 }
 
-function makeFakeSurveys(): SurveyModel {
+function makeFakeSurvey(): SurveyModel {
   return {
     id: 'id1',
     question: 'q1',
@@ -20,7 +20,7 @@ function makeFakeSurveys(): SurveyModel {
 function makeLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
     async loadById (id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(makeFakeSurveys()))
+      return new Promise(resolve => resolve(makeFakeSurvey()))
     }
   }
   return new LoadSurveyByIdRepositoryStub()
@@ -63,6 +63,14 @@ describe('DbLoadSurveyById' , () => {
     const promise = sut.loadById("any-id")
 
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return a valid survey LoadSurveyByIdRepository succeded', async () => {
+    const { sut, loadSurveyByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyByIdRepositoryStub, "loadById")
+    const survey = await sut.loadById("any-id")
+
+    expect(survey).toStrictEqual(makeFakeSurvey())
   })
 
   test('Should return null LoadSurveyByIdRepository dont find a survey related with the provided id', async () => {
