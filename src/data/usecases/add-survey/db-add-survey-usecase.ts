@@ -1,4 +1,8 @@
-import { type AddSurvey, type AddSurveyModel, type AddSurveyRepository } from './db-add-survey-protocols'
+import {
+  type AddSurvey,
+  type AddSurveyModel,
+  type AddSurveyRepository
+} from './db-add-survey-protocols'
 
 export class DbAddSurvey implements AddSurvey {
   constructor (
