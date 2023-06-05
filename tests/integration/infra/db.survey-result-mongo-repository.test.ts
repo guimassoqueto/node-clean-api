@@ -2,9 +2,9 @@ import { SurveyResultMongoRepository } from '@src/infra/db/mongodb/survey-result
 import { MONGO_URL } from "@tests/settings"
 import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
 import { Collection } from "mongodb"
-import { AddSurveyModel } from '@src/domain/usecases/add-survey';
+import { AddSurveyModel } from '@src/domain/usecases/survey/add-survey';
 import { SurveyModel } from '@src/domain/models/survey';
-import { AddAccountModel } from '@src/domain/usecases/add-account';
+import { AddAccountModel } from '@src/domain/usecases/account/add-account';
 import { AccountModel } from '@src/domain/models/account';
 
 const RealDate = Date;

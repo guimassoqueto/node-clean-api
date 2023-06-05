@@ -1,6 +1,6 @@
 import { ObjectId, type WithId } from 'mongodb'
 import { type AccountModel } from '@src/domain/models/account'
-import { type AddAccountModel } from '@src/domain/usecases/add-account'
+import { type AddAccountModel } from '@src/domain/usecases/account/add-account'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { EmailAlreadyInUseError } from '@src/errors'
 import {

@@ -1,5 +1,5 @@
 import { SignUpControlller } from "@src/presentation/controllers/user/signup/signup-controller"
-import { AddAccount, AddAccountModel } from "@src/domain/usecases/add-account"
+import { AddAccount, AddAccountModel } from "@src/domain/usecases/account/add-account"
 import { AddUnverifiedAccount } from "@src/domain/usecases/add-unverified-account"
 import { AccountModel } from "@src/domain/models/account"
 import {
