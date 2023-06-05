@@ -77,4 +77,15 @@ describe('SurveyMongoRepository' , () => {
       expect(surveys.length).toStrictEqual(0)
     })
   })
+
+  describe('loadById()' , () => {
+    test('Should load a survey on loadById success', async () => {
+      const newSurvey = await surveyCollection.insertOne(makeSurveyData(1))
+      const newSurveyId = newSurvey.insertedId.toString()
+      const sut = new SurveyMongoRepository()
+      const survey = await sut.loadById(newSurveyId)
+
+      expect(survey).toBeTruthy()
+    })
+  })
 })
