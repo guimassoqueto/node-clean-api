@@ -1,4 +1,4 @@
-import { DbLoadSurveys } from '@src/data/usecases/load-surveys/db-load-surveys'
+import { DbLoadSurveys } from '@src/data/usecases/survey/load-surveys/db-load-surveys'
 import { LoadSurveysRepository } from '@src/data/protocols/db/survey'
 import { SurveyModel } from '@src/domain/models/survey'
 

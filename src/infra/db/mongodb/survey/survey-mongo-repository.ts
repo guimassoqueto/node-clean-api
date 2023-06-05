@@ -3,7 +3,7 @@ import {
   type LoadSurveysRepository,
   type LoadSurveyByIdRepository
 } from '@src/data/protocols/db/survey'
-import { type AddSurveyModel } from '@src/data/usecases/add-survey/db-add-survey-protocols'
+import { type AddSurveyModel } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { type SurveyModel } from '@src/domain/models/survey'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { ObjectId } from 'mongodb'

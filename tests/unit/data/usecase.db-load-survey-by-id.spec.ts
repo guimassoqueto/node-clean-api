@@ -1,5 +1,5 @@
-import { DbLoadSurveyById } from '@src/data/usecases/load-survey-by-id/db-load-survey-by-id'
-import { LoadSurveyByIdRepository, SurveyModel } from '@src/data/usecases/load-survey-by-id/db-load-survey-by-id-protocols'
+import { DbLoadSurveyById } from '@src/data/usecases/survey/load-survey-by-id/db-load-survey-by-id'
+import { LoadSurveyByIdRepository, SurveyModel } from '@src/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols'
 
 const RealDate = Date;
 class MockDate extends RealDate {

@@ -1,5 +1,5 @@
 import { SurveyMongoRepository } from '@src/infra/db/mongodb/survey/survey-mongo-repository'
-import { AddSurveyModel } from '@src/data/usecases/add-survey/db-add-survey-protocols'
+import { AddSurveyModel } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { MONGO_URL } from "@tests/settings"
 import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
 import { Collection } from "mongodb"

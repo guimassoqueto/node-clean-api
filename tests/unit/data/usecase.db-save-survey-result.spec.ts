@@ -1,9 +1,9 @@
-import { DbSaveSurveyResult } from '@src/data/usecases/save-survey-result/db-save-survey-result'
+import { DbSaveSurveyResult } from '@src/data/usecases/survey-result/save-survey-result/db-save-survey-result'
 import { 
   SaveSurveyResultModel,
   SurveyResultModel,
   SaveSurveyResultRepository
- } from '@src/data/usecases/save-survey-result/db-save-survey-result-protocols'
+ } from '@src/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
 
 
 const RealDate = Date;
