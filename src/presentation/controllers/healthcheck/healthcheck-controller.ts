@@ -1,4 +1,4 @@
-import loggerConfig from '@src/logger-config'
+import { loggerConfig } from '@src/logger-config'
 import { serverError } from '@src/presentation/helpers/http/http-helper'
 import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 

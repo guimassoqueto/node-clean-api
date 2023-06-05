@@ -1,5 +1,5 @@
 import { type SESClient, type SendEmailCommandInput, SendEmailCommand } from '@aws-sdk/client-ses'
-import { type EmailService, type EmailVerificationData, type EmailVerificationResponse } from '@src/domain/usecases/email-service'
+import { type EmailService, type EmailVerificationData, type EmailVerificationResponse } from '@src/domain/usecases/account-verification-mail'
 import { APP_URL } from '@src/settings'
 
 export class AwsSesAdapter implements EmailService {

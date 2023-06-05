@@ -2,7 +2,7 @@ import { ENVIRONMENT } from '@src/settings'
 import winston, { format, type Logger } from 'winston'
 const { combine, timestamp, printf, label } = format
 
-export default function loggerConfig (appLabel: string): Logger {
+export function loggerConfig (appLabel: string): Logger {
   // formato da mensagem no logger
   const messageFormat: winston.Logform.Format = printf(({ level, message, label, timestamp }) => {
     return `${timestamp} [${label}][${level}]: ${message}`

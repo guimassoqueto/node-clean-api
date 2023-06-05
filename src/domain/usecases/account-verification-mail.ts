@@ -8,6 +8,6 @@ export type EmailVerificationData = {
 }
 
 // TODO: mover para presentation? Ou algum outro local?
-export type EmailService = {
+export interface EmailService {
   sendAccountVerificationEmail: (emailVerificationInfo: EmailVerificationData) => Promise<EmailVerificationResponse>
 }

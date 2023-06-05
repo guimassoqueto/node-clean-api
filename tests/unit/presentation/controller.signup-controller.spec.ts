@@ -13,6 +13,7 @@ import { MissingParamError, ServerError } from "@src/errors"
 import { badRequest } from "@src/presentation/helpers/http/http-helper"
 import { UnverifiedAccountModel } from "@src/domain/models/unverified-account"
 
+
 function makeUnverifiedAccount(): UnverifiedAccountModel {
   return {
     id: "any_id",
