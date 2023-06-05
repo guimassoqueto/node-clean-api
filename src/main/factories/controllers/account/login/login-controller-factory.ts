@@ -1,5 +1,5 @@
 import { type Controller } from '@src/presentation/protocols'
-import { LoginController } from '@src/presentation/controllers/user/login/login-controller'
+import { LoginController } from '@src/presentation/controllers/account/login/login-controller'
 import { DbAuthentication } from '@src/data/usecases/account/authentication/db-authentication'
 import { makeLoginValidation } from './login-validation-factory'
 import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'

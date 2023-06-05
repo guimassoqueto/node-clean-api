@@ -1,5 +1,5 @@
 import { AccountVerification } from "@src/domain/usecases/account/account-verification"
-import { VerifyAccountController } from "@src/presentation/controllers/user/verify-account/verify-accout-controller"
+import { VerifyAccountController } from "@src/presentation/controllers/account/verify-account/verify-accout-controller"
 import { AccountAlreadyVerifiedError } from "@src/errors"
 import { HttpRequest, Validation } from "@src/presentation/protocols"
 

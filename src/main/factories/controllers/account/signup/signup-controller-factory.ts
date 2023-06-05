@@ -1,4 +1,4 @@
-import { SignUpControlller } from '@src/presentation/controllers/user/signup/signup-controller'
+import { SignUpControlller } from '@src/presentation/controllers/account/signup/signup-controller'
 import { DbAddAcccount } from '@src/data/usecases/account/add-account/db-add-account'
 import { DbAddUnverifiedAcccount } from '@src/data/usecases/unverified-account/add-unverified-account/db-add-unverified-account-usecase'
 import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
