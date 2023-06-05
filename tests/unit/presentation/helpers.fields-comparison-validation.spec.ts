@@ -1,5 +1,5 @@
 import { InvalidParamError } from "@src/errors"
-import { FieldsComparisonValidation } from "@src/validation/validations"
+import { FieldsComparisonValidation } from "@src/validation/field-validations"
 
 describe('Fields Comparison Validator' , () => {
   test('Should return InvalidParamError if the provided fields are different', () => {

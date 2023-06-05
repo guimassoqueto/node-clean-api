@@ -3,8 +3,8 @@ import {
   type Controller,
   type HttpRequest,
   type HttpResponse,
-  type Validation,
-  type AddSurvey
+  type AddSurvey,
+  type Validation
 } from './add-survey-protocols'
 
 export class AddSurveyController implements Controller {

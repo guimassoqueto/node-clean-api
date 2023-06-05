@@ -1,4 +1,4 @@
-import { type EmailService } from '@src/domain/usecases/email-service'
+import { type EmailService } from '@src/domain/usecases/account-verification-mail'
 import { AwsSesAdapter } from '@src/infra/email/aws/aws-ses-adapter'
 import { AWS_SES_REGION, AWS_SES_ACCESS_KEY_ID, AWS_SES_ACCESS_KEY_SECRET } from '@src/settings'
 import { SESClient, type SESClientConfig } from '@aws-sdk/client-ses'

@@ -1,4 +1,4 @@
-import { type EmailValidator } from '@src/presentation/protocols'
+import { type EmailValidator } from '@src/validation/protocols/email-validator'
 import validator from 'validator'
 
 export class EmailValidatorAdapter implements EmailValidator {

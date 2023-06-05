@@ -4,8 +4,8 @@ import {
   FieldsComparisonValidation,
   EmailValidation,
   PasswordValidation
-} from '@src/validation/validations'
-import { type Validation } from '@src/presentation/protocols'
+} from '@src/validation/field-validations'
+import { type Validation } from '@src/validation/validation'
 import { EmailValidatorAdapter } from '@src/infra/validator/email-validator-adapter'
 import { PasswordValidatorAdapter } from '@src/infra/validator/password-validator-adapter'
 

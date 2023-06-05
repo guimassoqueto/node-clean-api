@@ -1,9 +1,9 @@
 import { ValidationComposite } from '@src/validation/validation-composite'
+import { type Validation } from '@src/validation/validation'
 import {
   RequiredFieldValidation,
   EmailValidation
-} from '@src/validation/validations'
-import { type Validation } from '@src/presentation/controllers/user/login/login-controller-protocols'
+} from '@src/validation/field-validations'
 import { EmailValidatorAdapter } from '@src/infra/validator/email-validator-adapter'
 
 export function makeLoginValidation (): ValidationComposite {

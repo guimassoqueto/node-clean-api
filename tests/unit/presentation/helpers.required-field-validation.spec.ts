@@ -1,5 +1,5 @@
 import { MissingParamError } from "@src/errors"
-import { RequiredFieldValidation } from "@src/validation/validations"
+import { RequiredFieldValidation } from "@src/validation/field-validations"
 
 
 describe('RequiredField Validation' , () => {
