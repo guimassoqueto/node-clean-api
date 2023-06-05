@@ -1,4 +1,4 @@
-import { DbAddAcccount } from "@src/data/usecases/add-account/db-add-account-usecase"
+import { DbAddAcccount } from "@src/data/usecases/add-account/db-add-account"
 import { 
   Hasher, 
   AddAccountModel, 

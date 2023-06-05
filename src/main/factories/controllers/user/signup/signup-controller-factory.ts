@@ -1,5 +1,5 @@
 import { SignUpControlller } from '@src/presentation/controllers/user/signup/signup-controller'
-import { DbAddAcccount } from '@src/data/usecases/add-account/db-add-account-usecase'
+import { DbAddAcccount } from '@src/data/usecases/add-account/db-add-account'
 import { DbAddUnverifiedAcccount } from '@src/data/usecases/add-unverified-account/db-add-unverified-account-usecase'
 import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '@src/infra/cryptography/jwt-adapter/jwt-adapter'

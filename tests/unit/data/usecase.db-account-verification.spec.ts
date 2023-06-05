@@ -8,7 +8,7 @@ import {
   UpdateAccessTokenRepository,
   Encrypter
 } from "@src/data/usecases/account-verification/db-account-verification-protocols"
-import { DbAccountVerification } from "@src/data/usecases/account-verification/db-account-verification-usecase"
+import { DbAccountVerification } from "@src/data/usecases/account-verification/db-account-verification"
 
 function makeFakeAccount(id: string = "any-id"): AccountModel {
   return {

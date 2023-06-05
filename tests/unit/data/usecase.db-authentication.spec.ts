@@ -7,7 +7,7 @@ import {
   Authentication,
   AuthenticationModel
 } from "@src/data/usecases/authentication/db-authentication-protocols"
-import { DbAuthentication } from "@src/data/usecases/authentication/db-authentication-usecase"
+import { DbAuthentication } from "@src/data/usecases/authentication/db-authentication"
 
 function makeFakeAuthentication(): AuthenticationModel {
   return {

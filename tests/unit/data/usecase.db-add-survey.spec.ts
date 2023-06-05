@@ -1,5 +1,5 @@
 import { AddSurveyRepository, AddSurveyModel } from '@src/data/usecases/add-survey/db-add-survey-protocols'
-import { DbAddSurvey } from '@src/data/usecases/add-survey/db-add-survey-usecase'
+import { DbAddSurvey } from '@src/data/usecases/add-survey/db-add-survey'
 
 function makeFakeSurvey(): AddSurveyModel {
   return {
