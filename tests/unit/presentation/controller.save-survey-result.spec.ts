@@ -1,9 +1,9 @@
 import { SaveSurveyResultController } from '@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-controller'
+import { HttpRequest } from '@src/presentation/protocols'
+import { forbidden, serverError } from '@src/presentation/helpers/http'
 import { 
   LoadSurveyById, SurveyModel, InvalidParamError
 } from '@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-protocols'
-import { HttpRequest } from '@src/presentation/protocols'
-import { forbidden } from '@src/presentation/helpers/http'
 
 
 const RealDate = Date;
@@ -75,5 +75,15 @@ describe('SaveSurveyResultController' , () => {
 
     const response = await sut.handle(request)
     expect(response).toStrictEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if surveyId throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    const error = new Error()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockRejectedValueOnce(error)
+    const request = makeFakeRequest()
+
+    const response = await sut.handle(request)
+    expect(response).toStrictEqual(serverError(error))
   })
 })
