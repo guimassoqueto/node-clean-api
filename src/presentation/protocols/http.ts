@@ -3,6 +3,7 @@ export type HttpRequest = {
   query?: any
   body?: any
   params?: any
+  accountId?: string
 }
 
 export type HttpResponse = {
