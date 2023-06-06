@@ -1,10 +1,5 @@
-import {
-  type Controller,
-  type HttpRequest,
-  type HttpResponse,
-  type Authentication,
-  type Validation
-} from './login-controller-protocols'
+import { type Authentication, type Validation } from './login-controller-protocols'
+import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 import { serverError, ok, unauthorized, badRequest } from '@src/presentation/helpers/http/http-helper'
 import { loggerConfig } from '@src/logger-config'
 
