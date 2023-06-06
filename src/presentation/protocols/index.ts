@@ -1,6 +1,3 @@
 export * from './controller'
-export * from '../../validation/protocols/email-validator'
 export * from './http'
-export * from '../../validation/protocols/password-validator'
-export * from '../../validation/validation'
 export * from './middleware'
