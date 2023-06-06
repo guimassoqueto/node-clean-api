@@ -1,17 +1,19 @@
-import { SignUpControlller } from '@src/presentation/controllers/account/signup/signup-controller'
-import { AddAccount, AddAccountModel } from '@src/domain/usecases/account/add-account'
-import { AddUnverifiedAccount } from '@src/domain/usecases/unverified-account/add-unverified-account'
-import { AccountModel } from '@src/domain/models/account'
+import { SignUpControlller } from '@src/presentation/controllers/account/signup/signup-controller';
+import { HttpRequest } from '@src/presentation/protocols';
+import { badRequest } from '@src/presentation/helpers/http';
 import {
-  HttpRequest,
   Validation,
   EmailService,
   EmailVerificationData,
   EmailVerificationResponse,
+  UnverifiedAccountModel,
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  AddUnverifiedAccount,
+  ServerError,
+  MissingParamError,
 } from '@src/presentation/controllers/account/signup/signup-controller-protocols'
-import { MissingParamError, ServerError } from '@src/errors'
-import { badRequest } from '@src/presentation/helpers/http/http-helper'
-import { UnverifiedAccountModel } from '@src/domain/models/unverified-account'
 
 
 function makeUnverifiedAccount(): UnverifiedAccountModel {

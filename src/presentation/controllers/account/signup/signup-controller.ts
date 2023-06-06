@@ -1,15 +1,13 @@
+import { badRequest, ok, serverError, conflict } from '@src/presentation/helpers/http'
+import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 import {
-  type Controller,
   type AddAccount,
-  type HttpRequest,
-  type HttpResponse,
   type Validation,
   type EmailService,
-  type AddUnverifiedAccount
+  type AddUnverifiedAccount,
+  loggerConfig,
+  EmailAlreadyInUseError
 } from './signup-controller-protocols'
-import { badRequest, ok, serverError, conflict } from '@src/presentation/helpers/http/http-helper'
-import { EmailAlreadyInUseError } from '@src/errors'
-import { loggerConfig } from '@src/logger-config'
 
 const logger = loggerConfig('signup-controller')
 
