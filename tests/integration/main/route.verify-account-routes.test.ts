@@ -1,16 +1,16 @@
-import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper";
-import app from "@src/main/config/app"
-import request from "supertest"
-import { MONGO_URL, JWT_SECRET } from "@tests/settings";
-import { Collection } from "mongodb";
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper';
+import app from '@src/main/config/app'
+import request from 'supertest'
+import { MONGO_URL, JWT_SECRET } from '@tests/settings';
+import { Collection } from 'mongodb';
 
-import { sign } from "jsonwebtoken"
+import { sign } from 'jsonwebtoken'
 
 function makeAccount() {
   return {
-    name: "any_name",
-    email: "any_email@email.com",
-    password: "any_password",
+    name: 'any_name',
+    email: 'any_email@email.com',
+    password: 'any_password',
     verified: false,
     createdAt: new Date(2023, 11, 31),
   }
@@ -41,8 +41,8 @@ describe('Verify Account' , () => {
   })
 
   beforeEach(async () => {
-    accountsCollection = await mongo.getCollection("accounts")
-    unverifiedAccountsCollection = await mongo.getCollection("unverifiedAccounts")
+    accountsCollection = await mongo.getCollection('accounts')
+    unverifiedAccountsCollection = await mongo.getCollection('unverifiedAccounts')
   })
 
   afterEach(async () => {
@@ -61,7 +61,7 @@ describe('Verify Account' , () => {
   test('Should return 409 if accountToken is invalid', async () => {
     await request(app)
       .get('/api/verify-account')
-      .query({accountToken: "invalid-token"})
+      .query({accountToken: 'invalid-token'})
       .send()
       .expect(409)
   })

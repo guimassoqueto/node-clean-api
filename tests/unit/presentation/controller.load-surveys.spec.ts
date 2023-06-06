@@ -47,7 +47,7 @@ function makeSut(): SutTypes {
 describe('LoadSurveysController' , () => {
   test('Should call LoadSurveys', async () => {
     const { sut, loadSurveysStub } = makeSut()
-    const loadSpy = jest.spyOn(loadSurveysStub, "load")
+    const loadSpy = jest.spyOn(loadSurveysStub, 'load')
     await sut.handle({})
     
     expect(loadSpy).toHaveBeenCalled()
@@ -63,7 +63,7 @@ describe('LoadSurveysController' , () => {
   test('Should throw if LoadSurveys throws', async () => {
     const { sut, loadSurveysStub } = makeSut()
     const error = new Error()
-    jest.spyOn(loadSurveysStub, "load").mockRejectedValueOnce(error)
+    jest.spyOn(loadSurveysStub, 'load').mockRejectedValueOnce(error)
     const response = await sut.handle({})
 
     expect(response).toEqual(serverError(error))
@@ -71,7 +71,7 @@ describe('LoadSurveysController' , () => {
 
   test('Should return 204 if LoadSurveys return an empty list', async () => {
     const { sut, loadSurveysStub } = makeSut()
-    jest.spyOn(loadSurveysStub, "load").mockResolvedValue([])
+    jest.spyOn(loadSurveysStub, 'load').mockResolvedValue([])
     const response = await sut.handle({})
 
     expect(response).toEqual(noContent())

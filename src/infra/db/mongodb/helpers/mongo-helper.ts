@@ -35,4 +35,11 @@ export class MongoHelper {
     const { _id, ...rest } = obj
     return Object.assign({}, rest, { id: _id.toString() }) as T
   }
+
+  public arrayMapper<T>(objArray: any[]): T[] {
+    return objArray.map(obj => {
+      const { _id, ...rest } = obj
+      return Object.assign({}, rest, { id: _id.toString() }) as T
+    })
+  }
 }

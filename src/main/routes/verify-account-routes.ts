@@ -1,5 +1,5 @@
 import { type Router } from 'express'
-import { makeVerifyAccountController } from '@src/main/factories/controllers/user/verify-account/verify-account-controller-factory'
+import { makeVerifyAccountController } from '@src/main/factories/controllers/account/verify-account/verify-account-controller-factory'
 import { expressRouteAdapter } from '@src/main/adapters/express-route-adapter'
 
 export default function (router: Router): void {

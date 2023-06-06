@@ -1,13 +1,13 @@
-import { MONGO_URL } from "@tests/settings"
-import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
-import { AccountMongoRepository } from "@src/infra/db/mongodb/account/account-mongo-repository"
-import { Collection } from "mongodb"
+import { MONGO_URL } from '@tests/settings'
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
+import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'
+import { Collection } from 'mongodb'
 
 function makeAccount() {
   return {
-    name: "any_name",
-    email: "any_email",
-    password: "any_password",
+    name: 'any_name',
+    email: 'any_email',
+    password: 'any_password',
     verified: false,
     createdAt: new Date(2023, 11, 31),
     accessToken: 'any-token',
@@ -31,7 +31,7 @@ describe('Add Account Mongo Repository' , () => {
   })
 
   afterEach(async () => {
-    accountCollection = await mongo.getCollection("accounts")
+    accountCollection = await mongo.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -63,7 +63,7 @@ describe('Add Account Mongo Repository' , () => {
 
     test('Should return null if the account with the provided email is not found', async () => {
       const sut = makeSut()
-      const promise = sut.loadByEmail("inexistent_email")
+      const promise = sut.loadByEmail('inexistent_email')
   
       await expect(promise).resolves.toBeNull()
     })

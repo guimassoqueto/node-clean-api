@@ -1,16 +1,16 @@
-import { DbAddAcccount } from "@src/data/usecases/add-account/db-add-account-usecase"
+import { DbAddAcccount } from '@src/data/usecases/account/add-account/db-add-account'
 import { 
   Hasher, 
   AddAccountModel, 
   AccountModel,
   AddAccountRepository
-} from "@src/data/usecases/add-account/db-add-account-protocols"
+} from '@src/data/usecases/account/add-account/db-add-account-protocols'
 
 
 function makeHasher(): Hasher {
   class HasherStub implements Hasher {
     async hash(value: string): Promise<string> {
-      return new Promise(resolve => resolve("hashed_password"));
+      return new Promise(resolve => resolve('hashed_password'));
     }
   }
   return new HasherStub()
@@ -18,18 +18,18 @@ function makeHasher(): Hasher {
 
 function makeAddAccount(): AddAccountModel {
   return {
-    name: "valid_name",
-    email: "valid_email@email.com",
-    password: "valid_password"
+    name: 'valid_name',
+    email: 'valid_email@email.com',
+    password: 'valid_password'
   }
 }
 
 function makeFakeAccount(): AccountModel {
   return {
-    id: "valid_id",
-    name: "valid_name",
-    password: "hashed_password",
-    email: "valid_email@email.com",
+    id: 'valid_id',
+    name: 'valid_name',
+    password: 'hashed_password',
+    email: 'valid_email@email.com',
     verified: true,
     createdAt: new Date()
   }
@@ -86,13 +86,13 @@ describe('DbAddAcccount Usecase' , () => {
 
   test('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepositoryStub } = makeSut();
-    const addSpy = jest.spyOn(addAccountRepositoryStub, "add")
+    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
     const accountData: AddAccountModel = makeAddAccount()
     await sut.add(accountData);
     expect(addSpy).toHaveBeenCalledWith({
-      name: "valid_name",
-      email: "valid_email@email.com",
-      password: "hashed_password"
+      name: 'valid_name',
+      email: 'valid_email@email.com',
+      password: 'hashed_password'
     })
   })
 

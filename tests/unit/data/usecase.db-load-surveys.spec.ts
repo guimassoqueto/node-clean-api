@@ -1,4 +1,4 @@
-import { DbLoadSurveys } from '@src/data/usecases/load-surveys/db-load-surveys'
+import { DbLoadSurveys } from '@src/data/usecases/survey/load-surveys/db-load-surveys'
 import { LoadSurveysRepository } from '@src/data/protocols/db/survey'
 import { SurveyModel } from '@src/domain/models/survey'
 
@@ -45,7 +45,7 @@ function makeSut(): SutTypes {
 describe('DbLoadSurveys' , () => {
   test('Should call LoadSurveysRepository', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
-    const spyLoad = jest.spyOn(loadSurveysRepositoryStub, "loadAll")
+    const spyLoad = jest.spyOn(loadSurveysRepositoryStub, 'loadAll')
     await sut.load()
 
     expect(spyLoad).toHaveBeenCalled()
@@ -53,7 +53,7 @@ describe('DbLoadSurveys' , () => {
 
   test('Should throw if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
-    jest.spyOn(loadSurveysRepositoryStub, "loadAll").mockRejectedValueOnce(new Error())
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockRejectedValueOnce(new Error())
 
     const promise = sut.load()
 

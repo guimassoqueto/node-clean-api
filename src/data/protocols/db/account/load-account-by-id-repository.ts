@@ -1,4 +1,4 @@
-import { type AccountModel } from '@src/data/usecases/authentication/db-authentication-protocols'
+import { type AccountModel } from '@src/data/usecases/account/authentication/db-authentication-protocols'
 
 export interface LoadAccountByIdRepository {
   loadById: (id: string) => Promise<AccountModel | null >

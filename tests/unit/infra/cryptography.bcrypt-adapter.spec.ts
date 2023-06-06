@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt";
-import { BcryptAdapter } from "@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter"
-import { SALT_ROUNDS } from "@tests/settings";
+import bcrypt from 'bcrypt';
+import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
+import { SALT_ROUNDS } from '@tests/settings';
 
 // Mockando o método hash do bcrypt para retornar um valor esperado
-const expectedHash = "any_hash"
+const expectedHash = 'any_hash'
 jest.mock('bcrypt', () => ({
   async hash(value?: string): Promise<string> {
     return new Promise(resolve => resolve(expectedHash))
@@ -23,8 +23,8 @@ describe('Bcrypt Adapter' , () => {
   describe('hash()' , () => {
     test('Should call bcrypt.hash with correct values', async () => {
       const sut = makeSut()
-      const hashSpy = jest.spyOn(bcrypt, "hash")
-      const valueToHash = "any_string" 
+      const hashSpy = jest.spyOn(bcrypt, 'hash')
+      const valueToHash = 'any_string' 
       await sut.hash(valueToHash)
   
       expect(hashSpy).toHaveBeenCalledWith(valueToHash, SALT_ROUNDS)
@@ -32,23 +32,23 @@ describe('Bcrypt Adapter' , () => {
   
     test('Should returns a valid hash on hashing success', async () => {
       const sut = makeSut()
-      const hashedValue = await sut.hash("any_string")
+      const hashedValue = await sut.hash('any_string')
   
       expect(hashedValue).toBe(expectedHash)
     })
   
     test('Should throw if encrypt gets an error', async () => {
       const sut = makeSut()
-      jest.spyOn(sut, "hash").mockReturnValueOnce(new Promise((_, reject) => reject(new Error())))
+      jest.spyOn(sut, 'hash').mockReturnValueOnce(new Promise((_, reject) => reject(new Error())))
   
-      const promise = sut.hash("any_string")
+      const promise = sut.hash('any_string')
   
       await expect(promise).rejects.toThrow()
     })
   
     test('Should throw if bcrypt.hash throws', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
+      const stringToHash = 'any_string'
       jest.spyOn(bcrypt, 'hash').mockImplementationOnce((data: string | Buffer, saltOrRounds: string | number) => {
         throw new Error()
       })
@@ -61,8 +61,8 @@ describe('Bcrypt Adapter' , () => {
   describe('compare()' , () => {
     test('Should call bcrypt.compare with correct values', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
-      const bcrypCompareSpy = jest.spyOn(bcrypt, "compare")
+      const stringToHash = 'any_string'
+      const bcrypCompareSpy = jest.spyOn(bcrypt, 'compare')
       await sut.compare(stringToHash, expectedHash)
   
       expect(bcrypCompareSpy).toBeCalledWith(stringToHash, expectedHash)
@@ -70,7 +70,7 @@ describe('Bcrypt Adapter' , () => {
   
     test('Should return true if compare succeeds', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
+      const stringToHash = 'any_string'
       const result = await sut.compare(stringToHash, expectedHash)
   
       expect(result).toBe(true)
@@ -78,7 +78,7 @@ describe('Bcrypt Adapter' , () => {
   
     test('Should return true if compare succeeds', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
+      const stringToHash = 'any_string'
       const result = await sut.compare(stringToHash, expectedHash)
   
       expect(result).toBe(true)
@@ -86,7 +86,7 @@ describe('Bcrypt Adapter' , () => {
   
     test('Should return false if bcrypt.compare isnt match', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
+      const stringToHash = 'any_string'
       jest.spyOn(bcrypt, 'compare').mockImplementation((data: string | Buffer, encrypted: string) => {
         return new Promise(resolve => resolve(false))
       })
@@ -97,7 +97,7 @@ describe('Bcrypt Adapter' , () => {
   
     test('Should throw if bcrypt.compare throws', async () => {
       const sut = makeSut()
-      const stringToHash = "any_string"
+      const stringToHash = 'any_string'
       jest.spyOn(bcrypt, 'compare').mockImplementation((data: string | Buffer, encrypted: string) => {
         throw new Error()
       })

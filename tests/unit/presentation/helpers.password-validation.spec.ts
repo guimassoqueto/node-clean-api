@@ -1,6 +1,6 @@
-import { PasswordValidator } from "@src/presentation/protocols";
-import { PasswordValidation } from "@src/validation/field-validations" 
-import { InvalidParamError } from "@src/errors";
+import { PasswordValidator } from '@src/presentation/protocols';
+import { PasswordValidation } from '@src/validation/field-validations' 
+import { InvalidParamError } from '@src/errors';
 
 // Factory que cria um PasswordValidator
 function makePasswordValidator(): PasswordValidator {
@@ -21,7 +21,7 @@ type SutTypes =  {
 
 function makeSut(): SutTypes {
   const passwordValidatorStub = makePasswordValidator()
-  const sut = new PasswordValidation("password", passwordValidatorStub)
+  const sut = new PasswordValidation('password', passwordValidatorStub)
 
   return {
     sut,
@@ -37,8 +37,8 @@ function makeSut(): SutTypes {
 describe('Password Validation' , () => {
   test('PasswordValidator should receive the correct value as argument', () => {
     const { sut, passwordValidatorStub } = makeSut()
-    const isStrongSpy = jest.spyOn(passwordValidatorStub, "isStrong")
-    const input = { password: "valid_password" }
+    const isStrongSpy = jest.spyOn(passwordValidatorStub, 'isStrong')
+    const input = { password: 'valid_password' }
     sut.validate(input)
 
     expect(isStrongSpy).toHaveBeenCalledWith(input.password)
@@ -46,7 +46,7 @@ describe('Password Validation' , () => {
 
   test('PasswordValidator should thows if PasswordValidator throws', () => {
     const { sut, passwordValidatorStub } = makeSut()
-    jest.spyOn(passwordValidatorStub, "isStrong").mockImplementationOnce((password: string) => {
+    jest.spyOn(passwordValidatorStub, 'isStrong').mockImplementationOnce((password: string) => {
       throw new Error()
     })
     expect(sut.validate).toThrow()
@@ -54,8 +54,8 @@ describe('Password Validation' , () => {
 
   test('PasswordValidator return InvalidParamError if the password provided is not strong', () => {
     const { sut, passwordValidatorStub } = makeSut()
-    jest.spyOn(passwordValidatorStub, "isStrong").mockReturnValueOnce(false)
-    const result = sut.validate({password: "weak_password"})
-    expect(result).toEqual(new InvalidParamError("password"))
+    jest.spyOn(passwordValidatorStub, 'isStrong').mockReturnValueOnce(false)
+    const result = sut.validate({password: 'weak_password'})
+    expect(result).toEqual(new InvalidParamError('password'))
   })
 })

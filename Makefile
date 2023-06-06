@@ -72,11 +72,6 @@ or:
 od:
 	${DIR} .
 
-## executa teste de um arquivo especifico
-## (test file)
-tf:
-	${PACKAGE_MANAGER_RUN} test -- tests/integration/infra/db.account-mongo-repository.test.ts
-
 ## faz a transpilação de tsc para javascript em tempo real, execute em um terminal separado
 ## (typescript watch)
 tsw:
@@ -97,3 +92,8 @@ sjs:
 ## (start typescript)
 sts:
 	${DATABASE_UP} && ${PACKAGE_MANAGER_RUN} start:ts
+
+## executa teste de um arquivo especifico
+## (test file)
+tf:
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/data/usecase.db-load-survey-by-id.spec.ts

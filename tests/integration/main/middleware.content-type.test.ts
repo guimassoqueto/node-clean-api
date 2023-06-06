@@ -1,6 +1,6 @@
-import request from "supertest"
-import app from "@src/main/config/app"
-import { Request, Response } from "express"
+import request from 'supertest'
+import app from '@src/main/config/app'
+import { Request, Response } from 'express'
 
 describe('ContentType Middleware' , () => {
   test('Should return default Content-Type to application/json', async () => {

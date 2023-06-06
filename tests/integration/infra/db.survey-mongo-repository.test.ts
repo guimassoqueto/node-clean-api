@@ -1,8 +1,8 @@
 import { SurveyMongoRepository } from '@src/infra/db/mongodb/survey/survey-mongo-repository'
-import { AddSurveyModel } from '@src/data/usecases/add-survey/db-add-survey-protocols'
-import { MONGO_URL } from "@tests/settings"
-import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
-import { Collection } from "mongodb"
+import { AddSurveyModel } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
+import { MONGO_URL } from '@tests/settings'
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
+import { Collection } from 'mongodb'
 
 const RealDate = Date;
 class MockDate extends RealDate {
@@ -42,7 +42,7 @@ describe('SurveyMongoRepository' , () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await mongo.getCollection("surveys")
+    surveyCollection = await mongo.getCollection('surveys')
     await surveyCollection.deleteMany({})
   })
 
@@ -75,6 +75,17 @@ describe('SurveyMongoRepository' , () => {
       const surveys = await sut.loadAll()
       expect(surveys).toStrictEqual([])
       expect(surveys.length).toStrictEqual(0)
+    })
+  })
+
+  describe('loadById()' , () => {
+    test('Should load a survey on loadById success', async () => {
+      const newSurvey = await surveyCollection.insertOne(makeSurveyData(1))
+      const newSurveyId = newSurvey.insertedId.toString()
+      const sut = new SurveyMongoRepository()
+      const survey = await sut.loadById(newSurveyId)
+
+      expect(survey).toBeTruthy()
     })
   })
 })

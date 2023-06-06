@@ -10,7 +10,7 @@ export class HealthCheckController implements Controller {
       const httpResponse: HttpResponse = {
         statusCode: 200,
         body: {
-          status: "i'm live"
+          status: 'i\'m live'
         }
       }
       return await new Promise(resolve => { resolve(httpResponse) })
