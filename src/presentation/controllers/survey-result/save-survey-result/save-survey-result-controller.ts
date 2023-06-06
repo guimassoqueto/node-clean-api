@@ -1,9 +1,6 @@
-import { loggerConfig } from '@src/logger-config'
-import {
-  type Controller, type HttpRequest, type HttpResponse,
-  type LoadSurveyById, serverError,
-  notFound, ok
-} from './save-survey-result-protocols'
+import { type HttpRequest, type HttpResponse, type Controller } from '@src/presentation/protocols'
+import { forbidden, ok, serverError } from '@src/presentation/helpers/http'
+import { type LoadSurveyById, loggerConfig, InvalidParamError } from './save-survey-result-protocols'
 
 const logger = loggerConfig('SaveSurveyResultController')
 
@@ -16,7 +13,7 @@ export class SaveSurveyResultController implements Controller {
     try {
       const { surveyId } = httpRequest.params
       const survey = await this.loadSurveyById.loadById(surveyId)
-      if (!survey) return notFound()
+      if (!survey) return forbidden(new InvalidParamError('surveyId'))
 
       return ok(survey)
     } catch (error) {
