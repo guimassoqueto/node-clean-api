@@ -1,5 +1,5 @@
-import { PasswordValidator } from '@src/presentation/protocols'
 import { PasswordValidatorAdapter } from '@src/infra/validator'
+import { PasswordValidator } from '@src/validation/protocols';
 
 // Factory for PasswordValidatorAdapter
 function makeSut(): PasswordValidator {

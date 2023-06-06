@@ -1,6 +1,6 @@
 import { ValidationComposite } from '@src/validation/validation-composite'
-import { Validation } from '@src/presentation/protocols'
 import { MissingParamError, InvalidParamError } from '@src/errors'
+import { Validation } from '@src/validation/validation'
 
 function makeValidation(): Validation {
   class ValidationSut implements Validation {

@@ -6,7 +6,8 @@ import {
   EmailValidation,
   PasswordValidation
 } from '@src/validation/field-validations'
-import { EmailValidator, PasswordValidator, Validation } from '@src/presentation/protocols'
+import { EmailValidator, PasswordValidator } from '@src/validation/protocols'
+import { Validation } from '@src/validation/validation'
 
 jest.mock('@src/validation/validation-composite')
 
