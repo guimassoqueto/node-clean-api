@@ -10,7 +10,7 @@ export default {
     "<rootDir>/src/**/*.ts",
     "!<rootDir>/src/main/**",
     "!<rootDir>/src/settings.ts",
-    "!<rootDir>/src@src/logger-config.ts",
+    "!<rootDir>/src/logger-config.ts",
     "!<rootDir>/tests/settings.ts"
   ],
   coverageDirectory: "coverage",
