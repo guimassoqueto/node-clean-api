@@ -7,10 +7,10 @@ import {
   ChangeAccountIdRepository,
   UpdateAccessTokenRepository,
   Encrypter
-} from "@src/data/usecases/account/account-verification/db-account-verification-protocols"
-import { DbAccountVerification } from "@src/data/usecases/account/account-verification/db-account-verification"
+} from '@src/data/usecases/account/account-verification/db-account-verification-protocols'
+import { DbAccountVerification } from '@src/data/usecases/account/account-verification/db-account-verification'
 
-function makeFakeAccount(id: string = "any-id"): AccountModel {
+function makeFakeAccount(id: string = 'any-id'): AccountModel {
   return {
     id: id,
     name: 'any-name',
@@ -33,7 +33,7 @@ function makeDecoder(): Decoder {
 function makeEncrypter(): Encrypter {
   class EncrypterStub implements Encrypter {
     async encrypt (encryptedValue: string): Promise<string> {
-      return new Promise(resolve => resolve("any-token"))
+      return new Promise(resolve => resolve('any-token'))
     }
   }
   return new EncrypterStub()
@@ -58,7 +58,7 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
 function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
   class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
     async changeId (id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(makeFakeAccount("new-id")))
+      return new Promise(resolve => resolve(makeFakeAccount('new-id')))
     }
   }
   return new ChangeAccountIdRepositoryStub()
@@ -123,7 +123,7 @@ function makeSut(): SutTypes {
 describe('DbAccountVerification', () => {
   test('Should throws Decoder throws', async () => {
     const { sut, decoderStub } = makeSut()
-    jest.spyOn(decoderStub, "decode").mockImplementationOnce(() => {
+    jest.spyOn(decoderStub, 'decode').mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
@@ -133,7 +133,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throws Encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
-    jest.spyOn(encrypterStub, "encrypt").mockImplementationOnce((encryptedValue: string) => {
+    jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce((encryptedValue: string) => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
@@ -143,7 +143,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throw if LoadAccountByIdRepository throws', async () => {
     const { sut, loadAccountByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadAccountByIdRepositoryStub, "loadById").mockRejectedValueOnce(new Error())
+    jest.spyOn(loadAccountByIdRepositoryStub, 'loadById').mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()
@@ -151,7 +151,7 @@ describe('DbAccountVerification', () => {
 
   test('Should return null if loadAccountByIdRepositoryStub dont find the user', async () => {
     const { sut, loadAccountByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadAccountByIdRepositoryStub, "loadById").mockResolvedValue(null)
+    jest.spyOn(loadAccountByIdRepositoryStub, 'loadById').mockResolvedValue(null)
     const result = await sut.verify('any-token')
 
     expect(result).toBeFalsy()
@@ -159,7 +159,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throw if updateAccountVerified throws', async () => {
     const { sut, updateAccountVerifiedRepositoryStub } = makeSut()
-    jest.spyOn(updateAccountVerifiedRepositoryStub, "updateVerified").mockRejectedValueOnce(new Error())
+    jest.spyOn(updateAccountVerifiedRepositoryStub, 'updateVerified').mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()
@@ -167,7 +167,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throw if deleteUnverifiedAccountByAccountToken throws', async () => {
     const { sut, deleteUnverifiedAccountByAccountTokenRepositoryStub } = makeSut()
-    jest.spyOn(deleteUnverifiedAccountByAccountTokenRepositoryStub, "deleteByAccountToken").mockRejectedValueOnce(new Error())
+    jest.spyOn(deleteUnverifiedAccountByAccountTokenRepositoryStub, 'deleteByAccountToken').mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()
@@ -175,7 +175,7 @@ describe('DbAccountVerification', () => {
 
   test('Should return null if changeAccountIdRepository dont find the user', async () => {
     const { sut, changeAccountIdRepositoryStub } = makeSut()
-    jest.spyOn(changeAccountIdRepositoryStub, "changeId").mockResolvedValue(null)
+    jest.spyOn(changeAccountIdRepositoryStub, 'changeId').mockResolvedValue(null)
     const result = await sut.verify('any-token')
 
     expect(result).toBeFalsy()
@@ -183,7 +183,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throw if changeAccountIdRepository throws', async () => {
     const { sut, changeAccountIdRepositoryStub } = makeSut()
-    jest.spyOn(changeAccountIdRepositoryStub, "changeId").mockRejectedValueOnce(new Error())
+    jest.spyOn(changeAccountIdRepositoryStub, 'changeId').mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()
@@ -191,7 +191,7 @@ describe('DbAccountVerification', () => {
 
   test('Should throw if uptadeAccessTokenRepository throws', async () => {
     const { sut, updateAccessTokenRepositoryStub } = makeSut()
-    jest.spyOn(updateAccessTokenRepositoryStub, "updateAccessToken").mockRejectedValueOnce(new Error())
+    jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken').mockRejectedValueOnce(new Error())
     const promise = sut.verify('any-token')
 
     await expect(promise).rejects.toThrow()

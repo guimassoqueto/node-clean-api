@@ -4,9 +4,9 @@ import { DbAddSurvey } from '@src/data/usecases/survey/add-survey/db-add-survey'
 function makeFakeSurvey(): AddSurveyModel {
   return {
     createdAt: new Date(2023, 11, 31),
-    question: "any-question",
+    question: 'any-question',
     answers: [
-      { image: "any-image", answer: "any-answer" }
+      { image: 'any-image', answer: 'any-answer' }
     ]
   }
 }
@@ -38,7 +38,7 @@ function makeSut(): SutTypes {
 describe('DbAddSurvey' , () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
-    const addSpy = jest.spyOn(addSurveyRepositoryStub, "add")
+    const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
     const newSurveyData = makeFakeSurvey()
     await sut.add(newSurveyData)
 
@@ -47,7 +47,7 @@ describe('DbAddSurvey' , () => {
 
   test('Should throw if AddSurveyRepository throws', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
-    jest.spyOn(addSurveyRepositoryStub, "add").mockRejectedValueOnce(new Error())
+    jest.spyOn(addSurveyRepositoryStub, 'add').mockRejectedValueOnce(new Error())
     const newSurveyData = makeFakeSurvey()
     const promise = sut.add(newSurveyData)
 

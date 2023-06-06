@@ -1,7 +1,7 @@
 import { SurveyResultMongoRepository } from '@src/infra/db/mongodb/survey-result/survey-result-mongo-repository'
-import { MONGO_URL } from "@tests/settings"
-import { MongoHelper } from "@src/infra/db/mongodb/helpers/mongo-helper"
-import { Collection } from "mongodb"
+import { MONGO_URL } from '@tests/settings'
+import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
+import { Collection } from 'mongodb'
 import { AddSurveyModel } from '@src/domain/usecases/survey/add-survey';
 import { SurveyModel } from '@src/domain/models/survey';
 import { AddAccountModel } from '@src/domain/usecases/account/add-account';
@@ -37,9 +37,9 @@ function makeSurvey(): AddSurveyModel {
 
 function makeAccount(): AddAccountModel {
   return {
-    name: "any-name",
-    email: "any-emal",
-    password: "any-password"
+    name: 'any-name',
+    email: 'any-emal',
+    password: 'any-password'
   }
 }
 
@@ -69,9 +69,9 @@ describe('SurveyResultMongoRepository' , () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await mongo.getCollection("surveys")
-    accountCollection = await mongo.getCollection("accounts")
-    surveyResultCollection = await mongo.getCollection("surveyResults")
+    surveyCollection = await mongo.getCollection('surveys')
+    accountCollection = await mongo.getCollection('accounts')
+    surveyResultCollection = await mongo.getCollection('surveyResults')
     await surveyCollection.deleteMany({})
     await accountCollection.deleteMany({})
     await surveyResultCollection.deleteMany({})

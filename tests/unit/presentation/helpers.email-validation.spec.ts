@@ -1,6 +1,6 @@
-import { EmailValidator } from "@src/presentation/protocols";
-import { EmailValidation } from "@src/validation/field-validations"
-import { InvalidParamError } from "@src/errors";
+import { EmailValidator } from '@src/presentation/protocols';
+import { EmailValidation } from '@src/validation/field-validations'
+import { InvalidParamError } from '@src/errors';
 
 function makeEmailValidator(): EmailValidator {
   class EmailValidatorStub implements EmailValidator {
@@ -29,8 +29,8 @@ function makeSut(): SutTypes {
 describe('Email Validation' , () => {
   test('Should EmailValidator is called with correct value', () => {
     const { sut, emailValidatorStub } = makeSut()
-    const spyIsValid = jest.spyOn(emailValidatorStub, "isValid")
-    const input = { email: "valid_email@email.com" }
+    const spyIsValid = jest.spyOn(emailValidatorStub, 'isValid')
+    const input = { email: 'valid_email@email.com' }
     sut.validate(input)
 
     expect(spyIsValid).toHaveBeenCalledWith(input.email)
@@ -38,7 +38,7 @@ describe('Email Validation' , () => {
 
   test('Should throw if EmailValidator throws', () => {
     const { sut, emailValidatorStub } = makeSut()
-    jest.spyOn(emailValidatorStub, "isValid").mockImplementation((email: string) => {
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementation((email: string) => {
       throw new Error()
     })
     
@@ -47,9 +47,9 @@ describe('Email Validation' , () => {
 
   test('Should return an error if the email provided is not valid', () => {
     const { sut, emailValidatorStub } = makeSut()
-    jest.spyOn(emailValidatorStub, "isValid").mockReturnValueOnce(false)
-    const result = sut.validate({email: "invalid_email"})
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const result = sut.validate({email: 'invalid_email'})
     
-    expect(result).toEqual(new InvalidParamError("email"))
+    expect(result).toEqual(new InvalidParamError('email'))
   })
 })

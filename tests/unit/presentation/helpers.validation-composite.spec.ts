@@ -1,6 +1,6 @@
-import { ValidationComposite } from "@src/validation/validation-composite"
-import { Validation } from "@src/presentation/protocols"
-import { MissingParamError, InvalidParamError } from "@src/errors"
+import { ValidationComposite } from '@src/validation/validation-composite'
+import { Validation } from '@src/presentation/protocols'
+import { MissingParamError, InvalidParamError } from '@src/errors'
 
 function makeValidation(): Validation {
   class ValidationSut implements Validation {
@@ -30,7 +30,7 @@ describe('ValidationComposite' , () => {
     const { sut, validationStubs } = makeSut()
     const [ ValidationStubOne, _ ] = validationStubs
 
-    jest.spyOn(ValidationStubOne, "validate").mockImplementationOnce((input: any) => {
+    jest.spyOn(ValidationStubOne, 'validate').mockImplementationOnce((input: any) => {
       throw new Error()
     })
 
@@ -40,20 +40,20 @@ describe('ValidationComposite' , () => {
   test('Should return the first error if multiple validations returns', () => {
     const { sut, validationStubs } = makeSut()
     const [ ValidationStubOne, ValidationStubTwo ] = validationStubs
-    jest.spyOn(ValidationStubOne, "validate").mockImplementationOnce((input: any) => {
-      return new InvalidParamError("field")
+    jest.spyOn(ValidationStubOne, 'validate').mockImplementationOnce((input: any) => {
+      return new InvalidParamError('field')
     })
-    jest.spyOn(ValidationStubTwo, "validate").mockImplementationOnce((input: any) => {
-      return new MissingParamError("field")
+    jest.spyOn(ValidationStubTwo, 'validate').mockImplementationOnce((input: any) => {
+      return new MissingParamError('field')
     })
-    const result = sut.validate({ field: "any_value" })
+    const result = sut.validate({ field: 'any_value' })
 
-    expect(result).toEqual(new InvalidParamError("field"))
+    expect(result).toEqual(new InvalidParamError('field'))
   })
 
   test('Should return null if all validations Pass', () => {
     const { sut } = makeSut()
-    const result = sut.validate({ field: "any_data" })
+    const result = sut.validate({ field: 'any_data' })
     expect(result).toEqual(null)
   })
 })

@@ -15,15 +15,15 @@ class MockDate extends RealDate {
 
 function makeFakeSurveyResultData(): SaveSurveyResultModel {
   return {
-    surveyId: "any-survey-id",
-    accountId: "any-account-id",
-    answer: "any-answer",
+    surveyId: 'any-survey-id',
+    accountId: 'any-account-id',
+    answer: 'any-answer',
     date: new Date(2030, 11, 31)
   }
 }
 
 function makeFakeSurveyResult(): SurveyResultModel {
-  return Object.assign({}, makeFakeSurveyResultData(), {id: "any-id"})
+  return Object.assign({}, makeFakeSurveyResultData(), {id: 'any-id'})
 }
 
 function makeSurveyResultRepository(): SaveSurveyResultRepository {
@@ -60,7 +60,7 @@ describe('DbSaveSurveyResult' , () => {
 
   test('Should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
-    const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, "save")
+    const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, 'save')
     const surveyResultData = makeFakeSurveyResultData()
     await sut.save(surveyResultData)
 
@@ -69,7 +69,7 @@ describe('DbSaveSurveyResult' , () => {
 
   test('Should throw if SaveSurveyResultRepository throws', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
-    jest.spyOn(saveSurveyResultRepositoryStub, "save").mockRejectedValueOnce(new Error())
+    jest.spyOn(saveSurveyResultRepositoryStub, 'save').mockRejectedValueOnce(new Error())
     const surveyResultData = makeFakeSurveyResultData()
     const promise =  sut.save(surveyResultData)
 

@@ -51,32 +51,32 @@ describe('DbLoadSurveyById' , () => {
 
   test('Should call LoadSurveyByIdRepository with correct values', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
-    const spyLoad = jest.spyOn(loadSurveyByIdRepositoryStub, "loadById")
-    await sut.loadById("any-id")
+    const spyLoad = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
+    await sut.loadById('any-id')
 
-    expect(spyLoad).toHaveBeenCalledWith("any-id")
+    expect(spyLoad).toHaveBeenCalledWith('any-id')
   })
 
   test('Should DbLoadSurveyById throw if LoadSurveyByIdRepository throws', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadSurveyByIdRepositoryStub, "loadById").mockRejectedValueOnce(new Error())
-    const promise = sut.loadById("any-id")
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockRejectedValueOnce(new Error())
+    const promise = sut.loadById('any-id')
 
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return a valid survey LoadSurveyByIdRepository succeded', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadSurveyByIdRepositoryStub, "loadById")
-    const survey = await sut.loadById("any-id")
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
+    const survey = await sut.loadById('any-id')
 
     expect(survey).toStrictEqual(makeFakeSurvey())
   })
 
   test('Should return null LoadSurveyByIdRepository dont find a survey related with the provided id', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadSurveyByIdRepositoryStub, "loadById").mockResolvedValueOnce(null)
-    const result = await sut.loadById("any-id")
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockResolvedValueOnce(null)
+    const result = await sut.loadById('any-id')
 
     expect(result).toBeNull()
   })

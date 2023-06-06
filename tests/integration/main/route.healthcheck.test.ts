@@ -1,5 +1,5 @@
-import app from "@src/main/config/app"
-import request from "supertest"
+import app from '@src/main/config/app'
+import request from 'supertest'
 
 describe('HealthCheck' , () => {
 

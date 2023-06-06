@@ -31,14 +31,14 @@ function makeFakeRequest(): HttpRequest {
     }
   }
 }
-function makeFakeSurvey(id: string = "any-id"): SurveyModel {
+function makeFakeSurvey(id: string = 'any-id'): SurveyModel {
   return {
     id,
-    question: "any-question",
+    question: 'any-question',
     answers: [
       {
-        image: "https://any-image.com",
-        answer: "any-answer"
+        image: 'https://any-image.com',
+        answer: 'any-answer'
       }
     ],
     createdAt: new Date(2030, 11, 31)
@@ -57,7 +57,7 @@ function makeLoadSurveyById(): LoadSurveyById {
 describe('SaveSurveyResult' , () => {
   test('Should call LoadSurveyById with correct args', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
-    const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, "loadById")
+    const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
     const request = makeFakeRequest()
 
     await sut.handle(request)

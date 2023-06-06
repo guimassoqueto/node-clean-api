@@ -1,4 +1,4 @@
-import { EmailValidatorAdapter } from "@src/infra/validator";
+import { EmailValidatorAdapter } from '@src/infra/validator';
 
 // Factory que cria um EmailValidator
 function makeSut(): EmailValidatorAdapter {
@@ -22,10 +22,10 @@ describe('Email Validator Adapter' , () => {
 
   test('Should call validator with correct email', async () => {
     const sut = makeSut()
-    const isEmailSpy = jest.spyOn(sut, "isValid")
+    const isEmailSpy = jest.spyOn(sut, 'isValid')
 
     // corfirma que o email passado no método é o mesmo email usado na verificação
-    const correct_email = "correct_email@gmail.com"
+    const correct_email = 'correct_email@gmail.com'
     sut.isValid(correct_email)
 
     expect(isEmailSpy).toHaveBeenCalledWith(correct_email)
