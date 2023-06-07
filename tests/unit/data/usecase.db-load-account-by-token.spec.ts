@@ -7,7 +7,7 @@ import { mockAccountModel, mockDecrypter, RealDate, MockDate } from '@tests/help
 function mockLoadAccountByToken(): LoadAccountByTokenRepository {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken(accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccountModel(true)))
+      return Promise.resolve(mockAccountModel(true))
     }
   }
   return new LoadAccountByTokenRepositoryStub()

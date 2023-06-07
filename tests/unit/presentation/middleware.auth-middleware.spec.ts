@@ -17,7 +17,7 @@ function makeRequest(): HttpRequest {
 function makeLoadAccountByToken(): LoadAccountByToken {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string | undefined): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccountModel()))
+      return Promise.resolve(mockAccountModel())
     }
   }
 

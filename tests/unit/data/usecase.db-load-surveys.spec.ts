@@ -7,7 +7,7 @@ import { SurveyModel } from '@src/domain/models/survey'
 function mockLoadSurveyRepository(): LoadSurveysRepository {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
     async loadAll (): Promise<SurveyModel[]> {
-      return new Promise(resolve => resolve(mockSurveyModels()))
+      return Promise.resolve(mockSurveyModels())
     }
   }
   return new LoadSurveysRepositoryStub()

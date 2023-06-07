@@ -16,7 +16,7 @@ import {
 function mockAddAccountRepository(): AddAccountRepository {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add(accountData: AddAccountParams): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccountModel()))
+      return Promise.resolve(mockAccountModel())
     }
   }
   return new AddAccountRepositoryStub()
@@ -54,9 +54,7 @@ describe('DbAddAcccount Usecase' , () => {
 
   test('Should throw in case of errors in encrypt method', async () => {
     const { sut, hasherStub } = makeSut();
-    jest.spyOn(hasherStub, 'hash').mockReturnValueOnce(new Promise((resolve, reject) => {
-      reject(new Error())
-    }));
+    jest.spyOn(hasherStub, 'hash').mockRejectedValueOnce(new Error());
     const account: AddAccountParams = mockAddAccountParams()
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()
@@ -77,9 +75,7 @@ describe('DbAddAcccount Usecase' , () => {
 
   test('Should throw in case of errors in add method', async () => {
     const { sut, addAccountRepositoryStub } = makeSut();
-    jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => {
-      reject(new Error())
-    }));
+    jest.spyOn(addAccountRepositoryStub, 'add').mockRejectedValueOnce(new Error())
     const account: AddAccountParams = mockAddAccountParams()
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()

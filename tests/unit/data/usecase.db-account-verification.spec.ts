@@ -27,7 +27,7 @@ function mockAccountModel(id: string = 'any-id'): AccountModel {
 function makeLoadAccountByIdRepository(): LoadAccountByIdRepository {
   class LoadAccountByIdRepositoryStub implements LoadAccountByIdRepository {
     loadById(id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccountModel()))
+      return Promise.resolve(mockAccountModel())
     }
   }
   return new LoadAccountByIdRepositoryStub()
@@ -43,7 +43,7 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
 function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
   class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
     async changeId (id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccountModel('new-id')))
+      return Promise.resolve(mockAccountModel('new-id'))
     }
   }
   return new ChangeAccountIdRepositoryStub()

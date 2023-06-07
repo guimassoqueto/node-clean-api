@@ -18,7 +18,7 @@ function makeRequest(): HttpRequest {
 function mockAccountVerification(): AccountVerification {
   class AccountVerificationStub implements AccountVerification {
     async verify(accountToken: string): Promise<string | null> {
-      return new Promise(resolve => resolve('any-token'))
+      return Promise.resolve('any-token')
     }
   }
   return new AccountVerificationStub()

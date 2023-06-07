@@ -6,7 +6,7 @@ import { mockAddSurveysParams } from '@tests/helpers'
 function mockAddSurveyRepository(): AddSurveyRepository {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
     add (surveyData: AddSurveyParams): Promise<void> {
-      return new Promise(resolve => resolve())
+      return Promise.resolve()
     }
   }
   return new AddSurveyRepositoryStub()

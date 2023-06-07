@@ -9,7 +9,7 @@ import { mockValidation } from '@tests/helpers'
 function mockAuthentication(accessToken: string = 'any-token'): Authentication {
   class AuthenticationStub implements Authentication {
     async auth(authentication: AuthenticationParams): Promise<string | null> {
-      return new Promise(resolve => resolve(accessToken))
+      return Promise.resolve(accessToken)
     }
   }
   return new AuthenticationStub()
@@ -63,7 +63,7 @@ describe('Login Controller' , () => {
 
   test('Should return 401 if invalid credentials are provided', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, _ )=> resolve(null)))
+    jest.spyOn(authenticationStub, 'auth').mockResolvedValueOnce(null)
     const httpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse).toEqual(unauthorized())
@@ -72,7 +72,7 @@ describe('Login Controller' , () => {
   test('Should return 500 in authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
     const error = new Error('Some error')
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((_, reject) => reject(error)))
+    jest.spyOn(authenticationStub, 'auth').mockRejectedValueOnce(error)
     const httpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse).toEqual(serverError(error))

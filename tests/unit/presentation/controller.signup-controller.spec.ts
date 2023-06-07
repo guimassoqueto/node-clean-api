@@ -20,7 +20,7 @@ import { RealDate, MockDate, mockUnverifiedAccount, mockAccountModel, mockValida
 function mockAddAccount(): AddAccount {
   class AddAccountStub implements AddAccount {
     public async add(account: AddAccountParams): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccountModel()))
+      return Promise.resolve(mockAccountModel())
     }
   }
 
@@ -30,7 +30,7 @@ function mockAddAccount(): AddAccount {
 function mockAddUnverifiedAccount(): AddUnverifiedAccount {
   class AddUnverifiedAccountStub implements AddUnverifiedAccount {
     async add(accountId: string): Promise<UnverifiedAccountModel> {
-      return new Promise(resolve => resolve(mockUnverifiedAccount()))
+      return Promise.resolve(mockUnverifiedAccount())
     }
   }
   return new AddUnverifiedAccountStub()
@@ -39,7 +39,7 @@ function mockAddUnverifiedAccount(): AddUnverifiedAccount {
 function mockEmailService(): EmailService {
   class EmailServiceStub implements EmailService {
     async sendAccountVerificationEmail(emailVerificationParams: EmailVerificationParams): Promise<EmailVerificationResponse> {
-      return new Promise(resolve => resolve({ statusCode: 200 }))
+      return Promise.resolve({ statusCode: 200 })
     }
   }
 
@@ -112,9 +112,7 @@ describe('SignUpControlller', () => {
 
   test('Should return 500 when AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockImplementationOnce((account: AddAccountParams) => {
-      return new Promise((_, reject) => reject(new ServerError()))
-    })
+    jest.spyOn(addAccountStub, 'add').mockRejectedValue(new ServerError())
     const httpRequest = makeRequest()
     const httpResponse = await sut.handle(httpRequest)
 
@@ -160,9 +158,7 @@ describe('SignUpControlller', () => {
   test('Should return 500 if addUnverifiedAccountStub throws', async () => {
     const { sut, addUnverifiedAccountStub } = makeSut()
     const error = new Error('any_error')
-    jest.spyOn(addUnverifiedAccountStub, 'add').mockImplementationOnce((accountId: string) => {
-      return new Promise((_, reject) => reject(new Error()))
-    })
+    jest.spyOn(addUnverifiedAccountStub, 'add').mockRejectedValue(new Error())
     const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)
@@ -181,9 +177,7 @@ describe('SignUpControlller', () => {
   test('Should return 500 if sendAccountVerificationEmail throws', async () => {
     const { sut, emailServiceStub } = makeSut()
     const error = new Error('any_error')
-    jest.spyOn(emailServiceStub, 'sendAccountVerificationEmail').mockImplementationOnce(() => {
-      return new Promise((_, reject) => reject(new Error('sendAccountVerificationEmail error')))
-    })
+    jest.spyOn(emailServiceStub, 'sendAccountVerificationEmail').mockRejectedValue(new Error('sendAccountVerificationEmail error'))
     const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)

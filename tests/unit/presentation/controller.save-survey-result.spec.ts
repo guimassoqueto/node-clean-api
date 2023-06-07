@@ -11,7 +11,7 @@ import { RealDate, MockDate, mockSurveyModel } from '@tests/helpers'
 function mockSaveSurveyResult(): SaveSurveyResult {
   class SaveSurveyResultStub implements SaveSurveyResult {
     async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return new Promise(resolve => resolve(mockSurveyResult()))
+      return Promise.resolve(mockSurveyResult())
     }
   }
   return new SaveSurveyResultStub()
@@ -20,7 +20,7 @@ function mockSaveSurveyResult(): SaveSurveyResult {
 function mockLoadSurveyById(): LoadSurveyById {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string) : Promise<SurveyModel | null> {
-      return new Promise (resolve => resolve(mockSurveyModel()))
+      return  Promise.resolve(mockSurveyModel())
     }
   }
   return new LoadSurveyByIdStub()

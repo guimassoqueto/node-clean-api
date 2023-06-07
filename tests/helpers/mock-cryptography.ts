@@ -7,7 +7,7 @@ import { Decoder, Decrypter, Encrypter, Hasher } from '@src/data/protocols/crypt
 export function mockDecoder(): Decoder {
   class DecoderStub implements Decoder {
     async decode(encodedValue: string): Promise<string> {
-      return new Promise(resolve => resolve('any-decoded-value'))
+      return Promise.resolve('any-decoded-value')
     }
   }
   return new DecoderStub()
@@ -20,7 +20,7 @@ export function mockDecoder(): Decoder {
 export function mockEncrypter(): Encrypter {
   class EncrypterStub implements Encrypter {
     async encrypt (encryptedValue: string): Promise<string> {
-      return new Promise(resolve => resolve('any-token'))
+      return Promise.resolve('any-token')
     }
   }
   return new EncrypterStub()
@@ -32,7 +32,7 @@ export function mockEncrypter(): Encrypter {
 export function mockDecrypter(): Decrypter {
   class DecrypterStub implements Decrypter {
     decrypt (encryptedValue: string): Promise<string> {
-      return new Promise(resolve => resolve('any-decrypted-value'))
+      return Promise.resolve('any-decrypted-value')
     }
   }
   return new DecrypterStub()
@@ -44,7 +44,7 @@ export function mockDecrypter(): Decrypter {
 export function mockHasher(): Hasher {
   class HasherStub implements Hasher {
     async hash(value: string): Promise<string> {
-      return new Promise(resolve => resolve('hashed-password'));
+      return Promise.resolve('hashed-password')
     }
   }
   return new HasherStub()

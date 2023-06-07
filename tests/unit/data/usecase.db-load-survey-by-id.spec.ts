@@ -6,7 +6,7 @@ import { RealDate, MockDate, mockSurveyModel } from '@tests/helpers'
 function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
     async loadById (id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(mockSurveyModel()))
+      return Promise.resolve(mockSurveyModel())
     }
   }
   return new LoadSurveyByIdRepositoryStub()

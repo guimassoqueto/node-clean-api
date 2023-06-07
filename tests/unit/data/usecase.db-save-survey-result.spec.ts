@@ -14,7 +14,7 @@ function mockSurveyResult(): SurveyResultModel {
 function mockSurveyResultRepository(): SaveSurveyResultRepository {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
     async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return new Promise(resolve => resolve(mockSurveyResult()))
+      return Promise.resolve(mockSurveyResult())
     }
   }
   return new SaveSurveyResultRepositoryStub()

@@ -2,14 +2,15 @@ import bcrypt from 'bcrypt';
 import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { SALT_ROUNDS } from '@tests/settings';
 
+
 const expectedHash = 'any-hash'
 jest.mock('bcrypt', () => ({
   async hash(value?: string): Promise<string> {
-    return new Promise(resolve => resolve(expectedHash))
+    return Promise.resolve(expectedHash)
   },
 
   async compare(data: string | Buffer, encrypted: string): Promise<boolean> {
-    return new Promise(resolve => resolve(true))
+    return Promise.resolve(true)
   }
 }))
 
@@ -39,7 +40,7 @@ describe('BcryptAdapter' , () => {
   
     test('Should throw if encrypt gets an error', async () => {
       const sut = makeSut()
-      jest.spyOn(sut, 'hash').mockReturnValueOnce(new Promise((_, reject) => reject(new Error())))
+      jest.spyOn(sut, 'hash').mockRejectedValueOnce(new Error())
   
       const promise = sut.hash('any_string')
   

@@ -7,7 +7,7 @@ import { mockSurveyModels } from '@tests/helpers'
 function mockLoadSurveys(): LoadSurveys {
   class LoadSurveysStub implements LoadSurveys {
     async load(): Promise<SurveyModel[]> {
-      return new Promise(resolve => resolve(mockSurveyModels()))
+      return Promise.resolve(mockSurveyModels())
     }
   }
   return new LoadSurveysStub()
