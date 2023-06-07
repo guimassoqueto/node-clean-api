@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt';
 import { BcryptAdapter } from '@src/infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { SALT_ROUNDS } from '@tests/settings';
 
-// Mockando o método hash do bcrypt para retornar um valor esperado
-const expectedHash = 'any_hash'
+const expectedHash = 'any-hash'
 jest.mock('bcrypt', () => ({
   async hash(value?: string): Promise<string> {
     return new Promise(resolve => resolve(expectedHash))
@@ -14,12 +13,13 @@ jest.mock('bcrypt', () => ({
   }
 }))
 
-// Factory para a criação de BcryptAdapter
+
 function makeSut(): BcryptAdapter {
   return new BcryptAdapter(SALT_ROUNDS);
 }
 
-describe('Bcrypt Adapter' , () => {
+
+describe('BcryptAdapter' , () => {
   describe('hash()' , () => {
     test('Should call bcrypt.hash with correct values', async () => {
       const sut = makeSut()

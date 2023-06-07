@@ -2,17 +2,7 @@ import { MONGO_URL } from '@tests/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'
 import { Collection } from 'mongodb'
-
-function makeAccount() {
-  return {
-    name: 'any_name',
-    email: 'any_email',
-    password: 'any_password',
-    verified: false,
-    createdAt: new Date(2023, 11, 31),
-    accessToken: 'any-token',
-  }
-}
+import { mockAccountWithToken } from '@tests/helpers'
 
 function makeSut(): AccountMongoRepository {
   return new AccountMongoRepository()
@@ -30,14 +20,14 @@ describe('Add Account Mongo Repository' , () => {
     await mongo.disconnect();
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     accountCollection = await mongo.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
   test('Should return an account on add success', async () => {
     const sut = makeSut()
-    const accountToBeAdded = makeAccount()
+    const accountToBeAdded = mockAccountWithToken()
     const account = await sut.add(accountToBeAdded)
 
     expect(account).toBeTruthy()
@@ -50,7 +40,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('loadByEmail()', () => {
     test('Should return an account on loadbyEmail success', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
       await accountCollection.insertOne(new_account) // insere uma conta antes de buscá-la
       const account = await sut.loadByEmail(new_account.email) // busca a conta
   
@@ -72,7 +62,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('loadById()', () => {
     test('Should return an account on loadById success', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
       const inserted_account = await accountCollection.insertOne(new_account) // insere uma conta antes de buscá-la
       const account = await sut.loadById(inserted_account.insertedId.toString()) // busca a conta
   
@@ -87,7 +77,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('updateAccessToken()' , () => {
     test('Should update the account access token on updateAccessToken success', async () => {
       const sut = makeSut()
-      const res = await accountCollection.insertOne(makeAccount())
+      const res = await accountCollection.insertOne(mockAccountWithToken())
       await sut.updateAccessToken(res.insertedId.toString(), 'any_token') // atualiza o token
       const account = await accountCollection.findOne({ _id: res.insertedId })
   
@@ -99,7 +89,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('updateVerified()' , () => {
     test('Should update the verified field on updateVerified success', async () => {
       const sut = makeSut()
-      const res = await accountCollection.insertOne(makeAccount())
+      const res = await accountCollection.insertOne(mockAccountWithToken())
       const account_before_update = await accountCollection.findOne({ _id: res.insertedId })
       expect(account_before_update).toBeTruthy()
       expect(account_before_update?.verified).toBe(false)
@@ -113,7 +103,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('changeId()' , () => {
     test('Should change the id of an account, keeping the other fields exact the same', async () => {
       const sut = makeSut()
-      const account = makeAccount()
+      const account = mockAccountWithToken()
       const res = await accountCollection.insertOne(account)
       let oldAccount = await accountCollection.findOne({ _id: res.insertedId })
       
@@ -134,7 +124,7 @@ describe('Add Account Mongo Repository' , () => {
   describe('loadByToken()' , () => {
     test('Should return an account on loadByToken success without role', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
   
       await accountCollection.insertOne(new_account) 
       const account = await sut.loadByToken(new_account.accessToken)
@@ -148,7 +138,7 @@ describe('Add Account Mongo Repository' , () => {
 
     test('Should return an account on loadByToken success with ADMIN role', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
       new_account['role'] = 'ADMIN'
 
       await accountCollection.insertOne(new_account) 
@@ -163,7 +153,7 @@ describe('Add Account Mongo Repository' , () => {
 
     test('Should return null loadByToken with invalid role', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
 
       await accountCollection.insertOne(new_account) 
       const account = await sut.loadByToken(new_account.accessToken, 'ADMIN')
@@ -173,7 +163,7 @@ describe('Add Account Mongo Repository' , () => {
 
     test('Should return an account on loadByToken if user is ADMIN', async () => {
       const sut = makeSut()
-      const new_account = makeAccount()
+      const new_account = mockAccountWithToken()
       new_account['role'] = 'ADMIN'
 
       await accountCollection.insertOne(new_account) 

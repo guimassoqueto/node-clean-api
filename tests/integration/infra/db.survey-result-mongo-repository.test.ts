@@ -2,56 +2,30 @@ import { SurveyResultMongoRepository } from '@src/infra/db/mongodb/survey-result
 import { MONGO_URL } from '@tests/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { Collection } from 'mongodb'
-import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey';
 import { SurveyModel } from '@src/domain/models/survey';
-import { AddAccountParams } from '@src/domain/usecases/account/add-account';
 import { AccountModel } from '@src/domain/models/account';
+import { 
+  RealDate, 
+  MockDate, 
+  mockAddSurveysParams, 
+  mockAddAccountParams 
+} from '@tests/helpers'
 
-const RealDate = Date;
-class MockDate extends RealDate {
-  constructor() {
-    super('2030-01-01T00:00:00Z');
-  }
-}
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
 let accountCollection: Collection
 let mongo: MongoHelper 
 
-function makeSurvey(): AddSurveyParams {
-  return {
-    createdAt: new Date(),
-    question: `any-question`,
-    answers: [
-      {
-        image:'image1',
-        answer: 'any-answer1'
-      },
-      {
-        answer: 'any-answer2'
-      },
-    ]
-  }
-}
-
-function makeAccount(): AddAccountParams {
-  return {
-    name: 'any-name',
-    email: 'any-emal',
-    password: 'any-password'
-  }
-}
-
 
 async function createDbSurvey(): Promise<SurveyModel> {
-  const newSurvey = await surveyCollection.insertOne(makeSurvey())
+  const newSurvey = await surveyCollection.insertOne(mockAddSurveysParams())
   const survey = await surveyCollection.findOne({ _id: newSurvey.insertedId })
   return mongo.mapper<SurveyModel>(survey)
 }
 
 async function createDbAccount(): Promise<AccountModel> {
-  const newAccount = await accountCollection.insertOne(makeAccount())
+  const newAccount = await accountCollection.insertOne(mockAddAccountParams())
   const account = await accountCollection.findOne({ _id: newAccount.insertedId })
   return mongo.mapper<AccountModel>(account)
 }

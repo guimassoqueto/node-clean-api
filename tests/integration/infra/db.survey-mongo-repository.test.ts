@@ -3,29 +3,8 @@ import { AddSurveyParams } from '@src/data/usecases/survey/add-survey/db-add-sur
 import { MONGO_URL } from '@tests/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { Collection } from 'mongodb'
+import { RealDate, MockDate, mockAddSurveysParams } from '@tests/helpers'
 
-const RealDate = Date;
-class MockDate extends RealDate {
-  constructor() {
-    super('2030-01-01T00:00:00Z');
-  }
-}
-
-function makeSurveyData(questionNumber: number): AddSurveyParams {
-  return {
-    createdAt: new Date(),
-    question: `any-question${questionNumber}`,
-    answers: [
-      {
-        image:'image1',
-        answer: 'any-answer1'
-      },
-      {
-        answer: 'any-answer2'
-      },
-    ]
-  }
-}
 
 let surveyCollection: Collection
 let mongo: MongoHelper 
@@ -53,7 +32,7 @@ describe('SurveyMongoRepository' , () => {
   describe('add()' , () => {
     test('Should add a survey on success', async () => {
       const sut = new SurveyMongoRepository()
-      await sut.add(makeSurveyData(1))
+      await sut.add(mockAddSurveysParams(1))
       const survey = await surveyCollection.findOne({question: 'any-question1'})
       expect(survey).toBeTruthy()
       expect(survey?._id).toBeTruthy()
@@ -62,7 +41,7 @@ describe('SurveyMongoRepository' , () => {
   
   describe('loadAll()' , () => {
     test('Should return a correct quantity of Surveys on loadAll success', async () => {
-      await surveyCollection.insertMany([ makeSurveyData(0), makeSurveyData(1) ])
+      await surveyCollection.insertMany([ mockAddSurveysParams(0), mockAddSurveysParams(1) ])
       const sut = new SurveyMongoRepository()
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(2)
@@ -80,7 +59,7 @@ describe('SurveyMongoRepository' , () => {
 
   describe('loadById()' , () => {
     test('Should load a survey on loadById success', async () => {
-      const newSurvey = await surveyCollection.insertOne(makeSurveyData(1))
+      const newSurvey = await surveyCollection.insertOne(mockAddSurveysParams(1))
       const newSurveyId = newSurvey.insertedId.toString()
       const sut = new SurveyMongoRepository()
       const survey = await sut.loadById(newSurveyId)

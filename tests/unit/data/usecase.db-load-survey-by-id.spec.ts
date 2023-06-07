@@ -1,26 +1,12 @@
 import { DbLoadSurveyById } from '@src/data/usecases/survey/load-survey-by-id/db-load-survey-by-id'
 import { LoadSurveyByIdRepository, SurveyModel } from '@src/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols'
+import { RealDate, MockDate, mockSurvey } from '@tests/helpers'
 
-const RealDate = Date;
-class MockDate extends RealDate {
-  constructor() {
-    super('2030-01-01T00:00:00Z');
-  }
-}
 
-function makeFakeSurvey(): SurveyModel {
-  return {
-    id: 'id1',
-    question: 'q1',
-    answers: [{ answer: 'a1' }, { answer: 'a2'}],
-    createdAt: new Date(2030, 11, 31)
-  }
-}
-
-function makeLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
+function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
     async loadById (id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(makeFakeSurvey()))
+      return new Promise(resolve => resolve(mockSurvey()))
     }
   }
   return new LoadSurveyByIdRepositoryStub()
@@ -32,7 +18,7 @@ type SutTypes = {
 }
 
 function makeSut(): SutTypes {
-  const loadSurveyByIdRepositoryStub = makeLoadSurveyByIdRepository()
+  const loadSurveyByIdRepositoryStub = mockLoadSurveyByIdRepository()
   const sut = new DbLoadSurveyById(loadSurveyByIdRepositoryStub)
   return {
     sut,
@@ -70,7 +56,7 @@ describe('DbLoadSurveyById' , () => {
     jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
     const survey = await sut.loadById('any-id')
 
-    expect(survey).toStrictEqual(makeFakeSurvey())
+    expect(survey).toStrictEqual(mockSurvey())
   })
 
   test('Should return null LoadSurveyByIdRepository dont find a survey related with the provided id', async () => {

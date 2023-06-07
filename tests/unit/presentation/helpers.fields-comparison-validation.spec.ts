@@ -1,7 +1,7 @@
 import { InvalidParamError } from '@src/errors'
 import { FieldsComparisonValidation } from '@src/validation/field-validations'
 
-describe('Fields Comparison Validator' , () => {
+describe('FieldsComparisonValidation' , () => {
   test('Should return InvalidParamError if the provided fields are different', () => {
     const sut = new FieldsComparisonValidation('password', 'passwordConfirmation')
     const result = sut.validate({password: 'field', passwordConfirmation: 'field_diff'})

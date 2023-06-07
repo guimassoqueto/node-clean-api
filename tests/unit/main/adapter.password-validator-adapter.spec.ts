@@ -10,7 +10,7 @@ function makeSut(): PasswordValidator {
 describe('PasswordValidatorAdapter', () => {
   test('Should return false if the provided password is weak', async () => {
     const sut = makeSut();
-    const isStrongPassword = await sut.isStrong('password123');
+    const isStrongPassword = sut.isStrong('password123');
     expect(isStrongPassword).toBe(false)
   })
 

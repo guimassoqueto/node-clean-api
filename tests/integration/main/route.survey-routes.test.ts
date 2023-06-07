@@ -3,34 +3,9 @@ import app from '@src/main/config/app'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { JWT_SECRET, MONGO_URL } from '@tests/settings'
 import { Collection, ObjectId } from 'mongodb'
-import { AddAccountParams } from '@src/domain/usecases/account/add-account'
-import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
 import { sign } from 'jsonwebtoken'
+import { mockAddSurveysParams, mockAddAccountParams } from '@tests/helpers'
 
-function makeFakeSurvey(): AddSurveyParams {
-  return {
-    question: 'any_question',
-    answers: [
-      {
-        image: 'http://image-name.com',
-        answer: 'any-answer'
-      },
-      {
-        image: 'http://image2-name2.com',
-        answer: 'any-answer2'
-      }
-    ],
-    createdAt: new Date()
-  }
-}
-
-function makeFakeAccount(): AddAccountParams {
-  return {
-    name: 'any-name',
-    email: 'any-email',
-    password: 'any-password'
-  }
-}
 
 let surveyCollection: Collection
 let accountCollection: Collection
@@ -56,12 +31,12 @@ describe('Surveys Route', () => {
     test('Should return 403 if user did not provide a valid accessToken', async () => {
       await request(app)
         .post('/api/surveys')
-        .send(makeFakeSurvey())
+        .send(mockAddSurveysParams())
         .expect(403)
     })
   
     test('Should return 204 if user provide a valid accessToken', async () => {
-      const accountWithRole = Object.assign(makeFakeAccount(), { role: 'ADMIN' })
+      const accountWithRole = Object.assign(mockAddAccountParams(), { role: 'ADMIN' })
       const account = await accountCollection.insertOne(accountWithRole)
       const id = account.insertedId.toString()
       const accessToken = sign(id, JWT_SECRET)
@@ -71,7 +46,7 @@ describe('Surveys Route', () => {
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
-        .send(makeFakeSurvey())
+        .send(mockAddSurveysParams())
         .expect(204)
     })
   })
@@ -84,20 +59,20 @@ describe('Surveys Route', () => {
     })
 
     test('Should return 200 or 204 on load surveys if user provide a valid accessToken', async () => {
-      const account = await accountCollection.insertOne(makeFakeAccount())
+      const account = await accountCollection.insertOne(mockAddAccountParams())
       const id = account.insertedId.toString()
       const accessToken = sign(id, JWT_SECRET)
   
       await accountCollection.updateOne({_id: new ObjectId(id)}, { $set: { accessToken } })
       
       const randomBoolean = Math.random() < 0.5;
-      if (randomBoolean) await surveyCollection.insertOne(makeFakeSurvey())
+      if (randomBoolean) await surveyCollection.insertOne(mockAddSurveysParams())
       const statusCode = randomBoolean ? 200 : 204
 
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
-        .send(makeFakeSurvey())
+        .send(mockAddSurveysParams())
         .expect(statusCode)
     })
   })

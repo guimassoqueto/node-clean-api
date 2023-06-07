@@ -3,26 +3,9 @@ import app from '@src/main/config/app'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { JWT_SECRET, MONGO_URL } from '@tests/settings'
 import { Collection, ObjectId } from 'mongodb'
-import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
 import { sign } from 'jsonwebtoken'
+import { mockAddSurveysParams } from '@tests/helpers'
 
-
-function makeFakeSurvey(): AddSurveyParams {
-  return {
-    question: 'any_question',
-    answers: [
-      {
-        image: 'http://image-name.com',
-        answer: 'any-answer'
-      },
-      {
-        image: 'http://image2-name2.com',
-        answer: 'any-answer2'
-      }
-    ],
-    createdAt: new Date()
-  }
-}
 
 async function makeAccessToken(isAdmin: boolean = false): Promise<string> {
   const fakeAccount = {
@@ -73,14 +56,14 @@ describe('Surveys Route', () => {
 
     test('Should return 200 on save survey result with access token', async () => {
       const accessToken = await makeAccessToken(false)
-      const survey = (await surveyCollection.insertOne(makeFakeSurvey()))
+      const survey = (await surveyCollection.insertOne(mockAddSurveysParams()))
       const surveyId = survey.insertedId.toString()
 
       await request(app)
         .put(`/api/surveys/${surveyId}/results`)
         .set('x-access-token', accessToken)
         .send({
-          answer: 'any-answer2'
+          answer: 'any-answer-2'
         })
         .expect(200)
     })

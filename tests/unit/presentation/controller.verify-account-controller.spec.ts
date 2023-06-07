@@ -3,9 +3,10 @@ import { VerifyAccountController } from '@src/presentation/controllers/account/v
 import { AccountAlreadyVerifiedError } from '@src/errors'
 import { HttpRequest } from '@src/presentation/protocols'
 import { Validation } from '@src/validation/validation'
+import { mockValidation } from '@tests/helpers'
 
 
-function makeHttpRequest(): HttpRequest {
+function makeRequest(): HttpRequest {
   return {
     query: {
       accountToken: 'any-account-token'
@@ -14,16 +15,7 @@ function makeHttpRequest(): HttpRequest {
   }
 }
 
-function makeValidation(): Validation {
-  class ValidationStub implements Validation {
-    validate(input: any): Error | null {
-      return null
-    }
-  }
-  return new ValidationStub()
-}
-
-function makeAccountVerification(): AccountVerification {
+function mockAccountVerification(): AccountVerification {
   class AccountVerificationStub implements AccountVerification {
     async verify(accountToken: string): Promise<string | null> {
       return new Promise(resolve => resolve('any-token'))
@@ -39,8 +31,8 @@ type SutTypes = {
 }
 
 function makeSut(): SutTypes {
-  const validationStub = makeValidation()
-  const accountVerificationStub = makeAccountVerification()
+  const validationStub = mockValidation()
+  const accountVerificationStub = mockAccountVerification()
   const sut = new VerifyAccountController(validationStub, accountVerificationStub)
 
   return {
@@ -55,7 +47,7 @@ describe('VerifyAccountController', () => {
     const { sut, validationStub } = makeSut()
     const error = new Error('any error')
     jest.spyOn(validationStub, 'validate').mockReturnValue(error)
-    const request = makeHttpRequest()
+    const request = makeRequest()
     delete request.query.accountToken
     const response = await sut.handle(request)
 
@@ -69,7 +61,7 @@ describe('VerifyAccountController', () => {
     jest.spyOn(validationStub, 'validate').mockImplementationOnce(() => {
       throw error
     })
-    const response = await sut.handle(makeHttpRequest())
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)
   })
@@ -77,7 +69,7 @@ describe('VerifyAccountController', () => {
   test('Should call accountVerification.verify with correct values ', async () => {
     const { sut, accountVerificationStub } = makeSut()
     const spyVerify = jest.spyOn(accountVerificationStub, 'verify')
-    const request = makeHttpRequest()
+    const request = makeRequest()
     await sut.handle(request)
 
     expect(spyVerify).toHaveBeenCalledWith(request.query.accountToken)
@@ -88,7 +80,7 @@ describe('VerifyAccountController', () => {
     jest.spyOn(accountVerificationStub, 'verify').mockImplementationOnce(() => {
       throw new Error('any error')
     })
-    const response = await sut.handle(makeHttpRequest())
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)
   })
@@ -96,7 +88,7 @@ describe('VerifyAccountController', () => {
   test('Should return 404 if the token passed is invalid/expired', async () => {
     const { sut, accountVerificationStub } = makeSut()
     jest.spyOn(accountVerificationStub, 'verify').mockResolvedValue(null)
-    const response = await sut.handle(makeHttpRequest())
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(409)
     expect(response.body).toEqual(new AccountAlreadyVerifiedError())
@@ -104,7 +96,7 @@ describe('VerifyAccountController', () => {
 
   test('Should return 200 if everything works as expected', async () => {
     const { sut } = makeSut()
-    const response = await sut.handle(makeHttpRequest())
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(200)
   })

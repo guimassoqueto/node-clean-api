@@ -1,18 +1,8 @@
 import { PasswordValidation } from '@src/validation/field-validations' 
 import { InvalidParamError } from '@src/errors';
 import { PasswordValidator } from '@src/validation/protocols';
+import { mockPasswordValidator } from '@tests/helpers';
 
-// Factory que cria um PasswordValidator
-function makePasswordValidator(): PasswordValidator {
-  // Mock PasswordValidator
-  class PasswordValidatorStub implements PasswordValidator {
-    public isStrong(password: string): boolean {
-      return true;
-    }
-  }
-
-  return new PasswordValidatorStub();
-}
 
 type SutTypes =  {
   sut: PasswordValidation,
@@ -20,7 +10,7 @@ type SutTypes =  {
 }
 
 function makeSut(): SutTypes {
-  const passwordValidatorStub = makePasswordValidator()
+  const passwordValidatorStub = mockPasswordValidator()
   const sut = new PasswordValidation('password', passwordValidatorStub)
 
   return {
@@ -29,12 +19,7 @@ function makeSut(): SutTypes {
   }
 }
 
-// Tests
-// 1. PasswordValidator.isStrong receives the correct value as argument
-// 2. PasswordValidation throws if PasswordValidator throw
-// 3. PasswordValidation return invalid param error in case the password provided isnt strong
-
-describe('Password Validation' , () => {
+describe('PasswordValidator' , () => {
   test('PasswordValidator should receive the correct value as argument', () => {
     const { sut, passwordValidatorStub } = makeSut()
     const isStrongSpy = jest.spyOn(passwordValidatorStub, 'isStrong')

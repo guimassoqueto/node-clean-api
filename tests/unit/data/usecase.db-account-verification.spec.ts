@@ -9,8 +9,10 @@ import {
   Encrypter
 } from '@src/data/usecases/account/account-verification/db-account-verification-protocols'
 import { DbAccountVerification } from '@src/data/usecases/account/account-verification/db-account-verification'
+import { mockDecoder, mockEncrypter } from '@tests/helpers'
 
-function makeFakeAccount(id: string = 'any-id'): AccountModel {
+
+function mockAccount(id: string = 'any-id'): AccountModel {
   return {
     id: id,
     name: 'any-name',
@@ -21,28 +23,11 @@ function makeFakeAccount(id: string = 'any-id'): AccountModel {
   }
 }
 
-function makeDecoder(): Decoder {
-  class DecoderStub implements Decoder {
-    async decode(encodedValue: string): Promise<string> {
-      return new Promise(resolve => resolve('any-account-id'))
-    }
-  }
-  return new DecoderStub()
-}
-
-function makeEncrypter(): Encrypter {
-  class EncrypterStub implements Encrypter {
-    async encrypt (encryptedValue: string): Promise<string> {
-      return new Promise(resolve => resolve('any-token'))
-    }
-  }
-  return new EncrypterStub()
-}
 
 function makeLoadAccountByIdRepository(): LoadAccountByIdRepository {
   class LoadAccountByIdRepositoryStub implements LoadAccountByIdRepository {
     loadById(id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
+      return new Promise(resolve => resolve(mockAccount()))
     }
   }
   return new LoadAccountByIdRepositoryStub()
@@ -58,7 +43,7 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
 function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
   class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
     async changeId (id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(makeFakeAccount('new-id')))
+      return new Promise(resolve => resolve(mockAccount('new-id')))
     }
   }
   return new ChangeAccountIdRepositoryStub()
@@ -90,8 +75,8 @@ type SutTypes = {
 }
 
 function makeSut(): SutTypes {
-  const decoderStub = makeDecoder()
-  const encrypterStub = makeEncrypter()
+  const decoderStub = mockDecoder()
+  const encrypterStub = mockEncrypter()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
   const changeAccountIdRepositoryStub = makeChangeAccountIdRepository()

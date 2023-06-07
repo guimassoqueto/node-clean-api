@@ -11,7 +11,8 @@ export default {
     "!<rootDir>/src/main/**",
     "!<rootDir>/src/settings.ts",
     "!<rootDir>/src/logger-config.ts",
-    "!<rootDir>/tests/settings.ts"
+    "!<rootDir>/tests/settings.ts",
+    "!<rootDir>/tests/helpers/*.ts"
   ],
   coverageDirectory: "coverage",
   coverageProvider: "v8",
