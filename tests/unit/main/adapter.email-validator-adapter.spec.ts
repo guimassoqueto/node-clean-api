@@ -1,12 +1,11 @@
 import { EmailValidatorAdapter } from '@src/infra/validator';
 
-// Factory que cria um EmailValidator
 function makeSut(): EmailValidatorAdapter {
   const emailValidatorStub = new EmailValidatorAdapter()
   return emailValidatorStub;
 }
 
-describe('Email Validator Adapter' , () => {
+describe('EmailValidatorAdapter' , () => {
   test('should return false if the email passed is invalid', async () => {
     const sut = makeSut();
     const isValid = sut.isValid('invalid_email.com');

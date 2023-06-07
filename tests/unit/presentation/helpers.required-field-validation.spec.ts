@@ -2,7 +2,7 @@ import { MissingParamError } from '@src/errors'
 import { RequiredFieldValidation } from '@src/validation/field-validations'
 
 
-describe('RequiredField Validation' , () => {
+describe('RequiredFieldValidation' , () => {
   test('Should return MissingParamError if some field is missing', () => {
     const sut = new RequiredFieldValidation('email')
     const result = sut.validate({name: 'any_name'}) // nao possui o campo 'email', logo deve retornar InvalidParam

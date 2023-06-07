@@ -2,7 +2,7 @@ import {
   type SaveSurveyResultRepository,
   type SurveyResultModel,
   type SaveSurveyResult,
-  type SaveSurveyResultModel
+  type SaveSurveyResultParams
 } from './db-save-survey-result-protocols'
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
@@ -10,7 +10,7 @@ export class DbSaveSurveyResult implements SaveSurveyResult {
     private readonly saveSurveyResultRepository: SaveSurveyResultRepository
   ) {}
 
-  async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyData = await this.saveSurveyResultRepository.save(data)
     return surveyData
   }

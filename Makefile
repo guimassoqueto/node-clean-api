@@ -96,4 +96,4 @@ sts:
 ## executa teste de um arquivo especifico
 ## (test file)
 tf:
-	${PACKAGE_MANAGER_RUN} test -- tests/unit/data/usecase.db-load-survey-by-id.spec.ts
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/presentation/middleware.auth-middleware.spec.ts

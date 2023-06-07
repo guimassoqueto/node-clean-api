@@ -1,11 +1,11 @@
 import { type SESClient, type SendEmailCommandInput, SendEmailCommand } from '@aws-sdk/client-ses'
-import { type EmailService, type EmailVerificationData, type EmailVerificationResponse } from '@src/domain/usecases/email/account-verification-mail'
+import { type EmailService, type EmailVerificationParams, type EmailVerificationResponse } from '@src/domain/usecases/email/account-verification-mail'
 import { APP_URL } from '@src/settings'
 
 export class AwsSesAdapter implements EmailService {
   constructor (private readonly client: SESClient) { }
 
-  async sendAccountVerificationEmail (emailVerificationInfo: EmailVerificationData): Promise<EmailVerificationResponse> {
+  async sendAccountVerificationEmail (emailVerificationInfo: EmailVerificationParams): Promise<EmailVerificationResponse> {
     const { email, accountToken } = emailVerificationInfo
 
     const message: SendEmailCommandInput = {

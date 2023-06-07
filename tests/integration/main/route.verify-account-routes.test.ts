@@ -3,21 +3,12 @@ import app from '@src/main/config/app'
 import request from 'supertest'
 import { MONGO_URL, JWT_SECRET } from '@tests/settings';
 import { Collection } from 'mongodb';
-
 import { sign } from 'jsonwebtoken'
+import { mockAccountModel } from '@tests/helpers'
 
-function makeAccount() {
-  return {
-    name: 'any_name',
-    email: 'any_email@email.com',
-    password: 'any_password',
-    verified: false,
-    createdAt: new Date(2023, 11, 31),
-  }
-}
 
-type MakeUnverifiedAccount = [ object, string ]
-function makeUnverifiedAccount(accountId: string): MakeUnverifiedAccount {
+type MockUnverifiedAccount = [ object, string ]
+function mockUnverifiedAccount(accountId: string): MockUnverifiedAccount {
   const accountToken: string = sign(accountId, JWT_SECRET)
   const unverifiedAccount: object = {
     accountToken,
@@ -67,8 +58,8 @@ describe('Verify Account' , () => {
   })
 
   test('Should verify account if the token provided is valid', async () => {
-    const account = await accountsCollection.insertOne(makeAccount())
-    const [ uAccount , accountToken ] = makeUnverifiedAccount(account.insertedId.toString())
+    const account = await accountsCollection.insertOne(mockAccountModel())
+    const [ uAccount , accountToken ] = mockUnverifiedAccount(account.insertedId.toString())
     await unverifiedAccountsCollection.insertOne(uAccount)
     let accountAdded = await accountsCollection.findOne({ _id: account.insertedId })
     expect(accountAdded?.verified).toBe(false)

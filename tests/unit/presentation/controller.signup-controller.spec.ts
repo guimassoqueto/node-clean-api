@@ -4,77 +4,48 @@ import { badRequest } from '@src/presentation/helpers/http';
 import {
   Validation,
   EmailService,
-  EmailVerificationData,
+  EmailVerificationParams,
   EmailVerificationResponse,
   UnverifiedAccountModel,
   AccountModel,
   AddAccount,
-  AddAccountModel,
+  AddAccountParams,
   AddUnverifiedAccount,
   ServerError,
   MissingParamError,
 } from '@src/presentation/controllers/account/signup/signup-controller-protocols'
+import { RealDate, MockDate, mockUnverifiedAccount, mockAccountModel, mockValidation } from '@tests/helpers'
 
 
-function makeUnverifiedAccount(): UnverifiedAccountModel {
-  return {
-    id: 'any_id',
-    accountToken: 'hashed_account_id',
-    createdAt: new Date()
-  }
-}
-
-function makeFakeAccount(): AccountModel {
-  return {
-    id: 'valid_id',
-    name: 'valid_name',
-    email: 'valid_email@email.com',
-    password: 'valid_password',
-    verified: true,
-    createdAt: new Date()
-  }
-}
-
-// Factory que cria um AddAccount
-function makeAddAccount(): AddAccount {
-  // Mock AddAccountStub
+function mockAddAccount(): AddAccount {
   class AddAccountStub implements AddAccount {
-    public async add(account: AddAccountModel): Promise<AccountModel> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
+    public async add(account: AddAccountParams): Promise<AccountModel> {
+      return Promise.resolve(mockAccountModel())
     }
   }
 
   return new AddAccountStub();
 }
 
-function makeAddUnverifiedAccount(): AddUnverifiedAccount {
+function mockAddUnverifiedAccount(): AddUnverifiedAccount {
   class AddUnverifiedAccountStub implements AddUnverifiedAccount {
     async add(accountId: string): Promise<UnverifiedAccountModel> {
-      return new Promise(resolve => resolve(makeUnverifiedAccount()))
+      return Promise.resolve(mockUnverifiedAccount())
     }
   }
   return new AddUnverifiedAccountStub()
 }
 
-function makeEmailService(): EmailService {
+function mockEmailService(): EmailService {
   class EmailServiceStub implements EmailService {
-    async sendAccountVerificationEmail(emailVerificationData: EmailVerificationData): Promise<EmailVerificationResponse> {
-      return new Promise(resolve => resolve({ statusCode: 200 }))
+    async sendAccountVerificationEmail(emailVerificationParams: EmailVerificationParams): Promise<EmailVerificationResponse> {
+      return Promise.resolve({ statusCode: 200 })
     }
   }
 
   return new EmailServiceStub()
 }
 
-function makeValidation(): Validation {
-  class ValidationStub implements Validation {
-    validate(input: any): Error | null {
-      return null;
-    }
-  }
-
-  return new ValidationStub()
-}
 
 type SutTypes =  {
   sut: SignUpControlller,
@@ -86,10 +57,10 @@ type SutTypes =  {
 
 // Factory que cria um SignUpController
 function makeSut(): SutTypes {
-  const validationStub = makeValidation()
-  const addAccountStub = makeAddAccount()
-  const addUnverifiedAccountStub = makeAddUnverifiedAccount()
-  const emailServiceStub = makeEmailService()
+  const validationStub = mockValidation()
+  const addAccountStub = mockAddAccount()
+  const addUnverifiedAccountStub = mockAddUnverifiedAccount()
+  const emailServiceStub = mockEmailService()
 
   const sut = new SignUpControlller(
     validationStub,
@@ -107,22 +78,29 @@ function makeSut(): SutTypes {
   }
 }
 
-function makeFakeRequest(): HttpRequest {
+function makeRequest(): HttpRequest {
   return {
     body: {
-      name: 'valid_name',
-      email: 'valid_email@email.com',
-      password: 'valid_password',
-      passwordConfirmation: 'valid_password'
+      name: 'any-name',
+      email: 'any-email@email.com',
+      password: 'any-password',
+      passwordConfirmation: 'any-password'
     }
   }
 }
 
-describe('Sign Up Controlller', () => {
+describe('SignUpControlller', () => {
+  beforeAll(() => {
+    (global as any).Date = MockDate 
+  })
+  afterAll(() => {
+    (global as any).Date = RealDate
+  })
+
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut();
     const addSpy = jest.spyOn(addAccountStub, 'add')
-    const httpRequest = makeFakeRequest()
+    const httpRequest = makeRequest()
     await sut.handle(httpRequest)
 
     expect(addSpy).toHaveBeenCalledWith({
@@ -134,10 +112,8 @@ describe('Sign Up Controlller', () => {
 
   test('Should return 500 when AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockImplementationOnce((account: AddAccountModel) => {
-      return new Promise((_, reject) => reject(new ServerError()))
-    })
-    const httpRequest = makeFakeRequest()
+    jest.spyOn(addAccountStub, 'add').mockRejectedValue(new ServerError())
+    const httpRequest = makeRequest()
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(500);
@@ -146,7 +122,7 @@ describe('Sign Up Controlller', () => {
 
   test('Should return 200 when the request body is valid', async () => {
     const { sut } = makeSut();
-    const httpRequest = makeFakeRequest()
+    const httpRequest = makeRequest()
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(200)
@@ -155,7 +131,7 @@ describe('Sign Up Controlller', () => {
   test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpRequest = makeFakeRequest()
+    const httpRequest = makeRequest()
     await sut.handle(httpRequest);
 
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body);
@@ -165,7 +141,7 @@ describe('Sign Up Controlller', () => {
     const { sut, validationStub } = makeSut()
     const error = new MissingParamError('any_field')
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(error)
-    const httpRequest = makeFakeRequest()
+    const httpRequest = makeRequest()
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse).toEqual(badRequest(error))
@@ -174,18 +150,16 @@ describe('Sign Up Controlller', () => {
   test('Should call addUnverifiedAccount with correct values', async () => {
     const { sut, addUnverifiedAccountStub } = makeSut()
     const addSpy = jest.spyOn(addUnverifiedAccountStub, 'add')
-    await sut.handle(makeFakeRequest())
+    await sut.handle(makeRequest())
 
-    expect(addSpy).toHaveBeenCalledWith(makeFakeAccount().id)
+    expect(addSpy).toHaveBeenCalledWith(mockAccountModel().id)
   })
 
   test('Should return 500 if addUnverifiedAccountStub throws', async () => {
     const { sut, addUnverifiedAccountStub } = makeSut()
     const error = new Error('any_error')
-    jest.spyOn(addUnverifiedAccountStub, 'add').mockImplementationOnce((accountId: string) => {
-      return new Promise((_, reject) => reject(new Error()))
-    })
-    const response = await sut.handle(makeFakeRequest())
+    jest.spyOn(addUnverifiedAccountStub, 'add').mockRejectedValue(new Error())
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)
   })
@@ -193,20 +167,18 @@ describe('Sign Up Controlller', () => {
   test('Should call emailService.sendAccountVerificationEmail with correct values', async () => {
     const { sut, emailServiceStub } = makeSut()
     const sendAccountVerificationEmailSpy = jest.spyOn(emailServiceStub, 'sendAccountVerificationEmail')
-    const fakeRequest = makeFakeRequest()
+    const fakeRequest = makeRequest()
     await sut.handle(fakeRequest)
     const { email } = fakeRequest.body
 
-    expect(sendAccountVerificationEmailSpy).toHaveBeenCalledWith({ email, accountToken: makeUnverifiedAccount().accountToken })
+    expect(sendAccountVerificationEmailSpy).toHaveBeenCalledWith({ email, accountToken: mockUnverifiedAccount().accountToken })
   })
 
   test('Should return 500 if sendAccountVerificationEmail throws', async () => {
     const { sut, emailServiceStub } = makeSut()
     const error = new Error('any_error')
-    jest.spyOn(emailServiceStub, 'sendAccountVerificationEmail').mockImplementationOnce(() => {
-      return new Promise((_, reject) => reject(new Error('sendAccountVerificationEmail error')))
-    })
-    const response = await sut.handle(makeFakeRequest())
+    jest.spyOn(emailServiceStub, 'sendAccountVerificationEmail').mockRejectedValue(new Error('sendAccountVerificationEmail error'))
+    const response = await sut.handle(makeRequest())
 
     expect(response.statusCode).toBe(500)
   })
