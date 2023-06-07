@@ -1,6 +1,6 @@
 import { ObjectId, type WithId } from 'mongodb'
 import { type AccountModel } from '@src/domain/models/account'
-import { type AddAccountModel } from '@src/domain/usecases/account/add-account'
+import { type AddAccountParams } from '@src/domain/usecases/account/add-account'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { EmailAlreadyInUseError } from '@src/errors'
 import {
@@ -21,7 +21,7 @@ UpdateAccessTokenRepository,
 LoadAccountByIdRepository,
 UpdateAccountVerifiedRepository,
 ChangeAccountIdRepository {
-  async add (accountData: AddAccountModel): Promise<AccountModel> {
+  async add (accountData: AddAccountParams): Promise<AccountModel> {
     const mongo = MongoHelper.getInstance()
     const accountCollection = await mongo.getCollection('accounts')
 

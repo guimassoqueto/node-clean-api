@@ -9,7 +9,7 @@
             <mxRectangle x="-640" y="-544.5" width="340" height="56" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kCM1FT8XMwVdJC8RZSaU-6" value="add (account: AddAccountModel): Promise&amp;lt;AccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-5" vertex="1">
+        <mxCell id="kCM1FT8XMwVdJC8RZSaU-6" value="add (account: AddAccountParams): Promise&amp;lt;AccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-5" vertex="1">
           <mxGeometry y="30" width="340" height="26" as="geometry" />
         </mxCell>
         <mxCell id="kCM1FT8XMwVdJC8RZSaU-11" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;Authentication" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
@@ -17,7 +17,7 @@
             <mxRectangle x="730" y="-410" width="370" height="56" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kCM1FT8XMwVdJC8RZSaU-12" value="auth (authentication: AuthenticationModel): Promise&amp;lt;string | null&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-11" vertex="1">
+        <mxCell id="kCM1FT8XMwVdJC8RZSaU-12" value="auth (authentication: AuthenticationParams): Promise&amp;lt;string | null&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-11" vertex="1">
           <mxGeometry y="30" width="370" height="26" as="geometry" />
         </mxCell>
         <mxCell id="kCM1FT8XMwVdJC8RZSaU-13" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;Hasher" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
@@ -49,7 +49,7 @@
             <mxRectangle x="140" y="-490" width="360" height="66" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kCM1FT8XMwVdJC8RZSaU-21" value="add (accountData: AddAccountModel): Promise&amp;lt;AccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-20" vertex="1">
+        <mxCell id="kCM1FT8XMwVdJC8RZSaU-21" value="add (accountData: AddAccountParams): Promise&amp;lt;AccountModel&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="kCM1FT8XMwVdJC8RZSaU-20" vertex="1">
           <mxGeometry y="40" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="kCM1FT8XMwVdJC8RZSaU-23" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;LoadAccountByEmailRepository" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=40;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" collapsed="1">
@@ -576,7 +576,7 @@
             <mxRectangle x="304" y="-240" width="620" height="66" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="m0BBNBDtI2D7hg9GQkUa-22" value="sendAccountVerificationEmail (emailVerificationInfo: EmailVerificationData): Promise&amp;lt;EmailVerificationResponse&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="m0BBNBDtI2D7hg9GQkUa-20" vertex="1">
+        <mxCell id="m0BBNBDtI2D7hg9GQkUa-22" value="sendAccountVerificationEmail (emailVerificationInfo: EmailVerificationParams): Promise&amp;lt;EmailVerificationResponse&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="m0BBNBDtI2D7hg9GQkUa-20" vertex="1">
           <mxGeometry y="40" width="620" height="26" as="geometry" />
         </mxCell>
         <mxCell id="m0BBNBDtI2D7hg9GQkUa-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m0BBNBDtI2D7hg9GQkUa-24" target="m0BBNBDtI2D7hg9GQkUa-20" edge="1">

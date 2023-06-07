@@ -1,7 +1,7 @@
 import { AddSurveyController } from '@src/presentation/controllers/survey/add-survey/add-survey-controller'
 import { noContent, serverError } from '@src/presentation/helpers/http/http-helper'
 import { HttpRequest } from '@src/presentation/protocols'
-import { AddSurvey, AddSurveyModel, Validation } from '@src/presentation/controllers/survey/add-survey/add-survey-protocols'
+import { AddSurvey, AddSurveyParams, Validation } from '@src/presentation/controllers/survey/add-survey/add-survey-protocols'
 
 
 // mock Date object
@@ -36,7 +36,7 @@ function makeValidation(): Validation {
 
 function makeAddSurvey(): AddSurvey {
   class AddSurveyStub implements AddSurvey {
-    async add(data: AddSurveyModel): Promise<void> {
+    async add(data: AddSurveyParams): Promise<void> {
       return new Promise(resolve => resolve())
     }
   }

@@ -5,11 +5,11 @@ import {
   Encrypter, 
   UpdateAccessTokenRepository,
   Authentication,
-  AuthenticationModel
+  AuthenticationParams
 } from '@src/data/usecases/account/authentication/db-authentication-protocols'
 import { DbAuthentication } from '@src/data/usecases/account/authentication/db-authentication'
 
-function makeFakeAuthentication(): AuthenticationModel {
+function makeFakeAuthentication(): AuthenticationParams {
   return {
     email: 'any_email',
     password: 'any_password'

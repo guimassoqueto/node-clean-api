@@ -4,12 +4,12 @@ import { badRequest } from '@src/presentation/helpers/http';
 import {
   Validation,
   EmailService,
-  EmailVerificationData,
+  EmailVerificationParams,
   EmailVerificationResponse,
   UnverifiedAccountModel,
   AccountModel,
   AddAccount,
-  AddAccountModel,
+  AddAccountParams,
   AddUnverifiedAccount,
   ServerError,
   MissingParamError,
@@ -39,7 +39,7 @@ function makeFakeAccount(): AccountModel {
 function makeAddAccount(): AddAccount {
   // Mock AddAccountStub
   class AddAccountStub implements AddAccount {
-    public async add(account: AddAccountModel): Promise<AccountModel> {
+    public async add(account: AddAccountParams): Promise<AccountModel> {
       return new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -58,7 +58,7 @@ function makeAddUnverifiedAccount(): AddUnverifiedAccount {
 
 function makeEmailService(): EmailService {
   class EmailServiceStub implements EmailService {
-    async sendAccountVerificationEmail(emailVerificationData: EmailVerificationData): Promise<EmailVerificationResponse> {
+    async sendAccountVerificationEmail(emailVerificationParams: EmailVerificationParams): Promise<EmailVerificationResponse> {
       return new Promise(resolve => resolve({ statusCode: 200 }))
     }
   }
@@ -134,7 +134,7 @@ describe('Sign Up Controlller', () => {
 
   test('Should return 500 when AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockImplementationOnce((account: AddAccountModel) => {
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce((account: AddAccountParams) => {
       return new Promise((_, reject) => reject(new ServerError()))
     })
     const httpRequest = makeFakeRequest()

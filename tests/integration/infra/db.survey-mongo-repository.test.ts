@@ -1,5 +1,5 @@
 import { SurveyMongoRepository } from '@src/infra/db/mongodb/survey/survey-mongo-repository'
-import { AddSurveyModel } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
+import { AddSurveyParams } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { MONGO_URL } from '@tests/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { Collection } from 'mongodb'
@@ -11,7 +11,7 @@ class MockDate extends RealDate {
   }
 }
 
-function makeSurveyData(questionNumber: number): AddSurveyModel {
+function makeSurveyData(questionNumber: number): AddSurveyParams {
   return {
     createdAt: new Date(),
     question: `any-question${questionNumber}`,

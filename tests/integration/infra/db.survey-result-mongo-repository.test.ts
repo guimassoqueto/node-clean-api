@@ -2,9 +2,9 @@ import { SurveyResultMongoRepository } from '@src/infra/db/mongodb/survey-result
 import { MONGO_URL } from '@tests/settings'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { Collection } from 'mongodb'
-import { AddSurveyModel } from '@src/domain/usecases/survey/add-survey';
+import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey';
 import { SurveyModel } from '@src/domain/models/survey';
-import { AddAccountModel } from '@src/domain/usecases/account/add-account';
+import { AddAccountParams } from '@src/domain/usecases/account/add-account';
 import { AccountModel } from '@src/domain/models/account';
 
 const RealDate = Date;
@@ -19,7 +19,7 @@ let surveyResultCollection: Collection
 let accountCollection: Collection
 let mongo: MongoHelper 
 
-function makeSurvey(): AddSurveyModel {
+function makeSurvey(): AddSurveyParams {
   return {
     createdAt: new Date(),
     question: `any-question`,
@@ -35,7 +35,7 @@ function makeSurvey(): AddSurveyModel {
   }
 }
 
-function makeAccount(): AddAccountModel {
+function makeAccount(): AddAccountParams {
   return {
     name: 'any-name',
     email: 'any-emal',

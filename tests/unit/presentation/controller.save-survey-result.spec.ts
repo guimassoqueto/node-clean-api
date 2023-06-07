@@ -3,7 +3,7 @@ import { HttpRequest } from '@src/presentation/protocols'
 import { forbidden, serverError, ok } from '@src/presentation/helpers/http'
 import { 
   LoadSurveyById, SurveyModel, InvalidParamError,
-  SaveSurveyResult, SaveSurveyResultModel, SurveyResultModel
+  SaveSurveyResult, SaveSurveyResultParams, SurveyResultModel
 } from '@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-protocols'
 
 
@@ -16,7 +16,7 @@ class MockDate extends RealDate {
 
 function makeSaveSurveyResult(): SaveSurveyResult {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return new Promise(resolve => resolve(makeFakeSurveyResult()))
     }
   }

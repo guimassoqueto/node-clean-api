@@ -2,12 +2,11 @@ export type EmailVerificationResponse = {
   statusCode?: number
 }
 
-export type EmailVerificationData = {
+export type EmailVerificationParams = {
   email: string
   accountToken: string
 }
 
-// TODO: mover para presentation? Ou algum outro local?
 export interface EmailService {
-  sendAccountVerificationEmail: (emailVerificationInfo: EmailVerificationData) => Promise<EmailVerificationResponse>
+  sendAccountVerificationEmail: (emailVerificationParams: EmailVerificationParams) => Promise<EmailVerificationResponse>
 }

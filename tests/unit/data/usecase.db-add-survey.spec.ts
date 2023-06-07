@@ -1,7 +1,7 @@
-import { AddSurveyRepository, AddSurveyModel } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
+import { AddSurveyRepository, AddSurveyParams } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { DbAddSurvey } from '@src/data/usecases/survey/add-survey/db-add-survey'
 
-function makeFakeSurvey(): AddSurveyModel {
+function makeFakeSurvey(): AddSurveyParams {
   return {
     createdAt: new Date(2023, 11, 31),
     question: 'any-question',
@@ -13,7 +13,7 @@ function makeFakeSurvey(): AddSurveyModel {
 
 function makeAddSurveyRepository(): AddSurveyRepository {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
-    add (surveyData: AddSurveyModel): Promise<void> {
+    add (surveyData: AddSurveyParams): Promise<void> {
       return new Promise(resolve => resolve())
     }
   }

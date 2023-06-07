@@ -1,6 +1,6 @@
 import { DbSaveSurveyResult } from '@src/data/usecases/survey-result/save-survey-result/db-save-survey-result'
 import { 
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   SurveyResultModel,
   SaveSurveyResultRepository
  } from '@src/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
@@ -13,7 +13,7 @@ class MockDate extends RealDate {
   }
 }
 
-function makeFakeSurveyResultData(): SaveSurveyResultModel {
+function makeFakeSurveyResultData(): SaveSurveyResultParams {
   return {
     surveyId: 'any-survey-id',
     accountId: 'any-account-id',
@@ -28,7 +28,7 @@ function makeFakeSurveyResult(): SurveyResultModel {
 
 function makeSurveyResultRepository(): SaveSurveyResultRepository {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return new Promise(resolve => resolve(makeFakeSurveyResult()))
     }
   }

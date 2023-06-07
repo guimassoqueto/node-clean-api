@@ -3,11 +3,11 @@ import app from '@src/main/config/app'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { JWT_SECRET, MONGO_URL } from '@tests/settings'
 import { Collection, ObjectId } from 'mongodb'
-import { AddSurveyModel } from '@src/domain/usecases/survey/add-survey'
+import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
 import { sign } from 'jsonwebtoken'
 
 
-function makeFakeSurvey(): AddSurveyModel {
+function makeFakeSurvey(): AddSurveyParams {
   return {
     question: 'any_question',
     answers: [
