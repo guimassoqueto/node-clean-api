@@ -13,7 +13,7 @@ export class HealthCheckController implements Controller {
           status: 'i\'m live'
         }
       }
-      return await new Promise(resolve => { resolve(httpResponse) })
+      return await Promise.resolve(httpResponse)
     } catch (error) {
       logger.error(error)
       return serverError(error)
