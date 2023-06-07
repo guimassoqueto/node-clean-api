@@ -1,6 +1,17 @@
 import { DbLoadSurveys } from '@src/data/usecases/survey/load-surveys/db-load-surveys'
 import { LoadSurveysRepository } from '@src/data/protocols/db/survey'
-import { mockSurveys, mockLoadSurveyRepository } from '@tests/helpers'
+import { mockSurveyModels } from '@tests/helpers'
+import { SurveyModel } from '@src/domain/models/survey'
+
+
+function mockLoadSurveyRepository(): LoadSurveysRepository {
+  class LoadSurveysRepositoryStub implements LoadSurveysRepository {
+    async loadAll (): Promise<SurveyModel[]> {
+      return new Promise(resolve => resolve(mockSurveyModels()))
+    }
+  }
+  return new LoadSurveysRepositoryStub()
+}
 
 
 type SutTypes = {
@@ -39,6 +50,6 @@ describe('DbLoadSurveys' , () => {
     const { sut } = makeSut()
     const surveys = await sut.load()
 
-    expect(surveys).toEqual(mockSurveys())
+    expect(surveys).toEqual(mockSurveyModels())
   })
 })

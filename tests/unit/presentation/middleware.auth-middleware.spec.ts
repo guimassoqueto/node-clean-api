@@ -2,7 +2,7 @@ import { HttpRequest } from '@src/presentation/protocols'
 import { AuthMiddleware } from '@src/presentation/middlewares/auth-middleware'
 import { AccessDeniedError, AccountModel, LoadAccountByToken } from '@src/presentation/middlewares/auth-middleware-protocols'
 import { forbidden, ok, serverError } from '@src/presentation/helpers/http/http-helper'
-import { mockAccount } from '@tests/helpers'
+import { mockAccountModel } from '@tests/helpers'
 
 
 function makeRequest(): HttpRequest {
@@ -17,7 +17,7 @@ function makeRequest(): HttpRequest {
 function makeLoadAccountByToken(): LoadAccountByToken {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string | undefined): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccount()))
+      return new Promise(resolve => resolve(mockAccountModel()))
     }
   }
 

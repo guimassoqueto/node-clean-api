@@ -1,13 +1,13 @@
 import { DbLoadAccountByToken } from '@src/data/usecases/account/load-account-by-token/db-load-account-by-token'
 import { AccountModel, Decrypter } from '@src/data/usecases/account/load-account-by-token/db-load-account-by-token-protocols'
 import { LoadAccountByTokenRepository } from '@src/data/protocols/db/account/load-account-by-token-repository'
-import { mockAccount, mockDecrypter, RealDate, MockDate } from '@tests/helpers'
+import { mockAccountModel, mockDecrypter, RealDate, MockDate } from '@tests/helpers'
 
 
 function mockLoadAccountByToken(): LoadAccountByTokenRepository {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken(accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccount(true)))
+      return new Promise(resolve => resolve(mockAccountModel(true)))
     }
   }
   return new LoadAccountByTokenRepositoryStub()
@@ -84,7 +84,7 @@ describe('DbLoadAccountByToken' , () => {
     const { sut } = makeSut()
     const account = await sut.load('any-token', 'any-role')
 
-    expect(account).toStrictEqual(mockAccount(true))
+    expect(account).toStrictEqual(mockAccountModel(true))
   })
 
 })

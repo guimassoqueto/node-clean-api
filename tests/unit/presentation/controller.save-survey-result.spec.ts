@@ -5,7 +5,7 @@ import {
   LoadSurveyById, SurveyModel, InvalidParamError,
   SaveSurveyResult, SaveSurveyResultParams, SurveyResultModel
 } from '@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-protocols'
-import { RealDate, MockDate, mockSurvey } from '@tests/helpers'
+import { RealDate, MockDate, mockSurveyModel } from '@tests/helpers'
 
 
 function mockSaveSurveyResult(): SaveSurveyResult {
@@ -20,7 +20,7 @@ function mockSaveSurveyResult(): SaveSurveyResult {
 function mockLoadSurveyById(): LoadSurveyById {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string) : Promise<SurveyModel | null> {
-      return new Promise (resolve => resolve(mockSurvey()))
+      return new Promise (resolve => resolve(mockSurveyModel()))
     }
   }
   return new LoadSurveyByIdStub()
@@ -45,7 +45,7 @@ function makeSut(): SutTypes {
 }
 
 function makeRequest(): HttpRequest {
-  const answers = mockSurvey().answers
+  const answers = mockSurveyModel().answers
   const answer = answers[Math.floor(Math.random() * answers.length)].answer;
   return {
     params: {

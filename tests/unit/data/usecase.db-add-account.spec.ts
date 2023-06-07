@@ -2,13 +2,25 @@ import { DbAddAcccount } from '@src/data/usecases/account/add-account/db-add-acc
 import { 
   Hasher, 
   AddAccountParams, 
-  AddAccountRepository
+  AddAccountRepository,
+  AccountModel
 } from '@src/data/usecases/account/add-account/db-add-account-protocols'
+
 import { 
   mockAddAccountParams, 
-  mockHasher, 
-  mockAddAccountRepository
+  mockHasher,
+  mockAccountModel
 } from '@tests/helpers'
+
+
+function mockAddAccountRepository(): AddAccountRepository {
+  class AddAccountRepositoryStub implements AddAccountRepository {
+    async add(accountData: AddAccountParams): Promise<AccountModel> {
+      return new Promise(resolve => resolve(mockAccountModel()))
+    }
+  }
+  return new AddAccountRepositoryStub()
+}
 
 
 type SutTypes =  {

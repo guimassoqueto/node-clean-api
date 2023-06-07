@@ -1,8 +1,27 @@
+import { Collection } from 'mongodb'
 import { MONGO_URL } from '@tests/settings'
+import { AccountModel } from '@src/domain/models/account'
 import { MongoHelper } from '@src/infra/db/mongodb/helpers/mongo-helper'
 import { AccountMongoRepository } from '@src/infra/db/mongodb/account/account-mongo-repository'
-import { Collection } from 'mongodb'
-import { mockAccountWithToken } from '@tests/helpers'
+
+
+interface AccountModelWithToken extends Omit<AccountModel, 'id'> {
+  accessToken: string; 
+}
+
+
+export function mockAccountWithToken(verified: boolean = false): AccountModelWithToken {
+  return {
+    name: 'any-name',
+    email: 'any-email@email.com',
+    password: 'any-password',
+    verified,
+    createdAt: new Date(2030, 11, 31),
+    accessToken: 'any-token',
+  }
+}
+
+
 
 function makeSut(): AccountMongoRepository {
   return new AccountMongoRepository()

@@ -12,7 +12,7 @@ import { DbAccountVerification } from '@src/data/usecases/account/account-verifi
 import { mockDecoder, mockEncrypter } from '@tests/helpers'
 
 
-function mockAccount(id: string = 'any-id'): AccountModel {
+function mockAccountModel(id: string = 'any-id'): AccountModel {
   return {
     id: id,
     name: 'any-name',
@@ -27,7 +27,7 @@ function mockAccount(id: string = 'any-id'): AccountModel {
 function makeLoadAccountByIdRepository(): LoadAccountByIdRepository {
   class LoadAccountByIdRepositoryStub implements LoadAccountByIdRepository {
     loadById(id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccount()))
+      return new Promise(resolve => resolve(mockAccountModel()))
     }
   }
   return new LoadAccountByIdRepositoryStub()
@@ -43,7 +43,7 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
 function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
   class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
     async changeId (id: string): Promise<AccountModel | null> {
-      return new Promise(resolve => resolve(mockAccount('new-id')))
+      return new Promise(resolve => resolve(mockAccountModel('new-id')))
     }
   }
   return new ChangeAccountIdRepositoryStub()

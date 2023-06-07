@@ -1,8 +1,17 @@
 import { LoadSurveysController } from '@src/presentation/controllers/survey/load-surveys/load-surveys-controller'
-import { LoadSurveys } from '@src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
+import { LoadSurveys, SurveyModel } from '@src/presentation/controllers/survey/load-surveys/load-surveys-protocols'
 import { noContent, serverError } from '@src/presentation/helpers/http/http-helper'
-import { mockLoadSurveys, mockSurveys } from '@tests/helpers'
+import { mockSurveyModels } from '@tests/helpers'
 
+
+function mockLoadSurveys(): LoadSurveys {
+  class LoadSurveysStub implements LoadSurveys {
+    async load(): Promise<SurveyModel[]> {
+      return new Promise(resolve => resolve(mockSurveyModels()))
+    }
+  }
+  return new LoadSurveysStub()
+}
 
 type SutTypes = {
   sut: LoadSurveysController,
@@ -32,7 +41,7 @@ describe('LoadSurveysController' , () => {
     const response = await sut.handle({})
     
     expect(response.statusCode).toBe(200)
-    expect(response.body).toStrictEqual(mockSurveys())
+    expect(response.body).toStrictEqual(mockSurveyModels())
   })
 
   test('Should throw if LoadSurveys throws', async () => {

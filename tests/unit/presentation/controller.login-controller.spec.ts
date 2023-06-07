@@ -3,8 +3,25 @@ import { Authentication, Validation, AuthenticationParams } from '@src/presentat
 import { badRequest, ok, serverError, unauthorized } from '@src/presentation/helpers/http/http-helper'
 import { HttpRequest } from '@src/presentation/protocols';
 import { MissingParamError  } from '@src/errors'
-import { mockValidation, mockAuthentication, mockAuthenticationParams } from '@tests/helpers'
+import { mockValidation } from '@tests/helpers'
 
+
+function mockAuthentication(accessToken: string = 'any-token'): Authentication {
+  class AuthenticationStub implements Authentication {
+    async auth(authentication: AuthenticationParams): Promise<string | null> {
+      return new Promise(resolve => resolve(accessToken))
+    }
+  }
+  return new AuthenticationStub()
+}
+
+
+function mockAuthenticationParams(): AuthenticationParams {
+  return {
+    email: 'any-email',
+    password: 'any-password'
+  }
+}
 
 const accessToken = 'any-access-token'
 

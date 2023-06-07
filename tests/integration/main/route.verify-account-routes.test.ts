@@ -4,7 +4,7 @@ import request from 'supertest'
 import { MONGO_URL, JWT_SECRET } from '@tests/settings';
 import { Collection } from 'mongodb';
 import { sign } from 'jsonwebtoken'
-import { mockAccount } from '@tests/helpers'
+import { mockAccountModel } from '@tests/helpers'
 
 
 type MockUnverifiedAccount = [ object, string ]
@@ -58,7 +58,7 @@ describe('Verify Account' , () => {
   })
 
   test('Should verify account if the token provided is valid', async () => {
-    const account = await accountsCollection.insertOne(mockAccount())
+    const account = await accountsCollection.insertOne(mockAccountModel())
     const [ uAccount , accountToken ] = mockUnverifiedAccount(account.insertedId.toString())
     await unverifiedAccountsCollection.insertOne(uAccount)
     let accountAdded = await accountsCollection.findOne({ _id: account.insertedId })

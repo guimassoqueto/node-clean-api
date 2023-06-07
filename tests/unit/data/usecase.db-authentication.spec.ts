@@ -8,13 +8,21 @@ import {
   AuthenticationParams
 } from '@src/data/usecases/account/authentication/db-authentication-protocols'
 import { DbAuthentication } from '@src/data/usecases/account/authentication/db-authentication'
-import { mockAuthenticationParams, mockAccount } from '@tests/helpers'
+import { mockAccountModel } from '@tests/helpers'
+
+
+function mockAuthenticationParams(): AuthenticationParams {
+  return {
+    email: 'any-email',
+    password: 'any-password'
+  }
+}
 
 
 function makeLoadAccountByEmailRepository(): LoadAccountByEmailRepository {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (): Promise<AccountModel> {
-      const account = mockAccount(true)
+      const account = mockAccountModel(true)
       return new Promise(resolve => resolve(account))
     }
   }
@@ -113,7 +121,7 @@ describe('DbAuthentication UseCase' , () => {
     const AuthRequest = mockAuthenticationParams()
     await sut.auth(AuthRequest)
 
-    expect(compareSpy).toHaveBeenCalledWith(AuthRequest.password, mockAccount(true).password)
+    expect(compareSpy).toHaveBeenCalledWith(AuthRequest.password, mockAccountModel(true).password)
   })
 
   test('Should throw if HashComparer throws', async () => {
@@ -139,7 +147,7 @@ describe('DbAuthentication UseCase' , () => {
     const AuthRequest = mockAuthenticationParams()
     await sut.auth(AuthRequest)
 
-    expect(generateSpy).toHaveBeenCalledWith(mockAccount(true).id)
+    expect(generateSpy).toHaveBeenCalledWith(mockAccountModel(true).id)
   })
 
   test('Should throw if Encrypter throws', async () => {
@@ -164,7 +172,7 @@ describe('DbAuthentication UseCase' , () => {
     const AuthRequest = mockAuthenticationParams()
     await sut.auth(AuthRequest)
 
-    expect(updateSpy).toHaveBeenCalledWith(mockAccount(true).id, 'any_token')
+    expect(updateSpy).toHaveBeenCalledWith(mockAccountModel(true).id, 'any_token')
   })
 
   test('Should throw if UpdateAccessTokenRepository throws', async () => {

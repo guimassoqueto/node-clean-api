@@ -1,8 +1,18 @@
 import { AddSurveyController } from '@src/presentation/controllers/survey/add-survey/add-survey-controller'
 import { noContent, serverError } from '@src/presentation/helpers/http/http-helper'
 import { HttpRequest } from '@src/presentation/protocols'
-import { AddSurvey, Validation } from '@src/presentation/controllers/survey/add-survey/add-survey-protocols'
-import { RealDate, MockDate, mockAddSurvey, mockValidation, mockAddSurveysParams } from'@tests/helpers'
+import { AddSurvey, Validation, AddSurveyParams } from '@src/presentation/controllers/survey/add-survey/add-survey-protocols'
+import { RealDate, MockDate, mockValidation, mockAddSurveysParams } from'@tests/helpers'
+
+
+function mockAddSurvey(): AddSurvey {
+  class AddSurveyStub implements AddSurvey {
+    async add(data: AddSurveyParams): Promise<void> {
+      return new Promise(resolve => resolve())
+    }
+  }
+  return new AddSurveyStub()
+}
 
 
 function mockRequest(): HttpRequest {

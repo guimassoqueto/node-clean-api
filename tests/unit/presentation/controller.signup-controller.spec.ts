@@ -14,13 +14,13 @@ import {
   ServerError,
   MissingParamError,
 } from '@src/presentation/controllers/account/signup/signup-controller-protocols'
-import { RealDate, MockDate, mockUnverifiedAccount, mockAccount, mockValidation } from '@tests/helpers'
+import { RealDate, MockDate, mockUnverifiedAccount, mockAccountModel, mockValidation } from '@tests/helpers'
 
 
 function mockAddAccount(): AddAccount {
   class AddAccountStub implements AddAccount {
     public async add(account: AddAccountParams): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccount()))
+      return new Promise(resolve => resolve(mockAccountModel()))
     }
   }
 
@@ -154,7 +154,7 @@ describe('SignUpControlller', () => {
     const addSpy = jest.spyOn(addUnverifiedAccountStub, 'add')
     await sut.handle(makeRequest())
 
-    expect(addSpy).toHaveBeenCalledWith(mockAccount().id)
+    expect(addSpy).toHaveBeenCalledWith(mockAccountModel().id)
   })
 
   test('Should return 500 if addUnverifiedAccountStub throws', async () => {

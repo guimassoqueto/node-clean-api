@@ -1,6 +1,16 @@
 import { AddSurveyRepository, AddSurveyParams } from '@src/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { DbAddSurvey } from '@src/data/usecases/survey/add-survey/db-add-survey'
-import { mockAddSurveysParams, mockAddSurveyRepository } from '@tests/helpers'
+import { mockAddSurveysParams } from '@tests/helpers'
+
+
+function mockAddSurveyRepository(): AddSurveyRepository {
+  class AddSurveyRepositoryStub implements AddSurveyRepository {
+    add (surveyData: AddSurveyParams): Promise<void> {
+      return new Promise(resolve => resolve())
+    }
+  }
+  return new AddSurveyRepositoryStub()
+}
 
 
 type SutTypes = {
