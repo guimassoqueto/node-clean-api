@@ -1,34 +1,31 @@
-export const loginPath = {
+export const signupPath = {
   post: {
     tags: ['Account'],
-    summary: 'API to authenticate the user',
-    description: 'Resource represents a login authentication for an already verified user',
+    summary: 'API to register a new user',
+    description: 'Resource responsible to register a new user.',
     requestBody: {
       required: true,
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/login'
+            $ref: '#/schemas/signup'
           }
         }
       }
     },
     responses: {
       200: {
-        description: 'Successful login',
+        description: 'Successful signup',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/loginResponse'
+              $ref: '#/schemas/signupResponse'
             }
           }
         }
       },
       400: {
         $ref: '#/components/badRequest'
-      },
-      401: {
-        $ref: '#/components/unauthorized'
       },
       500: {
         $ref: '#/components/serverError'

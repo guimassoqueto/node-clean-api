@@ -1,7 +1,9 @@
-import { loginPath, surveysPath } from './paths'
+import { loginPath, surveysPath, signupPath } from './paths'
 import {
-  accountSchema,
   loginSchema,
+  loginResponseSchema,
+  signupSchema,
+  signupResponseSchema,
   errorSchema,
   surveySchema,
   surveyAnswerSchema,
@@ -34,12 +36,15 @@ export default {
     { name: 'Account' }, { name: 'Survey' }
   ],
   paths: {
+    '/signup': signupPath,
     '/login': loginPath,
     '/surveys': surveysPath
   },
   schemas: {
-    account: accountSchema,
+    loginResponse: loginResponseSchema,
     login: loginSchema,
+    signup: signupSchema,
+    signupResponse: signupResponseSchema,
     error: errorSchema,
     survey: surveySchema,
     surveys: surveysSchema,
