@@ -11,7 +11,8 @@ describe('NoCache Middleware' , () => {
 
     await request(app)
       .get('/test-cache')
-      .expect('Cache-Control', 'no-cache, no-store, must-revalidate')
+      .expect('Cache-Control', 'no-cache, no-store, must-revalidate, proxy-revalidate')
       .expect('Expires', '0')
+      .expect('surrogate-control', 'no-store')
   })
 })
