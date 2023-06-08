@@ -1,5 +1,6 @@
 import { loginPath } from './paths'
-import { accountSchema, loginSchema } from './schemas'
+import { accountSchema, loginSchema, errorSchema } from './schemas'
+import { badRequest, unauthorized, serverError } from './components'
 
 export default {
   openapi: '3.0.0',
@@ -7,6 +8,10 @@ export default {
     title: 'node-clean-api',
     description: 'API Node',
     version: '1.0.0'
+  },
+  license: {
+    name: 'ISC',
+    url: 'https://opensource.org/license/isc-license-txt/'
   },
   servers: [
     { url: '/api' }
@@ -19,6 +24,12 @@ export default {
   },
   schemas: {
     account: accountSchema,
-    login: loginSchema
+    login: loginSchema,
+    error: errorSchema
+  },
+  component: {
+    badRequest,
+    unauthorized,
+    serverError
   }
 }
