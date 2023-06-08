@@ -1,6 +1,15 @@
-export * from './errors/bad-request'
-export * from './errors/unauthorized'
-export * from './errors/server-error'
-export * from './errors/not-found'
-export * from './errors/forbidden'
-export * from './errors/no-content'
+import { badRequest } from './errors/bad-request'
+import { unauthorized } from './errors/unauthorized'
+import { serverError } from './errors/server-error'
+import { notFound } from './errors/not-found'
+import { forbidden } from './errors/forbidden'
+import { noContent } from './errors/no-content'
+
+export const components = {
+  badRequest,
+  unauthorized,
+  serverError,
+  notFound,
+  forbidden,
+  noContent
+}
