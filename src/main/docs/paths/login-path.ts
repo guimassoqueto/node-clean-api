@@ -25,13 +25,13 @@ export const loginPath = {
         }
       },
       400: {
-        $ref: '#/component/badRequest'
+        $ref: '#/components/badRequest'
       },
       401: {
-        $ref: '#/component/unauthorized'
+        $ref: '#/components/unauthorized'
       },
       500: {
-        $ref: '#/component/serverError'
+        $ref: '#/components/serverError'
       }
     }
   }

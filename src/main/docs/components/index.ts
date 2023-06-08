@@ -1,3 +1,5 @@
 export * from './badRequest'
 export * from './unauthorized'
 export * from './serverError'
+export * from './notFound'
+export * from './forbidden'
