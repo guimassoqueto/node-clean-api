@@ -57,7 +57,7 @@ describe('Login Route', () => {
         })
         .expect(200)
 
-      expect(response.body.verified).toBe(false)
+      expect(response.body.account.verified).toBe(false)
     })
 
     test('Should return the field createdAt after every sucessfull signup', async () => {
@@ -71,7 +71,7 @@ describe('Login Route', () => {
         })
         .expect(200)
 
-      expect(response.body.createdAt).toBeTruthy()
+      expect(response.body.account.createdAt).toBeTruthy()
     })
 
     test('Should return 409 on second signup with an already registered email', async () => {
