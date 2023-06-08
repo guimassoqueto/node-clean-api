@@ -1,11 +1,13 @@
 import express from 'express'
-import setUpMiddlewares from './middlewares'
-import setUpRoutes from './routes'
-import healthcheckRoute from './healthcheckRoute'
+import middlewares from './middlewares'
+import routes from './routes'
+import health from './routes-healthcheck'
+import swagger from './config-swagger'
 
 const app = express()
-setUpMiddlewares(app)
-healthcheckRoute(app) // rota de saúde da aplicação
-setUpRoutes(app)
+swagger(app)
+middlewares(app)
+health(app) // rota de saúde da aplicação
+routes(app)
 
 export default app
