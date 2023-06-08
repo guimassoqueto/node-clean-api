@@ -96,4 +96,4 @@ sts:
 ## executa teste de um arquivo especifico
 ## (test file)
 tf:
-	${PACKAGE_MANAGER_RUN} test -- tests/unit/presentation/middleware.auth-middleware.spec.ts
+	${PACKAGE_MANAGER_RUN} test -- tests/integration/main/middleware.no-cache.test.ts

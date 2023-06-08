@@ -33,7 +33,7 @@ export class SignUpControlller implements Controller {
 
       await this.emailService.sendAccountVerificationEmail({ email, accountToken: unverifiedAccount.accountToken })
 
-      return ok(account)
+      return ok({ message: `An email was sent to ${email} to verify the account.`, account })
     } catch (error) {
       logger.error(error)
       if (error instanceof EmailAlreadyInUseError) return conflict(error)

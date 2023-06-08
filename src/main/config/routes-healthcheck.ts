@@ -3,6 +3,6 @@ import healthCheckRoute from '@src/main/routes/healthcheck'
 
 export default function (app: Express): void {
   const router = Router()
-  app.use('/healthcheck', router)
+  app.use('/health', router)
   healthCheckRoute(router)
 }
