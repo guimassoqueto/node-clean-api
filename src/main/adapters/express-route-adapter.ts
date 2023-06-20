@@ -1,7 +1,7 @@
 import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
 import { type Request, type Response } from 'express'
 
-// Design Pattern: Proxy
+// Design Pattern: Adapter
 export function expressRouteAdapter (controller: Controller) {
   return async (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {
