@@ -8,7 +8,7 @@ import {
   mockAddAccountParams,
   mockAddSurveysParams,
   MockDate,
-  RealDate,
+  RealDate
 } from "@tests/helpers";
 
 let surveyCollection: Collection;
@@ -104,4 +104,50 @@ describe("SurveyResultMongoRepository", () => {
       expect(surveyResult.answers[1].percent).toEqual(0);
     });
   });
+
+  describe('load()' , () => {
+    test('Should load rurvey result ', async () => {
+      const survey = await createDbSurvey();
+      const account = await createDbAccount();
+      await surveyResultCollection.insertMany([
+        {
+          surveyId: new ObjectId(survey.id),
+          answer: survey.answers[0].answer,
+          accountId: new ObjectId(account.id),
+          date: new Date(2030, 11, 31),
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          answer: survey.answers[0].answer,
+          accountId: new ObjectId(account.id),
+          date: new Date(2030, 11, 31),
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          answer: survey.answers[1].answer,
+          accountId: new ObjectId(account.id),
+          date: new Date(2030, 11, 31),
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          answer: survey.answers[1].answer,
+          accountId: new ObjectId(account.id),
+          date: new Date(2030, 11, 31),
+        }
+      ]);
+
+      const sut = new SurveyResultMongoRepository();
+      const surveyResult = await sut.loadBySurveyId(survey.id);
+
+      expect(surveyResult).toBeTruthy();
+      expect(surveyResult.surveyId).toStrictEqual(new ObjectId(survey.id));
+      expect(surveyResult.answers[0].count).toEqual(2);
+      expect(surveyResult.answers[0].percent).toEqual(50);
+      expect(surveyResult.answers[1].count).toEqual(2);
+      expect(surveyResult.answers[1].percent).toEqual(50);
+      expect(surveyResult.answers[2].count).toEqual(0);
+      expect(surveyResult.answers[2].percent).toEqual(0);
+    })
+  })
+  
 });
