@@ -4,30 +4,8 @@ import {
   SurveyResultModel,
   SaveSurveyResultRepository
  } from '@src/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
-import { RealDate, MockDate, mockSaveSurveyResultParams } from '@tests/helpers'
+import { RealDate, MockDate, mockSaveSurveyResultParams, mockSurveyResultModel } from '@tests/helpers'
 
-
-function mockSurveyResultModel(): SurveyResultModel {
-  return {
-    surveyId: 'any-survey-id',
-    question: 'any-question',
-    answers: [
-      {
-        image: 'any-image-1',
-        answer: 'any-answer-1',
-        count: 50,
-        percent: 50
-      },
-      {
-        image: 'any-image-2',
-        answer: 'any-answer-2',
-        count: 50,
-        percent: 50
-      }
-    ],
-    date: new Date()
-  }
-}
 
 function mockSurveyResultRepository(): SaveSurveyResultRepository {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
