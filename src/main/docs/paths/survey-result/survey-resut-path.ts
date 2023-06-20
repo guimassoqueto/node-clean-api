@@ -37,13 +37,13 @@ export const surveyResultPath = {
         }
       },
       403: {
-        $ref: '#/components/forbidden'
+        $ref: '#/components/components/forbidden'
       },
       404: {
-        $ref: '#/components/notFound'
+        $ref: '#/components/components/notFound'
       },
       500: {
-        $ref: '#/components/serverError'
+        $ref: '#/components/components/serverError'
       }
     }
   }

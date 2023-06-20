@@ -10,6 +10,7 @@ import { saveSurveyParamsSchema } from './survey-result/save-survey-params-schem
 import { saveSurveyParamsResponseSchema } from './survey-result/save-survey-params-response-schema'
 import { errorSchema } from './error/error-schema'
 import { apiKeyAuthSchema } from './auth/api-key-auth-schema'
+import { surveyResultAnswerSchema } from './survey-result/survey-result-answer-schema'
 
 export const schemas = {
   loginResponse: loginResponseSchema,
@@ -22,7 +23,8 @@ export const schemas = {
   surveys: surveysSchema,
   surveyAnswer: surveyAnswerSchema,
   saveSurveyParams: saveSurveyParamsSchema,
-  saveSurveyParamsResponse: saveSurveyParamsResponseSchema
+  saveSurveyParamsResponse: saveSurveyParamsResponseSchema,
+  surveyResultAnswer: surveyResultAnswerSchema
 }
 
 export const securitySchemes = {
