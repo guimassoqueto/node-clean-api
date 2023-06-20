@@ -7,14 +7,32 @@ import {
 import { RealDate, MockDate, mockSaveSurveyResultParams } from '@tests/helpers'
 
 
-function mockSurveyResult(): SurveyResultModel {
-  return Object.assign({}, mockSaveSurveyResultParams(), {id: 'any-id'})
+function mockSurveyResultModel(): SurveyResultModel {
+  return {
+    surveyId: 'any-survey-id',
+    question: 'any-question',
+    answers: [
+      {
+        image: 'any-image-1',
+        answer: 'any-answer-1',
+        count: 50,
+        percent: 50
+      },
+      {
+        image: 'any-image-2',
+        answer: 'any-answer-2',
+        count: 50,
+        percent: 50
+      }
+    ],
+    date: new Date()
+  }
 }
 
 function mockSurveyResultRepository(): SaveSurveyResultRepository {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
     async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return Promise.resolve(mockSurveyResult())
+      return Promise.resolve(mockSurveyResultModel())
     }
   }
   return new SaveSurveyResultRepositoryStub()
@@ -66,7 +84,7 @@ describe('DbSaveSurveyResult' , () => {
     const surveyResultData = mockSaveSurveyResultParams()
     const surveyResult =  await sut.save(surveyResultData)
 
-    expect(surveyResult).toEqual(mockSurveyResult())
+    expect(surveyResult).toEqual(mockSurveyResultModel())
   })
 
 })

@@ -60,10 +60,22 @@ function makeRequest(): HttpRequest {
 
 function mockSurveyResult(): SurveyResultModel {
   return {
-    id: 'valid-id',
     surveyId: 'valid-survey-id',
-    accountId: 'valid-survey-id',
-    answer: 'valid-answer',
+    question: 'valid-question',
+    answers: [
+      {
+        image: 'any-image-1',
+        answer: 'any-answer-1',
+        count: 50,
+        percent: 50
+      },
+      {
+        image: 'any-image-2',
+        answer: 'any-answer-2',
+        count: 50,
+        percent: 50
+      }
+    ],
     date: new Date(2030, 11, 31)
   }
 }

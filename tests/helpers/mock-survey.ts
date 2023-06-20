@@ -18,7 +18,7 @@ export function mockSurveyModel(): SurveyModel {
         answer: 'any-answer-2'
       },
     ],
-    createdAt: new Date(2030, 11, 31)
+    date: new Date(2030, 11, 31)
   }
 }
 
@@ -41,7 +41,7 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
           answer: 'any-answer-2'
         },
       ],
-      createdAt: new Date(2030, 11, 31)
+      date: new Date(2030, 11, 31)
     });
   }
   return surveys
@@ -53,7 +53,7 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
  */
 export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
   return {
-    createdAt: new Date(2030,11, 31),
+    date: new Date(2030,11, 31),
     question: `any-question${(typeof questionNumber !== 'undefined') ? questionNumber: ''}`,
     answers: [
       {
