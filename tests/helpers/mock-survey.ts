@@ -17,6 +17,10 @@ export function mockSurveyModel(): SurveyModel {
       {
         answer: 'any-answer-2'
       },
+      {
+        image:'any-image-3',
+        answer: 'any-answer-3'
+      },
     ],
     date: new Date(2030, 11, 31)
   }
@@ -62,6 +66,9 @@ export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
       },
       {
         answer: 'any-answer-2'
+      },
+      {
+        answer: 'any-answer-3'
       },
     ]
   }
