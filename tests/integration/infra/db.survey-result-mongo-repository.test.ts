@@ -73,6 +73,8 @@ describe("SurveyResultMongoRepository", () => {
       expect(surveyResult.surveyId).toStrictEqual(survey.id);
       expect(surveyResult.answers[0].count).toEqual(1);
       expect(surveyResult.answers[0].percent).toEqual(100);
+      expect(surveyResult.answers[1].count).toEqual(0);
+      expect(surveyResult.answers[1].percent).toEqual(0);
     });
 
     test("Should update survey result if it is not new", async () => {
@@ -98,6 +100,8 @@ describe("SurveyResultMongoRepository", () => {
       expect(surveyResult.answers[0].count).toEqual(1);
       expect(surveyResult.answers[0].answer).toBe(survey.answers[1].answer);
       expect(surveyResult.answers[0].percent).toEqual(100);
+      expect(surveyResult.answers[1].count).toEqual(0);
+      expect(surveyResult.answers[1].percent).toEqual(0);
     });
   });
 });
