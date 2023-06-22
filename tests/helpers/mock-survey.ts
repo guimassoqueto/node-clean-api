@@ -1,3 +1,4 @@
+import { LoadSurveyByIdRepository } from "@src/data/protocols/db/survey";
 import { SurveyModel } from "@src/domain/models/survey";
 import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
 
@@ -72,4 +73,13 @@ export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
       },
     ]
   }
+}
+
+export function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
+  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
+    async loadById (surveyId: string): Promise<SurveyModel | null> {
+      return Promise.resolve(mockSurveyModel())
+    }
+  }
+  return new LoadSurveyByIdRepositoryStub()
 }

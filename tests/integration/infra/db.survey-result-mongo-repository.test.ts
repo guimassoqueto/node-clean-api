@@ -140,13 +140,13 @@ describe("SurveyResultMongoRepository", () => {
       const surveyResult = await sut.loadBySurveyId(survey.id);
 
       expect(surveyResult).toBeTruthy();
-      expect(surveyResult.surveyId).toStrictEqual(new ObjectId(survey.id));
-      expect(surveyResult.answers[0].count).toEqual(2);
-      expect(surveyResult.answers[0].percent).toEqual(50);
-      expect(surveyResult.answers[1].count).toEqual(2);
-      expect(surveyResult.answers[1].percent).toEqual(50);
-      expect(surveyResult.answers[2].count).toEqual(0);
-      expect(surveyResult.answers[2].percent).toEqual(0);
+      expect(surveyResult?.surveyId).toStrictEqual(new ObjectId(survey.id));
+      expect(surveyResult?.answers[0].count).toEqual(2);
+      expect(surveyResult?.answers[0].percent).toEqual(50);
+      expect(surveyResult?.answers[1].count).toEqual(2);
+      expect(surveyResult?.answers[1].percent).toEqual(50);
+      expect(surveyResult?.answers[2].count).toEqual(0);
+      expect(surveyResult?.answers[2].percent).toEqual(0);
     })
   })
   
