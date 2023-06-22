@@ -76,6 +76,17 @@ describe("Surveys Route", () => {
         .get("/api/surveys/any_id/results")
         .expect(403);
     });
+
+    test("Should return 200 on save survey result with access token", async () => {
+      const accessToken = await makeAccessToken(false);
+      const survey = await surveyCollection.insertOne(mockAddSurveysParams());
+      const surveyId = survey.insertedId.toString();
+
+      await request(app)
+        .get(`/api/surveys/${surveyId}/results`)
+        .set("x-access-token", accessToken)
+        .expect(200);
+    });
   })
   
 });
