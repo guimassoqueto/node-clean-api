@@ -47,16 +47,16 @@ export const surveysPath = {
     },
     responses: {
       204: {
-        $ref: '#/components/noContent'
+        $ref: '#/components/components/noContent'
       },
       400: {
-        $ref: '#/components/badRequest'
+        $ref: '#/components/components/badRequest'
       },
       403: {
-        $ref: '#/components/forbidden'
+        $ref: '#/components/components/forbidden'
       },
       500: {
-        $ref: '#/components/serverError'
+        $ref: '#/components/components/serverError'
       }
     }
   }

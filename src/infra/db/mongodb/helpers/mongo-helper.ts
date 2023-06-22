@@ -1,5 +1,6 @@
 import { type Collection, MongoClient } from 'mongodb'
 
+// Design Pattern: Singleton
 export class MongoHelper {
   public client: MongoClient
   public uri: string

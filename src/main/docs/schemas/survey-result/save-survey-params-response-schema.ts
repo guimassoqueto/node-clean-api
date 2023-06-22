@@ -1,14 +1,17 @@
 export const saveSurveyParamsResponseSchema = {
   type: 'object',
   properties: {
-    id: {
+    surveyId: {
       type: 'string'
     },
-    accountId: {
+    question: {
       type: 'string'
     },
-    answer: {
-      type: 'string'
+    answers: {
+      type: 'array',
+      items: {
+        $ref: '#/schemas/surveyResultAnswer'
+      }
     },
     date: {
       type: 'string'

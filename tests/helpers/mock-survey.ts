@@ -1,3 +1,4 @@
+import { LoadSurveyByIdRepository } from "@src/data/protocols/db/survey";
 import { SurveyModel } from "@src/domain/models/survey";
 import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
 
@@ -7,18 +8,23 @@ import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
  */
 export function mockSurveyModel(): SurveyModel {
   return {
-    id: 'any-id',
+    id: 'any-survey-id',
     question: 'any-question',
     answers: [
       {
-        image:'any-image',
+        image:'any-image-1',
         answer: 'any-answer-1'
       },
       {
+        image:'any-image-2',
         answer: 'any-answer-2'
       },
+      {
+        image:'any-image-3',
+        answer: 'any-answer-3'
+      },
     ],
-    createdAt: new Date(2030, 11, 31)
+    date: new Date(2030, 11, 31)
   }
 }
 
@@ -41,7 +47,7 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
           answer: 'any-answer-2'
         },
       ],
-      createdAt: new Date(2030, 11, 31)
+      date: new Date(2030, 11, 31)
     });
   }
   return surveys
@@ -53,7 +59,7 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
  */
 export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
   return {
-    createdAt: new Date(2030,11, 31),
+    date: new Date(2030,11, 31),
     question: `any-question${(typeof questionNumber !== 'undefined') ? questionNumber: ''}`,
     answers: [
       {
@@ -63,6 +69,18 @@ export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
       {
         answer: 'any-answer-2'
       },
+      {
+        answer: 'any-answer-3'
+      },
     ]
   }
+}
+
+export function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
+  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
+    async loadById (surveyId: string): Promise<SurveyModel | null> {
+      return Promise.resolve(mockSurveyModel())
+    }
+  }
+  return new LoadSurveyByIdRepositoryStub()
 }

@@ -1,8 +1,12 @@
-import { type Middleware, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
-import { type Request, type Response, type NextFunction } from 'express'
+import {
+  type HttpRequest,
+  type HttpResponse,
+  type Middleware
+} from '@src/presentation/protocols'
+import { type NextFunction, type Request, type Response } from 'express'
 
 // Design Pattern: Proxy
-export function expressMiddlewareAdapter (middleware: Middleware) {
+export function expressMiddlewareProxy (middleware: Middleware) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const httpRequest: HttpRequest = {
       headers: req.headers

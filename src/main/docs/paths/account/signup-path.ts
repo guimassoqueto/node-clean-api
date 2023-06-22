@@ -25,10 +25,10 @@ export const signupPath = {
         }
       },
       400: {
-        $ref: '#/components/badRequest'
+        $ref: '#/components/components/badRequest'
       },
       500: {
-        $ref: '#/components/serverError'
+        $ref: '#/components/components/serverError'
       }
     }
   }
