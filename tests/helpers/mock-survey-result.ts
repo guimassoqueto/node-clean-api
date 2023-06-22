@@ -23,14 +23,14 @@ export function mockSurveyResultModel(): SurveyResultModel {
       {
         image: 'any-image-1',
         answer: 'any-answer-1',
-        count: 50,
-        percent: 50
+        count: 0,
+        percent: 0
       },
       {
         image: 'any-image-2',
         answer: 'any-answer-2',
-        count: 50,
-        percent: 50
+        count: 0,
+        percent: 0
       }
     ],
     date: new Date()
