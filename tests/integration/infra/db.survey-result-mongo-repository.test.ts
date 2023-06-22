@@ -62,19 +62,19 @@ describe("SurveyResultMongoRepository", () => {
       const sut = new SurveyResultMongoRepository();
       const survey = await createDbSurvey();
       const account = await createDbAccount();
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey.id,
         answer: survey.answers[0].answer,
         accountId: account.id,
         date: new Date(2030, 11, 31),
       });
 
+      const surveyResult = await surveyResultCollection.findOne({
+        surveyId: new ObjectId(survey.id),
+        accountId: new ObjectId(account.id)
+      })
+
       expect(surveyResult).toBeTruthy();
-      expect(surveyResult.surveyId).toStrictEqual(survey.id);
-      expect(surveyResult.answers[0].count).toEqual(1);
-      expect(surveyResult.answers[0].percent).toEqual(100);
-      expect(surveyResult.answers[1].count).toEqual(0);
-      expect(surveyResult.answers[1].percent).toEqual(0);
     });
 
     test("Should update survey result if it is not new", async () => {
@@ -88,20 +88,20 @@ describe("SurveyResultMongoRepository", () => {
       });
 
       const sut = new SurveyResultMongoRepository();
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey.id,
         answer: survey.answers[1].answer,
         accountId: account.id,
         date: new Date(2030, 11, 31),
       });
 
-      expect(surveyResult).toBeTruthy();
-      expect(surveyResult.surveyId).toStrictEqual(survey.id);
-      expect(surveyResult.answers[0].count).toEqual(1);
-      expect(surveyResult.answers[0].answer).toBe(survey.answers[1].answer);
-      expect(surveyResult.answers[0].percent).toEqual(100);
-      expect(surveyResult.answers[1].count).toEqual(0);
-      expect(surveyResult.answers[1].percent).toEqual(0);
+      const surveyResult = await surveyResultCollection.find({
+        surveyId: new ObjectId(survey.id),
+        accountId: new ObjectId(account.id)
+      }).toArray()
+
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.length).toBe(1)
     });
   });
 

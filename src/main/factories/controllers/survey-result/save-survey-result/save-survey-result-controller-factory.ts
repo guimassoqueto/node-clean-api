@@ -9,7 +9,8 @@ export function makeSaveSurveyResultController (): Controller {
   const loadSurveyByIdRepository = new SurveyMongoRepository()
   const loadSurveyById = new DbLoadSurveyById(loadSurveyByIdRepository)
   const saveSurveyResultRepository = new SurveyResultMongoRepository()
-  const saveSurveyResult = new DbSaveSurveyResult(saveSurveyResultRepository)
+  const loadSurveyResultRepository = new SurveyResultMongoRepository()
+  const saveSurveyResult = new DbSaveSurveyResult(saveSurveyResultRepository, loadSurveyResultRepository)
 
   return new SaveSurveyResultController(loadSurveyById, saveSurveyResult)
 }
