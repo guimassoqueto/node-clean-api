@@ -31,6 +31,12 @@ export function mockSurveyResultModel(): SurveyResultModel {
         answer: 'any-answer-2',
         count: 0,
         percent: 0
+      },
+      {
+        image: 'any-image-3',
+        answer: 'any-answer-3',
+        count: 0,
+        percent: 0
       }
     ],
     date: new Date()

@@ -8,14 +8,15 @@ import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
  */
 export function mockSurveyModel(): SurveyModel {
   return {
-    id: 'any-id',
+    id: 'any-survey-id',
     question: 'any-question',
     answers: [
       {
-        image:'any-image',
+        image:'any-image-1',
         answer: 'any-answer-1'
       },
       {
+        image:'any-image-2',
         answer: 'any-answer-2'
       },
       {
