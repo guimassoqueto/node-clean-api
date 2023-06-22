@@ -1,6 +1,6 @@
 import { LoadSurveyResultController } from '@src/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller'
 import { HttpRequest } from '@src/presentation/protocols'
-import { forbidden } from '@src/presentation/helpers/http'
+import { forbidden, serverError } from '@src/presentation/helpers/http'
 import { 
   LoadSurveyResult, SurveyResultModel, InvalidParamError
 } from '@src/presentation/controllers/survey-result/load-survey-result/load-survey-result-protocols'
@@ -56,6 +56,16 @@ describe('LoadSurveyResultController' , () => {
     const response = await sut.handle(request)
 
     expect(response).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    const error = new Error()
+    jest.spyOn(loadSurveyByIdStub, 'load').mockRejectedValueOnce(error)
+    const request = mockRequest()
+    const response = await sut.handle(request)
+
+    expect(response).toEqual(serverError(error))
   })
 })
 
