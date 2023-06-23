@@ -3,6 +3,9 @@ export const loginResponseSchema = {
   properties: {
     accessToken: {
       type: 'string'
+    },
+    userName: {
+      type: 'string'
     }
   }
 }
