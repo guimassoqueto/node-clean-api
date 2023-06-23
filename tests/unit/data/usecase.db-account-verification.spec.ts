@@ -1,15 +1,16 @@
 import {
   UpdateAccountVerifiedRepository,
-  Decoder,
   LoadAccountByIdRepository,
   AccountModel,
   DeleteUnverifiedAccountByAccountTokenRepository,
   ChangeAccountIdRepository,
   UpdateAccessTokenRepository,
-  Encrypter
 } from '@src/data/usecases/account/account-verification/db-account-verification-protocols'
 import { DbAccountVerification } from '@src/data/usecases/account/account-verification/db-account-verification'
-import { mockDecoder, mockEncrypter } from '@tests/helpers'
+import { 
+  EncrypterSpy,
+  DecoderSpy
+ } from '@tests/helpers'
 
 
 function mockAccountModel(id: string = 'any-id'): AccountModel {
@@ -43,7 +44,7 @@ function makeUpdateAccountVerifiedRepository(): UpdateAccountVerifiedRepository 
 function makeChangeAccountIdRepository(): ChangeAccountIdRepository {
   class ChangeAccountIdRepositoryStub implements ChangeAccountIdRepository {
     async changeId (id: string): Promise<AccountModel | null> {
-      return Promise.resolve(mockAccountModel('new-id'))
+      return Promise.resolve(mockAccountModel())
     }
   }
   return new ChangeAccountIdRepositoryStub()
@@ -65,8 +66,8 @@ function makeUpdateAccessTokenRepository(): UpdateAccessTokenRepository {
 
 type SutTypes = {
   sut: DbAccountVerification,
-  decoderStub: Decoder,
-  encrypterStub: Encrypter,
+  decoderSpy: DecoderSpy,
+  encrypterSpy: EncrypterSpy,
   loadAccountByIdRepositoryStub: LoadAccountByIdRepository,
   updateAccountVerifiedRepositoryStub: UpdateAccountVerifiedRepository,
   changeAccountIdRepositoryStub: ChangeAccountIdRepository,
@@ -75,8 +76,8 @@ type SutTypes = {
 }
 
 function makeSut(): SutTypes {
-  const decoderStub = mockDecoder()
-  const encrypterStub = mockEncrypter()
+  const decoderSpy = new DecoderSpy()
+  const encrypterSpy = new EncrypterSpy()
   const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepository()
   const updateAccountVerifiedRepositoryStub = makeUpdateAccountVerifiedRepository()
   const changeAccountIdRepositoryStub = makeChangeAccountIdRepository()
@@ -84,8 +85,8 @@ function makeSut(): SutTypes {
   const deleteUnverifiedAccountByAccountTokenRepositoryStub = makeDeleteUnverifiedAccountByAccountTokenRepository()
 
   const sut = new DbAccountVerification(
-    decoderStub,
-    encrypterStub,
+    decoderSpy,
+    encrypterSpy,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
     changeAccountIdRepositoryStub,
@@ -95,8 +96,8 @@ function makeSut(): SutTypes {
 
   return {
     sut,
-    decoderStub,
-    encrypterStub,
+    decoderSpy,
+    encrypterSpy,
     loadAccountByIdRepositoryStub,
     updateAccountVerifiedRepositoryStub,
     changeAccountIdRepositoryStub,
@@ -107,8 +108,8 @@ function makeSut(): SutTypes {
 
 describe('DbAccountVerification', () => {
   test('Should throws Decoder throws', async () => {
-    const { sut, decoderStub } = makeSut()
-    jest.spyOn(decoderStub, 'decode').mockImplementationOnce(() => {
+    const { sut, decoderSpy } = makeSut()
+    jest.spyOn(decoderSpy, 'decode').mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
@@ -116,9 +117,21 @@ describe('DbAccountVerification', () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should call Decoder with correct value', async () => {
+    const { sut, decoderSpy } = makeSut()
+    await sut.verify('any-token')
+    expect(decoderSpy.encodedValue).toEqual('any-token')
+  })
+
+  test('Should call Encrypter with correct plaintext', async () => {
+    const { sut, encrypterSpy } = makeSut()
+    await sut.verify('any-token')
+    expect(encrypterSpy.plaintext).toEqual(mockAccountModel().id)
+  })
+
   test('Should throws Encrypter throws', async () => {
-    const { sut, encrypterStub } = makeSut()
-    jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce((encryptedValue: string) => {
+    const { sut, encrypterSpy } = makeSut()
+    jest.spyOn(encrypterSpy, 'encrypt').mockImplementationOnce((encryptedValue: string) => {
       throw new Error()
     })
     const promise = sut.verify('any-token')
