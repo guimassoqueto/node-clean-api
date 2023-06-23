@@ -1,51 +1,56 @@
 import { Decoder, Decrypter, Encrypter, Hasher } from '@src/data/protocols/cryptography'
-
+import { faker } from '@faker-js/faker';
 
 /**
  * Mock Decoder class
  */
-export function mockDecoder(): Decoder {
-  class DecoderStub implements Decoder {
-    async decode(encodedValue: string): Promise<string> {
-      return Promise.resolve('any-decoded-value')
-    }
+export class DecoderSpy implements Decoder {
+  encodedValue: string
+  decodedValue = faker.string.sample({min: 8, max: 10})
+
+  async decode(encodedValue: string): Promise<string> {
+    this.encodedValue = encodedValue
+    return Promise.resolve(this.decodedValue)
   }
-  return new DecoderStub()
 }
 
 
 /**
  * Mock Encrypter class
  */
-export function mockEncrypter(): Encrypter {
-  class EncrypterStub implements Encrypter {
-    async encrypt (encryptedValue: string): Promise<string> {
-      return Promise.resolve('any-token')
-    }
+export class EncrypterSpy implements Encrypter {
+  plaintext: string
+  encryptedValue = faker.string.uuid()
+
+  async encrypt (plaintext: string): Promise<string> {
+    this.plaintext = plaintext
+    return Promise.resolve(this.encryptedValue)
   }
-  return new EncrypterStub()
 }
+
 
 /**
  * Mock Decrypter class
  */
-export function mockDecrypter(): Decrypter {
-  class DecrypterStub implements Decrypter {
-    decrypt (encryptedValue: string): Promise<string> {
-      return Promise.resolve('any-decrypted-value')
-    }
+export class DecrypterSpy implements Decrypter {
+  encryptedString: string
+  decryptedValue = faker.string.sample({min: 8, max: 10})
+
+  async decrypt (encryptedString: string): Promise<string | null> {
+    this.encryptedString = encryptedString
+    return Promise.resolve(this.decryptedValue)
   }
-  return new DecrypterStub()
 }
 
 /**
  * Mock Hasher class
  */
-export function mockHasher(): Hasher {
-  class HasherStub implements Hasher {
-    async hash(value: string): Promise<string> {
-      return Promise.resolve('hashed-password')
-    }
+export class HasherSpy implements Hasher {
+  hashedPlaintext = faker.string.uuid()
+  plaintext: string
+
+  async hash(plaintext: string): Promise<string> {
+    this.plaintext = plaintext
+    return Promise.resolve(this.hashedPlaintext)
   }
-  return new HasherStub()
 }
