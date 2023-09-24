@@ -2,31 +2,18 @@
 A full working API built using the top industry standards. TDD, Object-oriented programming, SOLID principles, Design Patterns, Security, among others.
 
 ## Usecase Diagram
-![Node API Usecase Diagram](/diagrams/UML/node-api.usecase.drawio.png)
+TODO
 
 ## Class Diagram
-*PS:* to see the complete diagram, with states and behaviors, open [this file](/diagrams/UML/node-api.class.drawio) with the app [Diagrams.net](https://www.diagrams.net/)
-![Node API Class Diagram](/diagrams/UML/node-api.class.drawio.png)
+TODO
 
 ## Sequence Diagrams
 
 ### SignUp Diagram
-![Node API SignUp Sequence Diagram](/diagrams/UML/node-api.signup.sequence.drawio.png)
+TODO
 
 ### Login Diagram
-![Node API Class Diagram](/diagrams/UML/node-api.login.sequence.drawio.png)
-
-## Requirements (for all users)
-* [Node 20+](https://nodejs.org/en)
-* [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
-
-## Optional Requirements
-If you want to try the application in a Kubernetes cluster, but before want to test locally:  
-* [kubectl](https://kubernetes.io/docs/tasks/tools/)
-* [minikube](https://minikube.sigs.k8s.io/docs/start/)
-
-If you want to access the application running locally without deploy it in a remote server:
-* [ngrok](https://ngrok.com/)
+TODO
 
 ## Running the application locally
 
@@ -55,22 +42,19 @@ If you want to access the application running locally without deploy it in a rem
 **PS**: `MONGO_URL` ***must not*** be defined in *compose.env*   
 **PS**: If you change any variable in *.env*, change to the same value in *compose.env*, except for the two variables above  
 
-|     VARIABLE           |DEFAULT VALUE                          |DEFINITION                         | REQUIRED|
-|----------------|-------------------------------|-----------------------------|----|
-|`ENVIRONMENT`|`dev`            |environment in which the app is running (necessary to run logs properly)           |:heavy_multiplication_x:|
-|`AWS_SES_REGION`|`""`            |AWS SES's region           |:heavy_check_mark:|
-|`AWS_SES_ACCESS_KEY_SECRET`|`""`            |AWS SES's Access Key Secret          |:heavy_check_mark:|
-|`AWS_SES_ACCESS_KEY_ID`|`""`            |AWS SES's Access Key ID            |:heavy_check_mark:|
-|`MONGO_ROOT_USERNAME`|`username`            |mongo user            |:heavy_check_mark:|
-|`MONGO_ROOT_PASSWORD`          |`password`            |mongo password            |:heavy_check_mark:|
-|`MONGO_HOST`         |`localhost`|mongo ip|:heavy_check_mark:|
-|`MONGO_PORT`|`27017`            |port where mongo is listening            |:heavy_check_mark:|
-|`APP_HOST`|`localhost`            |API's host           |:heavy_multiplication_x:|
-|`APP_PORT`|`8000`            |API's port            |:heavy_multiplication_x:|
-|`APP_URL`|`${APP_HOST}:${APP_PORT}"`            |API's URL            |:heavy_multiplication_x:|
-|`JWT_SECRET`|`secret`            |Private Secret for jwt            |:heavy_multiplication_x:|
-|`SALT_ROUNDS`|`12`            |number of rounds for encryption            |:heavy_multiplication_x:|
-|`MONGO_URL`|`""`            |mongo url (for remote mongo)           |:heavy_multiplication_x:|
+| VARIABLE              | DEFAULT VALUE              | DEFINITION                                                               | REQUIRED                 |
+| --------------------- | -------------------------- | ------------------------------------------------------------------------ | ------------------------ |
+| `ENVIRONMENT`         | `dev`                      | environment in which the app is running (necessary to run logs properly) | :heavy_multiplication_x: |
+| `MONGO_ROOT_USERNAME` | `username`                 | mongo user                                                               | :heavy_check_mark:       |
+| `MONGO_ROOT_PASSWORD` | `password`                 | mongo password                                                           | :heavy_check_mark:       |
+| `MONGO_HOST`          | `localhost`                | mongo ip                                                                 | :heavy_check_mark:       |
+| `MONGO_PORT`          | `27017`                    | port where mongo is listening                                            | :heavy_check_mark:       |
+| `APP_HOST`            | `localhost`                | API's host                                                               | :heavy_multiplication_x: |
+| `APP_PORT`            | `8000`                     | API's port                                                               | :heavy_multiplication_x: |
+| `APP_URL`             | `${APP_HOST}:${APP_PORT}"` | API's URL                                                                | :heavy_multiplication_x: |
+| `JWT_SECRET`          | `secret`                   | Private Secret for jwt                                                   | :heavy_multiplication_x: |
+| `SALT_ROUNDS`         | `12`                       | number of rounds for encryption                                          | :heavy_multiplication_x: |
+| `MONGO_URL`           | `""`                       | mongo url (for remote mongo)                                             | :heavy_multiplication_x: |
 
 
 ### Additional Commands (see [Makefile](Makefile))
@@ -89,9 +73,9 @@ If you want to access the application running locally without deploy it in a rem
 TODO:
 - [x] Create an Email interface to handle emails, for validations, password recovery, etc [AWS SES]
 - [x] Create an Adpater that implements Email interface and send emails. The Adapter should Implement an email service, like [Sendgrid](https://www.npmjs.com/package/@sendgrid/mail) or [Nodemailer](https://www.npmjs.com/package/nodemailer)
-- [x] UML Structure - Class Diagram
-- [x] UML Behavior - Use Case Diagram
-- [x] UML Interaction - Sequence Diagram
+- [ ] UML Structure - Class Diagram
+- [ ] UML Behavior - Use Case Diagram
+- [ ] UML Interaction - Sequence Diagram
 - [x] Add dependabot
 - [x] Add Github Actions Pipeline
 - [ ] Add MongoDb in Github Actions to run integration tests
