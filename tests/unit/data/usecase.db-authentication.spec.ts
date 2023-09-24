@@ -21,7 +21,7 @@ function mockAuthenticationParams(): AuthenticationParams {
 function makeLoadAccountByEmailRepository(): LoadAccountByEmailRepository {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel(true))
+      return Promise.resolve(mockAccountModel())
     }
   }
   return new LoadAccountByEmailRepositoryStub()
@@ -110,7 +110,7 @@ describe('DbAuthentication UseCase' , () => {
     const AuthRequest = mockAuthenticationParams()
     await sut.auth(AuthRequest)
 
-    expect(compareSpy).toHaveBeenCalledWith(AuthRequest.password, mockAccountModel(true).password)
+    expect(compareSpy).toHaveBeenCalledWith(AuthRequest.password, mockAccountModel().password)
   })
 
   test('Should throw if HashComparer throws', async () => {
@@ -135,7 +135,7 @@ describe('DbAuthentication UseCase' , () => {
     const authParam = mockAuthenticationParams()
     await sut.auth(authParam)
 
-    expect(encrypterSpy.plaintext).toEqual(mockAccountModel(true).id)
+    expect(encrypterSpy.plaintext).toEqual(mockAccountModel().id)
   })
 
   test('Should throw if Encrypter throws', async () => {
@@ -153,7 +153,7 @@ describe('DbAuthentication UseCase' , () => {
     const authResponse = await sut.auth(mockAuthenticationParams())
 
     expect(authResponse?.accessToken).toEqual(encrypterSpy.encryptedValue)
-    expect(authResponse?.userName).toEqual(mockAccountModel(true).name)
+    expect(authResponse?.userName).toEqual(mockAccountModel().name)
   })
 
   test('Should call UpdateAccessTokenRepository with correct values', async () => {
@@ -162,7 +162,7 @@ describe('DbAuthentication UseCase' , () => {
     const AuthRequest = mockAuthenticationParams()
     await sut.auth(AuthRequest)
 
-    expect(updateSpy).toHaveBeenCalledWith(mockAccountModel(true).id, encrypterSpy.encryptedValue)
+    expect(updateSpy).toHaveBeenCalledWith(mockAccountModel().id, encrypterSpy.encryptedValue)
   })
 
   test('Should throw if UpdateAccessTokenRepository throws', async () => {

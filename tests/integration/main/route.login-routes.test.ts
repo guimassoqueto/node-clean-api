@@ -47,20 +47,6 @@ describe("Login Route", () => {
         .expect(200);
     });
 
-    test("Should return the field verified being false after every signup", async () => {
-      const response = await request(app)
-        .post("/api/signup")
-        .send({
-          name: "Guilherme",
-          email: "guilhermemassoqueto@gmail.com",
-          password: "###!!!123GGGaaa",
-          passwordConfirmation: "###!!!123GGGaaa",
-        })
-        .expect(200);
-
-      expect(response.body.account.verified).toBe(false);
-    });
-
     test("Should return the field createdAt after every sucessfull signup", async () => {
       const response = await request(app)
         .post("/api/signup")
@@ -114,12 +100,10 @@ describe("Login Route", () => {
         name: string;
         email: string;
         password: string;
-        verified: boolean;
       } = {
         name: "any_user",
         email: "any_email@email.com",
         password: passwordHash,
-        verified: true,
       };
 
       await accountCollection.insertOne(newUser);
@@ -131,28 +115,6 @@ describe("Login Route", () => {
           password: rawPassword,
         })
         .expect(200);
-    });
-
-    test("Should return 401 if the user tries to login without verify the email first", async () => {
-      const rawPassword = "321!@#qweEWQ";
-      const passwordHash = await hash(rawPassword, SALT_ROUNDS);
-
-      // se o campo verified não for passado, a ausencia do mesmo no banco per se é falso
-      const newUser: { name: string; email: string; password: string } = {
-        name: "any_user",
-        email: "any_email@email.com",
-        password: passwordHash,
-      };
-
-      await accountCollection.insertOne(newUser);
-
-      await request(app)
-        .post("/api/login")
-        .send({
-          email: newUser.email,
-          password: rawPassword,
-        })
-        .expect(401);
     });
 
     test("Should return 401 on invalid credentials", async () => {
