@@ -8,14 +8,11 @@ interface AccountModelWithToken extends Omit<AccountModel, "id"> {
   accessToken: string;
 }
 
-export function mockAccountWithToken(
-  verified: boolean = false,
-): AccountModelWithToken {
+export function mockAccountWithToken(): AccountModelWithToken {
   return {
     name: "any-name",
     email: "any-email@email.com",
     password: "any-password",
-    verified,
     createdAt: new Date(2030, 11, 31),
     accessToken: "any-token",
   };
@@ -102,45 +99,6 @@ describe("Add Account Mongo Repository", () => {
 
       expect(account).toBeTruthy();
       expect(account?.accessToken).toBe("any_token");
-    });
-  });
-
-  describe("updateVerified()", () => {
-    test("Should update the verified field on updateVerified success", async () => {
-      const sut = makeSut();
-      const res = await accountCollection.insertOne(mockAccountWithToken());
-      const account_before_update = await accountCollection.findOne({
-        _id: res.insertedId,
-      });
-      expect(account_before_update).toBeTruthy();
-      expect(account_before_update?.verified).toBe(false);
-
-      await sut.updateVerified(res.insertedId.toString(), true); // atualiza o campo verified
-      const account_after_update = await accountCollection.findOne({
-        _id: res.insertedId,
-      });
-      expect(account_after_update?.verified).toBe(true);
-    });
-  });
-
-  describe("changeId()", () => {
-    test("Should change the id of an account, keeping the other fields exact the same", async () => {
-      const sut = makeSut();
-      const account = mockAccountWithToken();
-      const res = await accountCollection.insertOne(account);
-      let oldAccount = await accountCollection.findOne({ _id: res.insertedId });
-
-      expect(oldAccount).toBeTruthy();
-
-      const newAccount = await sut.changeId(res.insertedId.toString());
-      oldAccount = await accountCollection.findOne({ _id: res.insertedId });
-
-      expect(oldAccount).toBeFalsy();
-      expect(newAccount).toBeTruthy();
-      expect(newAccount?.createdAt).toStrictEqual(account.createdAt);
-      expect(newAccount?.email).toEqual(account.email);
-      expect(newAccount?.password).toEqual(account.password);
-      expect(newAccount?.verified).toEqual(account.verified);
     });
   });
 

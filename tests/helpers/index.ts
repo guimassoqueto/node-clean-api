@@ -1,7 +1,6 @@
 export * from './mock-account'
 export * from './mock-date'
 export * from './mock-survey'
-export * from './mock-unverified-account'
 export * from './mock-cryptography'
 export * from './mock-survey-result'
 export * from './mock-validation'

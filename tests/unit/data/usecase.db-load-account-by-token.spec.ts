@@ -12,7 +12,7 @@ import {
 function mockLoadAccountByToken(): LoadAccountByTokenRepository {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken(accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
-      return Promise.resolve(mockAccountModel(true))
+      return Promise.resolve(mockAccountModel())
     }
   }
   return new LoadAccountByTokenRepositoryStub()
@@ -88,7 +88,7 @@ describe('DbLoadAccountByToken' , () => {
     const { sut } = makeSut()
     const account = await sut.load('any-token', 'any-role')
 
-    expect(account).toStrictEqual(mockAccountModel(true))
+    expect(account).toStrictEqual(mockAccountModel())
   })
 
 })

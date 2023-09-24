@@ -1,7 +1,4 @@
 export * from '@src/domain/models/account'
-export * from '@src/domain/models/unverified-account'
-export * from '@src/domain/usecases/unverified-account/add-unverified-account'
-export * from '@src/domain/usecases/email/account-verification-mail'
 export * from '@src/domain/usecases/account/add-account'
 export * from '@src/validation/validation'
 export * from '@src/logger-config'

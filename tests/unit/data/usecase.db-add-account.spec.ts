@@ -86,7 +86,6 @@ describe('DbAddAcccount Usecase' , () => {
     expect(accountReturn).toBeTruthy()
     expect(accountReturn.email).toEqual(account.email)
     expect(accountReturn.name).toEqual(account.name)
-    expect(accountReturn.verified).toEqual(false)
     expect(accountReturn.createdAt).toBeTruthy()
   })
 })

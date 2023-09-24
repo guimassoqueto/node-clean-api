@@ -19,10 +19,6 @@ export const signupResponseSchema = {
         password: {
           type: 'string'
         },
-        verified: {
-          type: 'boolean',
-          default: false
-        },
         createdAt: {
           type: 'string'
         }
