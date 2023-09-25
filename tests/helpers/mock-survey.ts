@@ -1,6 +1,18 @@
 import { LoadSurveyByIdRepository } from "@src/data/protocols/db/survey";
 import { SurveyModel } from "@src/domain/models/survey";
 import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
+import { LoadSurveys } from "@src/domain/usecases/survey/load-surveys";
+
+
+export class LoadSurveysSpy implements LoadSurveys {
+  surveyModels = mockSurveyModels(3)
+  accountId: string
+
+ async load (accountId: string): Promise<SurveyModel[]> {
+  this.accountId = accountId
+  return this.surveyModels
+ }
+}
 
 
 /**
@@ -57,10 +69,10 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
 /**
  * Mock AddSurveyParams
  */
-export function mockAddSurveysParams(questionNumber?: number): AddSurveyParams {
+export function mockAddSurveysParams(): AddSurveyParams {
   return {
     date: new Date(2030,11, 31),
-    question: `any-question${(typeof questionNumber !== 'undefined') ? questionNumber: ''}`,
+    question: 'any-question',
     answers: [
       {
         image:'any-image',
