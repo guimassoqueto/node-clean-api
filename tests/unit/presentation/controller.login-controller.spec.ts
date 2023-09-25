@@ -11,9 +11,7 @@ import {
 } from "@src/presentation/helpers/http/http-helper";
 import { HttpRequest } from "@src/presentation/protocols";
 import { MissingParamError } from "@src/errors";
-import { mockValidation, AuthenticationSpy } from "@tests/helpers";
-
-
+import { AuthenticationSpy, mockValidation } from "@tests/helpers";
 
 function mockAuthenticationParams(): AuthenticationParams {
   return {
@@ -29,9 +27,9 @@ type SutTypes = {
 };
 
 function makeSut(): SutTypes {
-  const validationStub = mockValidation()
-  const authenticationSpy =  new AuthenticationSpy()
-  const sut = new LoginController(authenticationSpy, validationStub)
+  const validationStub = mockValidation();
+  const authenticationSpy = new AuthenticationSpy();
+  const sut = new LoginController(authenticationSpy, validationStub);
 
   return {
     sut,
@@ -76,7 +74,7 @@ describe("Login Controller", () => {
     const { sut, authenticationSpy } = makeSut();
     const httpResponse = await sut.handle(mockRequest());
 
-    expect(httpResponse).toEqual(ok(authenticationSpy.authenticationResponse));
+    expect(httpResponse).toEqual(ok(authenticationSpy.AuthenticationModel));
   });
 
   test("Should call Validation with correct value", async () => {
