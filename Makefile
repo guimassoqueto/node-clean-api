@@ -96,4 +96,4 @@ sts:
 ## executa teste de um arquivo especifico
 ## (test file)
 tf:
-	${PACKAGE_MANAGER_RUN} test -- tests/integration/infra/db.survey-mongo-repository.test.ts
+	${PACKAGE_MANAGER_RUN} test -- tests/unit/data/usecase.db-load-account-by-token.spec.ts
