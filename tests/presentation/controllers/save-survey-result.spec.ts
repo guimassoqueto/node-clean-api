@@ -1,5 +1,4 @@
 import { SaveSurveyResultController } from "@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-controller";
-import { HttpRequest } from "@src/presentation/protocols";
 import { forbidden, ok, serverError } from "@src/presentation/helpers/http";
 import {
   InvalidParamError,
@@ -10,6 +9,10 @@ import {
   SurveyResultModel,
 } from "@src/presentation/controllers/survey-result/save-survey-result/save-survey-result-protocols";
 import { MockDate, mockSurveyModel, RealDate } from "@tests/helpers";
+import { faker } from "@faker-js/faker";
+
+// TODO: refatorar todos estes testes usando spy
+
 
 function mockSaveSurveyResult(): SaveSurveyResult {
   class SaveSurveyResultStub implements SaveSurveyResult {
@@ -50,17 +53,13 @@ function makeSut(): SutTypes {
   };
 }
 
-function mockRequest(): HttpRequest {
+function mockRequest(): SaveSurveyResultController.Request {
   const answers = mockSurveyModel().answers;
   const answer = answers[Math.floor(Math.random() * answers.length)].answer;
   return {
-    params: {
-      surveyId: "any-id",
-    },
-    body: {
+      surveyId: faker.string.uuid(),
       answer,
-    },
-    accountId: "any-account-id",
+      accountId: faker.string.uuid(),
   };
 }
 
@@ -101,7 +100,7 @@ describe("SaveSurveyResultController", () => {
     const request = mockRequest();
 
     await sut.handle(request);
-    expect(loadByIdSpy).toHaveBeenCalledWith(request.params.surveyId);
+    expect(loadByIdSpy).toHaveBeenCalledWith(request.surveyId);
   });
 
   test("Should return 401 if surveyId does not exist", async () => {
@@ -128,9 +127,7 @@ describe("SaveSurveyResultController", () => {
   test("Should return 403 if an invalid answer is provided", async () => {
     const { sut } = makeSut();
     const request = mockRequest();
-    request.body = {
-      answer: "wrong-answer",
-    };
+    request.answer = "wrong-answer"
 
     const response = await sut.handle(request);
     expect(response).toStrictEqual(forbidden(new InvalidParamError("answer")));
@@ -144,8 +141,8 @@ describe("SaveSurveyResultController", () => {
 
     expect(saveSpy).toBeCalledWith({
       accountId: request.accountId,
-      surveyId: request.params.surveyId,
-      answer: request.body.answer,
+      surveyId: request.surveyId,
+      answer: request.answer,
       date: new Date(),
     });
   });

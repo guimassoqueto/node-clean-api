@@ -1,11 +1,10 @@
 import { LoadSurveysController } from '@src/presentation/controllers/survey/load-surveys/load-surveys-controller'
 import { noContent, ok, serverError } from '@src/presentation/helpers/http/http-helper'
-import { HttpRequest } from '@src/presentation/protocols'
-import { mockSurveyModels, LoadSurveysSpy } from '@tests/helpers'
+import { LoadSurveysSpy } from '@tests/presentation/mocks'
 import { faker } from "@faker-js/faker";
 
 
-function mockRequest(): HttpRequest {
+function mockRequest(): LoadSurveysController.Request {
   return {
     accountId: faker.string.uuid()
   }
@@ -44,7 +43,6 @@ describe('LoadSurveysController', () => {
     const error = new Error()
     jest.spyOn(loadSurveysSpy, 'load').mockRejectedValueOnce(error)
     const response = await sut.handle(mockRequest())
-
     expect(response).toEqual(serverError(error))
   })
 
@@ -52,8 +50,6 @@ describe('LoadSurveysController', () => {
     const { sut, loadSurveysSpy } = makeSut()
     loadSurveysSpy.surveyModels = []
     const response = await sut.handle(mockRequest())
-
     expect(response).toEqual(noContent())
   })
-
 })

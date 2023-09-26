@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { LoadSurveyByIdRepository } from "@src/data/protocols/db/survey";
 import { SurveyModel } from "@src/domain/models/survey";
 import { AddSurveyParams } from '@src/domain/usecases/survey/add-survey'
@@ -66,28 +67,6 @@ export function mockSurveyModels(ListSize: number = 2): SurveyModel[] {
 }
 
 
-/**
- * Mock AddSurveyParams
- */
-export function mockAddSurveysParams(): AddSurveyParams {
-  return {
-    date: new Date(2030,11, 31),
-    question: 'any-question',
-    answers: [
-      {
-        image:'any-image',
-        answer: 'any-answer-1'
-      },
-      {
-        answer: 'any-answer-2'
-      },
-      {
-        answer: 'any-answer-3'
-      },
-    ]
-  }
-}
-
 export function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository{
     async loadById (surveyId: string): Promise<SurveyModel | null> {
@@ -95,4 +74,23 @@ export function mockLoadSurveyByIdRepository(): LoadSurveyByIdRepository {
     }
   }
   return new LoadSurveyByIdRepositoryStub()
+}
+
+export function mockAddSurveysParams(): AddSurveyParams {
+  return {
+    date: new Date(2030,11, 31),
+    question: 'any-question',
+    answers: [
+      {
+        image: faker.image.url(),
+        answer: faker.word.words()
+      },
+      {
+        answer: faker.word.words()
+      },
+      {
+        answer: faker.word.words()
+      },
+    ]
+  }
 }

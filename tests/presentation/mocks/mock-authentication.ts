@@ -13,7 +13,6 @@ function mockAuthenticationModel(): AuthenticationModel {
   }
 }
 
-
 export class AuthenticationSpy implements Authentication {
   authetication: AuthenticationParams;
   result: AuthenticationModel | null = mockAuthenticationModel();

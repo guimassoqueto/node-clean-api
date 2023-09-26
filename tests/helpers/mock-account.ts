@@ -1,5 +1,7 @@
+import { faker } from '@faker-js/faker'
 import { AccountModel } from '@src/domain/models/account'
 import { AddAccountParams } from '@src/domain/usecases/account/add-account'
+import { LoadAccountByToken } from '@src/domain/usecases/account/load-account-by-token'
 
 
 /**
