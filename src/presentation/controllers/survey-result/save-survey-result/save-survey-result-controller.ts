@@ -1,4 +1,4 @@
-import { type HttpRequest, type HttpResponse, type Controller } from '@src/presentation/protocols'
+import { type HttpResponse, type Controller } from '@src/presentation/protocols'
 import { forbidden, ok, serverError } from '@src/presentation/helpers/http'
 import {
   type LoadSurveyById, loggerConfig, InvalidParamError,
@@ -7,17 +7,23 @@ import {
 
 const logger = loggerConfig('SaveSurveyResultController')
 
+export namespace SaveSurveyResultController {
+  export type Request = {
+    surveyId: string
+    answer: string
+    accountId: string
+  }
+}
+
 export class SaveSurveyResultController implements Controller {
   constructor (
     private readonly loadSurveyById: LoadSurveyById,
     private readonly saveSurveyResult: SaveSurveyResult
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: SaveSurveyResultController.Request): Promise<HttpResponse> {
     try {
-      const { surveyId } = httpRequest.params
-      const { answer } = httpRequest.body
-      const accountId = httpRequest.accountId as string
+      const { surveyId, answer, accountId } = request
 
       const survey = await this.loadSurveyById.loadById(surveyId)
       if (!survey) {

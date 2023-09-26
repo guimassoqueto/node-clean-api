@@ -1,5 +1,5 @@
 import { badRequest, ok, serverError, conflict } from '@src/presentation/helpers/http'
-import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
+import { type Controller, type HttpResponse } from '@src/presentation/protocols'
 import {
   type AddAccount,
   type Validation,
@@ -9,18 +9,27 @@ import {
 
 const logger = loggerConfig('signup-controller')
 
+export namespace SignUpControlller {
+  export type Request = {
+    name: string
+    email: string
+    password: string
+    passwordConfirmation: string
+  }
+}
+
 export class SignUpControlller implements Controller {
   constructor (
     private readonly validation: Validation,
     private readonly addAccount: AddAccount
   ) { }
 
-  public async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  public async handle (request: SignUpControlller.Request): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(request)
       if (error) return badRequest(error)
 
-      const { name, email, password } = httpRequest.body
+      const { name, email, password } = request
 
       const account = await this.addAccount.add({ name, email, password })
 

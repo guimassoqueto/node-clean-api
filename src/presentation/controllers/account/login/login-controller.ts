@@ -1,9 +1,16 @@
 import { type Authentication, type Validation } from './login-controller-protocols'
-import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
+import { type Controller, type HttpResponse } from '@src/presentation/protocols'
 import { serverError, ok, unauthorized, badRequest } from '@src/presentation/helpers/http/http-helper'
 import { loggerConfig } from '@src/logger-config'
 
 const logger = loggerConfig('login-controller')
+
+export namespace LoginController {
+  export type Request = {
+    email: string
+    password: string
+  }
+}
 
 export class LoginController implements Controller {
   constructor (
@@ -11,12 +18,12 @@ export class LoginController implements Controller {
     private readonly validation: Validation
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: LoginController.Request): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(request)
       if (error) return badRequest(error)
 
-      const { email, password } = httpRequest.body
+      const { email, password } = request
       const authResponse = await this.authentication.auth({ email, password })
       if (!authResponse) return unauthorized()
 
