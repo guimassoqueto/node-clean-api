@@ -1,11 +1,11 @@
 import { serverError } from '@src/presentation/helpers/http/http-helper'
-import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
+import { type Controller, type HttpResponse } from '@src/presentation/protocols'
 import { loggerConfig } from './healthcheck-protocols'
 
 const logger = loggerConfig('healthcheck-controller')
 
 export class HealthCheckController implements Controller {
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: any): Promise<HttpResponse> {
     try {
       const httpResponse: HttpResponse = {
         statusCode: 200,

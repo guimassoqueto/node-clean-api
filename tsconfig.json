@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDirs": ["src", "tests"],
     "outDir": "./dist",
     "module": "CommonJS",
     "target": "ES2019",
@@ -15,5 +15,5 @@
     },
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": ["src", "tests"]
 }

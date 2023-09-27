@@ -1,47 +1,30 @@
 import { DbAddAcccount } from '@src/data/usecases/account/add-account/db-add-account'
 import { 
-  AddAccountParams, 
-  AddAccountRepository,
-  AccountModel
-} from '@src/data/usecases/account/add-account/db-add-account-protocols'
-
-import { 
   mockAddAccountParams, 
-  mockAccountModel,
   HasherSpy,
-} from '@tests/helpers'
-
-function mockAddAccountRepository(): AddAccountRepository {
-  class AddAccountRepositoryStub implements AddAccountRepository {
-    async add(accountData: AddAccountParams): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel())
-    }
-  }
-  return new AddAccountRepositoryStub()
-}
+  AddAccountRepositorySpy
+} from '@tests/data/mocks'
 
 
 type SutTypes =  {
   sut: DbAddAcccount,
   hasherSpy: HasherSpy,
-  addAccountRepositoryStub: AddAccountRepository
+  addAccountRepositorySpy: AddAccountRepositorySpy
 }
-
 
 function makeSut(): SutTypes {
   const hasherSpy = new HasherSpy();
-  const addAccountRepositoryStub = mockAddAccountRepository();
-  const sut = new DbAddAcccount(hasherSpy, addAccountRepositoryStub);
+  const addAccountRepositorySpy = new AddAccountRepositorySpy()
+  const sut = new DbAddAcccount(hasherSpy, addAccountRepositorySpy);
 
   return {
     sut,
     hasherSpy,
-    addAccountRepositoryStub
+    addAccountRepositorySpy
   };
-
 }
 
-describe('DbAddAcccount Usecase' , () => {
+describe('DbAddAcccount' , () => {
   test('Should call Hasher with correct plaintext', async () => {
     const { sut, hasherSpy } = makeSut();
     const addAccountParams = mockAddAccountParams()
@@ -52,35 +35,31 @@ describe('DbAddAcccount Usecase' , () => {
   test('Should throw in case of errors in encrypt method', async () => {
     const { sut, hasherSpy } = makeSut();
     jest.spyOn(hasherSpy, 'hash').mockRejectedValueOnce(new Error());
-    const account: AddAccountParams = mockAddAccountParams()
+    const account = mockAddAccountParams()
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should call AddAccountRepository with correct values', async () => {
-    const { sut, addAccountRepositoryStub, hasherSpy } = makeSut();
-    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
-    const accountData: AddAccountParams = mockAddAccountParams()
+    const { sut, addAccountRepositorySpy, hasherSpy } = makeSut();
+    const accountData = mockAddAccountParams()
     await sut.add(accountData);
-
-    expect(addSpy).toHaveBeenCalledWith({
-      name: accountData.name,
-      email: accountData.email,
-      password: hasherSpy.hashedPlaintext
-    })
+    expect(addAccountRepositorySpy.accountData.email).toEqual(accountData.email)
+    expect(addAccountRepositorySpy.accountData.name).toEqual(accountData.name)
+    expect(addAccountRepositorySpy.accountData.password).toEqual(hasherSpy.hashedPlaintext)
   })
 
   test('Should throw in case of errors in add method', async () => {
-    const { sut, addAccountRepositoryStub } = makeSut();
-    jest.spyOn(addAccountRepositoryStub, 'add').mockRejectedValueOnce(new Error())
-    const account: AddAccountParams = mockAddAccountParams()
+    const { sut, addAccountRepositorySpy } = makeSut();
+    jest.spyOn(addAccountRepositorySpy, 'add').mockRejectedValueOnce(new Error())
+    const account = mockAddAccountParams()
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return an account on success', async () => {
     const { sut } = makeSut();
-    const account: AddAccountParams = mockAddAccountParams()
+    const account = mockAddAccountParams()
     const accountReturn = await sut.add(account)
 
     expect(accountReturn).toBeTruthy()

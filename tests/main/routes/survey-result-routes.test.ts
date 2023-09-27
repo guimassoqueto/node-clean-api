@@ -5,12 +5,13 @@ import { JWT_SECRET, MONGO_URL } from "@tests/settings";
 import { Collection, ObjectId } from "mongodb";
 import { sign } from "jsonwebtoken";
 import { mockAddSurveysParams } from "@tests/helpers";
+import { faker } from  "@faker-js/faker"
 
 async function makeAccessToken(isAdmin: boolean = false): Promise<string> {
   const fakeAccount = {
-    name: "any-name",
-    email: "any-email",
-    password: "any-password",
+    name: faker.person.firstName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
   };
 
   if (isAdmin) fakeAccount["role"] = "ADMIN";
@@ -57,14 +58,15 @@ describe("Surveys Route", () => {
 
     test("Should return 200 on save survey result with access token", async () => {
       const accessToken = await makeAccessToken(false);
-      const survey = await surveyCollection.insertOne(mockAddSurveysParams());
+      const surveyParams = mockAddSurveysParams()
+      const survey = await surveyCollection.insertOne(surveyParams);
       const surveyId = survey.insertedId.toString();
 
       await request(app)
         .put(`/api/surveys/${surveyId}/results`)
         .set("x-access-token", accessToken)
         .send({
-          answer: "any-answer-2",
+          answer: surveyParams.answers[1].answer,
         })
         .expect(200);
     });

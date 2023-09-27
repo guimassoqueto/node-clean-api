@@ -1,21 +1,21 @@
-import { type Controller, type HttpRequest, type HttpResponse } from '@src/presentation/protocols'
+import { type Controller, type HttpResponse } from '@src/presentation/protocols'
 import { type Request, type Response } from 'express'
 
 // Design Pattern: Adapter
 export function expressRouteAdapter (controller: Controller) {
   return async (req: Request, res: Response) => {
-    const httpRequest: HttpRequest = {
-      query: req.query,
-      body: req.body,
-      params: req.params,
+    const request = {
+      ...(req.query || {}),
+      ...(req.body || {}),
+      ...(req.params || {}),
       accountId: req.accountId
     }
-    const httpResponse: HttpResponse = await controller.handle(httpRequest)
+    const response: HttpResponse = await controller.handle(request)
 
-    if (httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) res.status(httpResponse.statusCode).json(httpResponse.body)
+    if (response.statusCode >= 200 && response.statusCode < 400) res.status(response.statusCode).json(response.body)
     else {
-      res.status(httpResponse.statusCode).json({
-        error: httpResponse.body.message
+      res.status(response.statusCode).json({
+        error: response.body.message
       })
     }
   }

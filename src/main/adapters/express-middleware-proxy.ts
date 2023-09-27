@@ -1,5 +1,4 @@
 import {
-  type HttpRequest,
   type HttpResponse,
   type Middleware
 } from '@src/presentation/protocols'
@@ -8,8 +7,9 @@ import { type NextFunction, type Request, type Response } from 'express'
 // Design Pattern: Proxy
 export function expressMiddlewareProxy (middleware: Middleware) {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const httpRequest: HttpRequest = {
-      headers: req.headers
+    const httpRequest = {
+      accessToken: req.headers?.['x-access-token'],
+      ...(req.headers || {})
     }
     const httpResponse: HttpResponse = await middleware.handle(httpRequest)
 
